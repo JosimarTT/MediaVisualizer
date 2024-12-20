@@ -1,6 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "media-visualizer-api", "media-visualizer-api.csproj", "{8693DFEE-0957-40C9-AF1A-7BEB1289BA5E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.Api", "MediaVisualizer.Api\MediaVisualizer.Api.csproj", "{19C9F23C-1DF2-4F26-9C58-108EBDBE53C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.Services", "MediaVisualizer.Services\MediaVisualizer.Services.csproj", "{6587572E-EAD2-40A3-B57F-7D4045D1D12E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.DataAccess", "MediaVisualizer.DataAccess\MediaVisualizer.DataAccess.csproj", "{E9E47B19-9AB7-470A-89E6-CE14D7F2AD69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.Shared", "MediaVisualizer.Shared\MediaVisualizer.Shared.csproj", "{67E08597-A6AA-4860-8065-7ECC580D2672}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +14,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8693DFEE-0957-40C9-AF1A-7BEB1289BA5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8693DFEE-0957-40C9-AF1A-7BEB1289BA5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8693DFEE-0957-40C9-AF1A-7BEB1289BA5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8693DFEE-0957-40C9-AF1A-7BEB1289BA5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19C9F23C-1DF2-4F26-9C58-108EBDBE53C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19C9F23C-1DF2-4F26-9C58-108EBDBE53C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19C9F23C-1DF2-4F26-9C58-108EBDBE53C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19C9F23C-1DF2-4F26-9C58-108EBDBE53C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6587572E-EAD2-40A3-B57F-7D4045D1D12E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6587572E-EAD2-40A3-B57F-7D4045D1D12E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6587572E-EAD2-40A3-B57F-7D4045D1D12E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6587572E-EAD2-40A3-B57F-7D4045D1D12E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9E47B19-9AB7-470A-89E6-CE14D7F2AD69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9E47B19-9AB7-470A-89E6-CE14D7F2AD69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9E47B19-9AB7-470A-89E6-CE14D7F2AD69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9E47B19-9AB7-470A-89E6-CE14D7F2AD69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67E08597-A6AA-4860-8065-7ECC580D2672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67E08597-A6AA-4860-8065-7ECC580D2672}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67E08597-A6AA-4860-8065-7ECC580D2672}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67E08597-A6AA-4860-8065-7ECC580D2672}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
