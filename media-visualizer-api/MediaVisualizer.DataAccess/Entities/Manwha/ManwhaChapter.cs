@@ -1,10 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using MediaVisualizer.DataAccess.Entities.Shared;
 
-namespace MediaVisualizer.DataAccess.Entities;
+namespace MediaVisualizer.DataAccess.Entities.Manwha;
 
-[Table("chapter", Schema = "manwha")]
+[Table("manwha.chapter")]
 public class ManwhaChapter:AuditEntity
 {
+    [Key]
     [Column("chapter_key")]
     public int ManwhaChapterKey { get; set; }
 
@@ -12,16 +15,16 @@ public class ManwhaChapter:AuditEntity
     public int ManwhaKey { get; set; }
 
     [ForeignKey(nameof(ManwhaKey))]
-    public Manwha Manwha { get; set; }
+    public Entities.Manwha.Manwha Manwha { get; set; }
 
     [Column("chapter_number")]
     public int ChapterNumber { get; set; }
 
-    public ICollection<ManwhaChapterTag> ManwhaChapterTags { get; set; }
+    public ICollection<Tag> Tags { get; set; }
 
-    public ICollection<ManwhaChapterArtist> ManwhaChapterArtists { get; set; }
+    public ICollection<Artist> Artists { get; set; }
 
-    public ICollection<ManwhaChapterAuthor> ManwhaChapterAuthors { get; set; }
+    public ICollection<Author> Authors { get; set; }
 
-    public ICollection<ManwhaChapterBrand> ManwhaChapterBrands { get; set; }
+    public ICollection<Brand> Brands { get; set; }
 }

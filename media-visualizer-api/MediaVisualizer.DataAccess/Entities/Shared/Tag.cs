@@ -1,21 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.DataAccess.Entities.Manga;
+using MediaVisualizer.DataAccess.Entities.Manwha;
 
 namespace MediaVisualizer.DataAccess.Entities.Shared;
 
-[Table("tag", Schema = "shared")]
+[Table("shared.tag")]
 public class Tag:AuditEntity
 {
+    [Key]
     [Column("tag_key")]
     public int TagKey { get; set; }
 
     [Column("name")]
     public string Name { get; set; }
 
-    public ICollection<AnimeChapterTag> AnimeChapterTags { get; set; }
+    public ICollection<AnimeChapter> AnimeChapters { get; set; }
 
-    public ICollection<ManwhaChapterTag> ManwhaChapterTags { get; set; }
+    public ICollection<ManwhaChapter> ManwhaChapters { get; set; }
 
-    public ICollection<MangaChapterTag> MangaChapterTags { get; set; }
+    public ICollection<MangaChapter> MangaChapters { get; set; }
 }

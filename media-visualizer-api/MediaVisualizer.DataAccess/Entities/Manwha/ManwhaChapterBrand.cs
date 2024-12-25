@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using MediaVisualizer.DataAccess.Entities.Shared;
+using Microsoft.EntityFrameworkCore;
 
-namespace MediaVisualizer.DataAccess.Entities;
+namespace MediaVisualizer.DataAccess.Entities.Manwha;
 
-[Table("chapter_brand", Schema = "manwha")]
+[Table("manwha.chapter_brand")]
+[Keyless]
 public class ManwhaChapterBrand:AuditEntity
 {
     [Column("chapter_key")]

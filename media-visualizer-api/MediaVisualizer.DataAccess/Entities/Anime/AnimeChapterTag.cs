@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using MediaVisualizer.DataAccess.Entities.Shared;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Entities.Anime;
 
-[Table("chapter_tag", Schema = "anime")]
+[Table("anime.chapter_tag")]
+[Keyless]
 public class AnimeChapterTag: AuditEntity
 {
     [Column("chapter_key")]

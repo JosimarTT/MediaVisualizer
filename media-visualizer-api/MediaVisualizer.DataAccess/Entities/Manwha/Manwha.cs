@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MediaVisualizer.DataAccess.Entities;
+namespace MediaVisualizer.DataAccess.Entities.Manwha;
 
-[Table("manwha",Schema = "manwha")]
+[Table("manwha.manwha")]
 public class Manwha:AuditEntity
 {
+    [Key]
     [Column("manwha_key")]
     public int ManwhaKey { get; set; }
 

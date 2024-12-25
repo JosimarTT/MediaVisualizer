@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MediaVisualizer.DataAccess.Entities.Shared;
 
 namespace MediaVisualizer.DataAccess.Entities.Anime;
 
-[Table("chapter",Schema = "anime")]
+[Table("anime.chapter")]
 public class AnimeChapter: AuditEntity
 {
+    [Key]
     [Column("chapter_key")]
     public int AnimeChapterKey { get; set; }
 
@@ -18,7 +20,7 @@ public class AnimeChapter: AuditEntity
     [Column("chapter_number")]
     public int ChapterNumber { get; set; }
 
-    public ICollection<AnimeChapterBrand> AnimeChapterBrands { get; set; }
+    public ICollection<Brand> Brands { get; set; }
 
-    public ICollection<AnimeChapterTag> AnimeChapterTags { get; set; }
+    public ICollection<Tag> Tags { get; set; }
 }

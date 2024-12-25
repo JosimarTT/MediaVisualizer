@@ -1,6 +1,7 @@
 ﻿using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.DataAccess.Entities.Manga;
+using MediaVisualizer.DataAccess.Entities.Manwha;
 using MediaVisualizer.DataAccess.Entities.Shared;
 using Microsoft.EntityFrameworkCore;
 

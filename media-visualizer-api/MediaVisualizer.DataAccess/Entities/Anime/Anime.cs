@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MediaVisualizer.DataAccess.Entities.Anime;
 
-[Table("anime",Schema = "anime")]
+[Table("anime.anime")]
 public class Anime: AuditEntity
 {
+    [Key]
     [Column("anime_key")]
     public int AnimeKey { get; set; }
 
