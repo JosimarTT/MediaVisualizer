@@ -6,19 +6,16 @@ using MediaVisualizer.DataAccess.Entities.Manwha;
 
 namespace MediaVisualizer.DataAccess.Entities.Shared;
 
-[Table("shared.brand")]
 public class Brand:AuditEntity
 {
     [Key]
-    [Column("brand_key")]
     public int BrandKey { get; set; }
 
-    [Column("name")]
     public string Name { get; set; }
 
-    public ICollection<AnimeChapter> AnimeChapters { get; set; }
+    public ICollection<Anime.Anime> Animes { get; set; }
 
-    public ICollection<MangaChapter> MangaChapters { get; set; }
+    public ICollection<Manga.Manga> Mangas { get; set; }
 
-    public ICollection<ManwhaChapter> ManwhaChapters { get; set; }
+    public ICollection<Manwha.Manwha> Manwhas { get; set; }
 }

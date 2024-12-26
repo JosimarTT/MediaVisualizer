@@ -7,37 +7,36 @@ public static class MangaConfiguration
 {
     public static void ConfigureMangaTables(this ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<MangaChapter>()
+        modelBuilder.Entity<Manga>()
             .HasMany(x => x.Artists)
-            .WithMany(x => x.MangaChapters)
-            .UsingEntity<MangaChapterArtist>(
-                j => j.ToTable("manga.chapter_artist"));
-        modelBuilder.Entity<MangaChapter>()
+            .WithMany(x => x.Mangas)
+            .UsingEntity<MangaArtist>();
+
+        modelBuilder.Entity<Manga>()
             .HasMany(x => x.Authors)
-            .WithMany(x => x.MangaChapters)
-            .UsingEntity<MangaChapterAuthor>(
-                j => j.ToTable("manga.chapter_author"));
-        modelBuilder.Entity<MangaChapter>()
+            .WithMany(x => x.Mangas)
+            .UsingEntity<MangaAuthor>();
+
+        modelBuilder.Entity<Manga>()
             .HasMany(x => x.Brands)
-            .WithMany(x => x.MangaChapters)
-            .UsingEntity<MangaChapterBrand>(
-                j => j.ToTable("manga.chapter_brand"));
-        modelBuilder.Entity<MangaChapter>()
+            .WithMany(x => x.Mangas)
+            .UsingEntity<MangaBrand>();
+
+        modelBuilder.Entity<Manga>()
             .HasMany(x => x.Tags)
-            .WithMany(x => x.MangaChapters)
-            .UsingEntity<MangaChapterTag>(
-                j => j.ToTable("manga.chapter_tag"));
-        modelBuilder.Entity<MangaChapterArtist>()
-            .ToTable("manga.chapter_artist")
-            .HasKey(x => new { x.MangaChapterKey, x.ArtistKey });
-        modelBuilder.Entity<MangaChapterAuthor>()
-            .ToTable("manga.chapter_author")
-            .HasKey(x => new { x.MangaChapterKey, x.AuthorKey });
-        modelBuilder.Entity<MangaChapterBrand>()
-            .ToTable("manga.chapter_brand")
-            .HasKey(x => new { x.MangaChapterKey, x.BrandKey });
-        modelBuilder.Entity<MangaChapterTag>()
-            .ToTable("manga.chapter_tag")
-            .HasKey(x => new { x.MangaChapterKey, x.TagKey });
+            .WithMany(x => x.Mangas)
+            .UsingEntity<MangaTag>();
+
+        modelBuilder.Entity<MangaArtist>()
+            .HasKey(x => new { x.MangaKey, x.ArtistKey });
+
+        modelBuilder.Entity<MangaAuthor>()
+            .HasKey(x => new {  x.MangaKey, x.AuthorKey });
+
+        modelBuilder.Entity<MangaBrand>()
+            .HasKey(x => new { x.MangaKey, x.BrandKey });
+
+        modelBuilder.Entity<MangaTag>()
+            .HasKey(x => new { x.MangaKey, x.TagKey });
     }
 }

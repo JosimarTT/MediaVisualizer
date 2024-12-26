@@ -7,38 +7,36 @@ public static class ManwhaConfiguration
 {
     public static void ConfigureManwhaTables(this ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<ManwhaChapter>()
+        modelBuilder.Entity<Manwha>()
             .HasMany(x => x.Artists)
-            .WithMany(x => x.ManwhaChapters)
-            .UsingEntity<ManwhaChapterArtist>(
-                j => j.ToTable("manwha.chapter_artist"));
-        modelBuilder.Entity<ManwhaChapter>()
-            .HasMany(x => x.Authors)
-            .WithMany(x => x.ManwhaChapters)
-            .UsingEntity<ManwhaChapterAuthor>(
-                j => j.ToTable("manwha.chapter_author"));
-        modelBuilder.Entity<ManwhaChapter>()
-            .HasMany(x => x.Brands)
-            .WithMany(x => x.ManwhaChapters)
-            .UsingEntity<ManwhaChapterBrand>(
-                j => j.ToTable("manwha.chapter_brand"));
-        modelBuilder.Entity<ManwhaChapter>()
-            .HasMany(x => x.Tags)
-            .WithMany(x => x.ManwhaChapters)
-            .UsingEntity<ManwhaChapterTag>(
-                j => j.ToTable("manwha.chapter_tag"));
-        modelBuilder.Entity<ManwhaChapterArtist>()
-            .ToTable("manwha.chapter_artist")
-            .HasKey(x => new { x.ManwhaChapterKey, x.ArtistKey });
-        modelBuilder.Entity<ManwhaChapterAuthor>()
-            .ToTable("manwha.chapter_author")
-            .HasKey(x => new { x.ManwhaChapterKey, x.AuthorKey });
-        modelBuilder.Entity<ManwhaChapterBrand>()
-            .ToTable("manwha.chapter_brand")
-            .HasKey(x => new { x.ManwhaChapterKey, x.BrandKey });
-        modelBuilder.Entity<ManwhaChapterTag>()
-            .ToTable("manwha.chapter_tag")
-            .HasKey(x => new { x.ManwhaChapterKey, x.TagKey });
-    }
+            .WithMany(x => x.Manwhas)
+            .UsingEntity<ManwhaArtist>();
 
+        modelBuilder.Entity<Manwha>()
+            .HasMany(x => x.Authors)
+            .WithMany(x => x.Manwhas)
+            .UsingEntity<ManwhaAuthor>();
+
+        modelBuilder.Entity<Manwha>()
+            .HasMany(x => x.Brands)
+            .WithMany(x => x.Manwhas)
+            .UsingEntity<ManwhaBrand>();
+
+        modelBuilder.Entity<Manwha>()
+            .HasMany(x => x.Tags)
+            .WithMany(x => x.Manwhas)
+            .UsingEntity<ManwhaTag>();
+
+        modelBuilder.Entity<ManwhaArtist>()
+            .HasKey(x => new { x.ManwhaKey, x.ArtistKey });
+
+        modelBuilder.Entity<ManwhaAuthor>()
+            .HasKey(x => new {  x.ManwhaKey, x.AuthorKey });
+
+        modelBuilder.Entity<ManwhaBrand>()
+            .HasKey(x => new {  x.ManwhaKey, x.BrandKey });
+
+        modelBuilder.Entity<ManwhaTag>()
+            .HasKey(x => new {  x.ManwhaKey, x.TagKey });
+    }
 }

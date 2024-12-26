@@ -5,16 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Entities.Manwha;
 
-[Table("manwha.chapter_tag")]
-public class ManwhaChapterTag:AuditEntity
+public class ManwhaTag:AuditEntity
 {
-    [Key,Column("chapter_key", Order = 0)]
-    public int ManwhaChapterKey { get; set; }
+    public int ManwhaKey { get; set; }
 
-    [ForeignKey(nameof(ManwhaChapterKey))]
-    public ManwhaChapter ManwhaChapter { get; set; }
+    [ForeignKey(nameof(ManwhaKey))]
+    public Manwha Manwha { get; set; }
 
-    [Key,Column("tag_key", Order = 1)]
     public int TagKey { get; set; }
 
     [ForeignKey(nameof(TagKey))]

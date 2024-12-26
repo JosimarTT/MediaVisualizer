@@ -5,16 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Entities.Manga;
 
-[Table("manga.chapter_author")]
-public class MangaChapterAuthor: AuditEntity
+public class MangaAuthor: AuditEntity
 {
-    [Key,Column("chapter_key", Order = 0)]
-    public int MangaChapterKey { get; set; }
+    public int MangaKey { get; set; }
 
-    [ForeignKey(nameof(MangaChapterKey))]
-    public MangaChapter MangaChapter { get; set; }
+    [ForeignKey(nameof(MangaKey))]
+    public Manga Manga { get; set; }
 
-    [Key,Column("author_key", Order = 1)]
     public int AuthorKey { get; set; }
 
     [ForeignKey(nameof(AuthorKey))]

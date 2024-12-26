@@ -5,16 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Entities.Anime;
 
-[Table("anime.chapter_brand")]
-public class AnimeChapterBrand:AuditEntity
+public class AnimeBrand:AuditEntity
 {
-    [Key, Column("chapter_key", Order = 0)]
-    public int AnimeChapterKey { get; set; }
+    public int AnimeKey { get; set; }
 
-    [ForeignKey(nameof(AnimeChapterKey))]
-    public AnimeChapter AnimeChapter { get; set; }
+    [ForeignKey(nameof(AnimeKey))]
+    public Anime Anime { get; set; }
 
-    [Key, Column("brand_key", Order = 1)]
     public int BrandKey { get; set; }
 
     [ForeignKey(nameof(BrandKey))]
