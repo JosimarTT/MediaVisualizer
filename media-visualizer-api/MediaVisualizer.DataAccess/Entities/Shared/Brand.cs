@@ -16,9 +16,9 @@ public class Brand:AuditEntity
     [Column("name")]
     public string Name { get; set; }
 
-    public ICollection<AnimeChapter> AnimeChapter { get; set; }
+    public ICollection<AnimeChapter> AnimeChapters { get; set; }
 
-    public ICollection<MangaChapter> MangaChapter { get; set; }
+    public ICollection<MangaChapter> MangaChapters { get; set; }
 
-    public ICollection<ManwhaChapter> ManwhaChapter { get; set; }
+    public ICollection<ManwhaChapter> ManwhaChapters { get; set; }
 }

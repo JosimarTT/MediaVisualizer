@@ -1,4 +1,5 @@
-﻿using MediaVisualizer.DataAccess.Entities;
+﻿using MediaVisualizer.DataAccess.Configuration;
+using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.DataAccess.Entities.Manga;
 using MediaVisualizer.DataAccess.Entities.Manwha;
@@ -36,4 +37,13 @@ public class MediaVisualizerDbContext : DbContext
     public DbSet<Author> Authors { get; set; }
     public DbSet<Brand> Brands { get; set; }
     public DbSet<Tag> Tags { get; set; }
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.ConfigureAnimeTables();
+    modelBuilder.ConfigureMangaTables();
+    modelBuilder.ConfigureManwhaTables();
+
+    base.OnModelCreating(modelBuilder);
+}
 }

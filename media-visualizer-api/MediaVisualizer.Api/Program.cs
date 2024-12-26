@@ -11,7 +11,7 @@ builder.Services.AddOpenApi();
 
 // Register the DbContext with the connection string
 builder.Services.AddDbContext<MediaVisualizerDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("MediaVisualizerDB")));
 
 var app = builder.Build();
 

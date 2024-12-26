@@ -1,20 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MediaVisualizer.DataAccess.Entities.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Entities.Anime;
 
 [Table("anime.chapter_brand")]
-[Keyless]
 public class AnimeChapterBrand:AuditEntity
 {
-    [Column("chapter_key")]
+    [Key, Column("chapter_key", Order = 0)]
     public int AnimeChapterKey { get; set; }
 
     [ForeignKey(nameof(AnimeChapterKey))]
     public AnimeChapter AnimeChapter { get; set; }
 
-    [Column("brand_key")]
+    [Key, Column("brand_key", Order = 1)]
     public int BrandKey { get; set; }
 
     [ForeignKey(nameof(BrandKey))]

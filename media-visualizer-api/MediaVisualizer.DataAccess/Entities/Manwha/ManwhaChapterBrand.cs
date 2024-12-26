@@ -1,20 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MediaVisualizer.DataAccess.Entities.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Entities.Manwha;
 
 [Table("manwha.chapter_brand")]
-[Keyless]
 public class ManwhaChapterBrand:AuditEntity
 {
-    [Column("chapter_key")]
+    [Key,Column("chapter_key", Order = 0)]
     public int ManwhaChapterKey { get; set; }
 
     [ForeignKey(nameof(ManwhaChapterKey))]
     public ManwhaChapter ManwhaChapter { get; set; }
 
-    [Column("brand_key")]
+    [Key,Column("brand_key", Order = 1)]
     public int BrandKey { get; set; }
 
     [ForeignKey(nameof(BrandKey))]
