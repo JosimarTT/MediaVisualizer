@@ -1,4 +1,6 @@
 using MediaVisualizer.DataAccess;
+using MediaVisualizer.DataAccess.Repositories;
+using MediaVisualizer.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,12 @@ builder.Services.AddOpenApi();
 // Register the DbContext with the connection string
 builder.Services.AddDbContext<MediaVisualizerDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MediaVisualizerDB")));
+
+// Register the repositories
+builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
+
+// Register the services
+builder.Services.AddScoped<IAnimeService, AnimeService>();
 
 var app = builder.Build();
 
