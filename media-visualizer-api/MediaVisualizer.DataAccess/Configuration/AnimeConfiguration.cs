@@ -7,21 +7,20 @@ public static class AnimeConfiguration
 {
     public static void ConfigureAnimeTables(this ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AnimeChapter>()
+        modelBuilder.Entity<Anime>()
             .HasMany(x => x.Brands)
-            .WithMany(x => x.AnimeChapters)
-            .UsingEntity<AnimeChapterBrand>(
-                j => j.ToTable("anime.chapter_brand"));
-        modelBuilder.Entity<AnimeChapter>()
+            .WithMany(x => x.Animes)
+            .UsingEntity<AnimeBrand>();
+
+        modelBuilder.Entity<Anime>()
             .HasMany(x => x.Tags)
-            .WithMany(x => x.AnimeChapters)
-            .UsingEntity<AnimeChapterTag>(
-                j => j.ToTable("anime.chapter_tag"));
-        modelBuilder.Entity<AnimeChapterBrand>()
-            .ToTable("anime.chapter_brand")
-            .HasKey(x => new { x.AnimeChapterKey, x.BrandKey });
-        modelBuilder.Entity<AnimeChapterTag>()
-            .ToTable("anime.chapter_tag")
-            .HasKey(x => new { x.AnimeChapterKey, x.TagKey });
+            .WithMany(x => x.Animes)
+            .UsingEntity<AnimeTag>();
+
+        modelBuilder.Entity<AnimeBrand>()
+            .HasKey(x => new {x.AnimeKey, x.BrandKey });
+
+        modelBuilder.Entity<AnimeTag>()
+            .HasKey(x => new { x.AnimeKey, x.TagKey });
     }
 }

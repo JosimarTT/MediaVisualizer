@@ -1,18 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MediaVisualizer.DataAccess.Entities.Shared;
 
 namespace MediaVisualizer.DataAccess.Entities.Manwha;
 
-[Table("manwha.manwha")]
 public class Manwha:AuditEntity
 {
     [Key]
-    [Column("manwha_key")]
     public int ManwhaKey { get; set; }
 
-    [Column("folder")]
     public string Folder { get; set; }
 
-    [Column("title")]
     public string Title { get; set; }
+
+    public ICollection<Tag> Tags { get; set; }
+
+    public ICollection<Artist> Artists { get; set; }
+
+    public ICollection<Author> Authors { get; set; }
+
+    public ICollection<Brand> Brands { get; set; }
 }

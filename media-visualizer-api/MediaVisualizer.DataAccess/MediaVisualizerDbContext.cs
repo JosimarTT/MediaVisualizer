@@ -14,29 +14,29 @@ public class MediaVisualizerDbContext : DbContext
     {
     }
 
-    public DbSet<Anime> Animes { get; set; }
-    public DbSet<AnimeChapter> AnimeChapters { get; set; }
-    public DbSet<AnimeChapterBrand> AnimeChapterBrands { get; set; }
-    public DbSet<AnimeChapterTag> AnimeChapterTags { get; set; }
+    public DbSet<Anime> Anime { get; set; }
+    public DbSet<AnimeChapter> AnimeChapter { get; set; }
+    public DbSet<AnimeBrand> AnimeBrands { get; set; }
+    public DbSet<AnimeTag> AnimeTag { get; set; }
 
-    public DbSet<Manga> Mangas { get; set; }
-    public DbSet<MangaChapter> MangaChapters { get; set; }
-    public DbSet<MangaChapterArtist> MangaChapterArtists { get; set; }
-    public DbSet<MangaChapterAuthor> MangaChapterAuthors { get; set; }
-    public DbSet<MangaChapterBrand> MangaChapterBrands { get; set; }
-    public DbSet<MangaChapterTag> MangaChapterTags { get; set; }
+    public DbSet<Manga> Manga { get; set; }
+    public DbSet<MangaChapter> MangaChapter { get; set; }
+    public DbSet<MangaArtist> MangaArtist { get; set; }
+    public DbSet<MangaAuthor> MangaAuthor { get; set; }
+    public DbSet<MangaBrand> MangaBrand { get; set; }
+    public DbSet<MangaTag> MangaTag { get; set; }
 
-    public DbSet<Manwha> Manwhas { get; set; }
-    public DbSet<ManwhaChapter> ManwhaChapters { get; set; }
-    public DbSet<ManwhaChapterArtist> ManwhaChapterArtists { get; set; }
-    public DbSet<ManwhaChapterAuthor> ManwhaChapterAuthors { get; set; }
-    public DbSet<ManwhaChapterBrand> ManwhaChapterBrands { get; set; }
-    public DbSet<ManwhaChapterTag> ManwhaChapterTags { get; set; }
+    public DbSet<Manwha> Manwha { get; set; }
+    public DbSet<ManwhaChapter> ManwhaChapter { get; set; }
+    public DbSet<ManwhaArtist> ManwhaArtist { get; set; }
+    public DbSet<ManwhaAuthor> ManwhaAuthor { get; set; }
+    public DbSet<ManwhaBrand> ManwhaBrand { get; set; }
+    public DbSet<ManwhaTag> ManwhaTag { get; set; }
 
-    public DbSet<Artist> Artists { get; set; }
-    public DbSet<Author> Authors { get; set; }
-    public DbSet<Brand> Brands { get; set; }
-    public DbSet<Tag> Tags { get; set; }
+    public DbSet<Artist> Artist { get; set; }
+    public DbSet<Author> Author { get; set; }
+    public DbSet<Brand> Brand { get; set; }
+    public DbSet<Tag> Tag { get; set; }
 
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
