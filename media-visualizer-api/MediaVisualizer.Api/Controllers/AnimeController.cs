@@ -21,4 +21,11 @@ public class AnimeController:ControllerBase
     {
         return await _animeService.GetAll();
     }
+
+    [HttpGet]
+    [Route("{key:int}")]
+    public async Task<AnimeDto> Get(int key)
+    {
+        return await _animeService.Get(key);
+    }
 }

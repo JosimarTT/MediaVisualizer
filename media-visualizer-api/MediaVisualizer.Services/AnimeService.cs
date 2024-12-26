@@ -25,9 +25,10 @@ public class AnimeService:IAnimeService
         throw new NotImplementedException();
     }
 
-    public Task<AnimeDto> Get(int id)
+    public async Task<AnimeDto> Get(int key)
     {
-        throw new NotImplementedException();
+        var anime = await _animeRepository.Get(key);
+        return anime.ConvertToAnimeDto();
     }
 
     public async Task<IEnumerable<AnimeDto>> GetAll()
