@@ -16,7 +16,7 @@ public class MediaVisualizerDbContext : DbContext
 
     public DbSet<Anime> Anime { get; set; }
     public DbSet<AnimeChapter> AnimeChapter { get; set; }
-    public DbSet<AnimeBrand> AnimeBrands { get; set; }
+    public DbSet<AnimeBrand> AnimeBrand { get; set; }
     public DbSet<AnimeTag> AnimeTag { get; set; }
 
     public DbSet<Manga> Manga { get; set; }
@@ -46,4 +46,6 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
     base.OnModelCreating(modelBuilder);
 }
+
+
 }
