@@ -31,12 +31,12 @@ public static class ManwhaConfiguration
             .HasKey(x => new { x.ManwhaKey, x.ArtistKey });
 
         modelBuilder.Entity<ManwhaAuthor>()
-            .HasKey(x => new {  x.ManwhaKey, x.AuthorKey });
+            .HasKey(x => new { x.ManwhaKey, x.AuthorKey });
 
         modelBuilder.Entity<ManwhaBrand>()
-            .HasKey(x => new {  x.ManwhaKey, x.BrandKey });
+            .HasKey(x => new { x.ManwhaKey, x.BrandKey });
 
         modelBuilder.Entity<ManwhaTag>()
-            .HasKey(x => new {  x.ManwhaKey, x.TagKey });
+            .HasKey(x => new { x.ManwhaKey, x.TagKey });
     }
 }

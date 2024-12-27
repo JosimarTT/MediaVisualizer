@@ -38,14 +38,12 @@ public class MediaVisualizerDbContext : DbContext
     public DbSet<Brand> Brand { get; set; }
     public DbSet<Tag> Tag { get; set; }
 
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.ConfigureAnimeTables();
-    modelBuilder.ConfigureMangaTables();
-    modelBuilder.ConfigureManwhaTables();
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ConfigureAnimeTables();
+        modelBuilder.ConfigureMangaTables();
+        modelBuilder.ConfigureManwhaTables();
 
-    base.OnModelCreating(modelBuilder);
-}
-
-
+        base.OnModelCreating(modelBuilder);
+    }
 }

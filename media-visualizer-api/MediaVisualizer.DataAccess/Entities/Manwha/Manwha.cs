@@ -4,10 +4,9 @@ using MediaVisualizer.DataAccess.Entities.Shared;
 
 namespace MediaVisualizer.DataAccess.Entities.Manwha;
 
-public class Manwha:AuditEntity
+public class Manwha : AuditEntity
 {
-    [Key]
-    public int ManwhaKey { get; set; }
+    [Key] public int ManwhaKey { get; set; }
 
     public string Folder { get; set; }
 

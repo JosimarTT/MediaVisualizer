@@ -31,7 +31,7 @@ public static class MangaConfiguration
             .HasKey(x => new { x.MangaKey, x.ArtistKey });
 
         modelBuilder.Entity<MangaAuthor>()
-            .HasKey(x => new {  x.MangaKey, x.AuthorKey });
+            .HasKey(x => new { x.MangaKey, x.AuthorKey });
 
         modelBuilder.Entity<MangaBrand>()
             .HasKey(x => new { x.MangaKey, x.BrandKey });

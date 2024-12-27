@@ -1,4 +1,7 @@
 using MediaVisualizer.DataAccess;
+using MediaVisualizer.DataAccess.Repositories;
+using MediaVisualizer.Services;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +16,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<MediaVisualizerDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MediaVisualizerDB")));
 
+// Register the repositories
+builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
+
+// Register the services
+builder.Services.AddScoped<IAnimeService, AnimeService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,6 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "Media Visualizer Api");
+        options.RoutePrefix = string.Empty;
     });
 }
 

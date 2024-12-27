@@ -5,14 +5,13 @@ using MediaVisualizer.DataAccess.Entities.Manwha;
 
 namespace MediaVisualizer.DataAccess.Entities.Shared;
 
-public class Artist:AuditEntity
+public class Artist : AuditEntity
 {
-    [Key]
-    public int ArtistKey { get; set; }
+    [Key] public int ArtistKey { get; set; }
 
     public string Name { get; set; }
 
     public ICollection<Manga.Manga> Mangas { get; set; }
 
-    public ICollection<Manwha.Manwha> Manwhas  { get; set; }
+    public ICollection<Manwha.Manwha> Manwhas { get; set; }
 }

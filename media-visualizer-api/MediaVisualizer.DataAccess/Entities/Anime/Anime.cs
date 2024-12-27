@@ -4,10 +4,9 @@ using MediaVisualizer.DataAccess.Entities.Shared;
 
 namespace MediaVisualizer.DataAccess.Entities.Anime;
 
-public class Anime: AuditEntity
+public class Anime : AuditEntity
 {
-    [Key]
-    public int AnimeKey { get; set; }
+    [Key] public int AnimeKey { get; set; }
 
     public string Folder { get; set; }
 

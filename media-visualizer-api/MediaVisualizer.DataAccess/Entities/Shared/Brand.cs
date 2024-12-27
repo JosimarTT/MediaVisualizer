@@ -6,10 +6,9 @@ using MediaVisualizer.DataAccess.Entities.Manwha;
 
 namespace MediaVisualizer.DataAccess.Entities.Shared;
 
-public class Brand:AuditEntity
+public class Brand : AuditEntity
 {
-    [Key]
-    public int BrandKey { get; set; }
+    [Key] public int BrandKey { get; set; }
 
     public string Name { get; set; }
 
