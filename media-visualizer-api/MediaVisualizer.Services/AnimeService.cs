@@ -15,17 +15,6 @@ public class AnimeService : IAnimeService
         _animeRepository = animeRepository;
     }
 
-    public async Task Create(AnimeDto animeDto)
-    {
-        var anime = new Anime();
-        await _animeRepository.Create(anime);
-    }
-
-    public async Task Update(AnimeDto animeDto)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<AnimeDto> Get(int key)
     {
         var anime = await _animeRepository.Get(key);
@@ -41,8 +30,6 @@ public class AnimeService : IAnimeService
 
 public interface IAnimeService
 {
-    public Task Create(AnimeDto animeDto);
-    public Task Update(AnimeDto animeDto);
     public Task<AnimeDto> Get(int id);
     public Task<IEnumerable<AnimeDto>> GetList(FiltersRequest filters);
 }

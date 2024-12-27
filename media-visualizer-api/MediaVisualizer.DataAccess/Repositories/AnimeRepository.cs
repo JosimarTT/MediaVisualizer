@@ -53,23 +53,10 @@ public class AnimeRepository : IAnimeRepository
             .Include(x => x.Tags)
             .SingleOrDefaultAsync(x => x.AnimeKey == animeKey);
     }
-
-    public async Task Create(Anime anime)
-    {
-        await _dbContext.AddAsync(anime);
-    }
-
-    public async Task Update(Anime anime)
-    {
-        _dbContext.Anime.Update(anime);
-        await _dbContext.SaveChangesAsync();
-    }
 }
 
 public interface IAnimeRepository
 {
     public Task<IEnumerable<Anime>> GetList(FiltersRequest filters);
     public Task<Anime> Get(int animeKey);
-    public Task Create(Anime anime);
-    public Task Update(Anime anime);
 }
