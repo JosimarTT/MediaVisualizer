@@ -14,6 +14,8 @@ public class Manga : AuditEntity
 
     public ICollection<Tag> Tags { get; set; }
 
+    public ICollection<MangaChapter> MangaChapters { get; set; }
+
     public ICollection<Artist> Artists { get; set; }
 
     public ICollection<Author> Authors { get; set; }

@@ -3,9 +3,9 @@ using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services.Converters;
 
-public static class AnimeToAnimeDto
+public static class AnimeConverter
 {
-    public static AnimeDto ConvertToAnimeDto(this Anime anime)
+    public static AnimeDto ToDto(this Anime anime)
     {
         if (anime == null) return null;
 
@@ -14,15 +14,15 @@ public static class AnimeToAnimeDto
             AnimeKey = anime.AnimeKey,
             Folder = anime.Folder,
             Title = anime.Title,
-            Brands = anime.Brands.ConvertToListDto(),
-            Tags = anime.Tags.ConvertToListDto()
+            Brands = anime.Brands.ToListDto(),
+            Tags = anime.Tags.ToListDto()
         };
     }
 
-    public static ICollection<AnimeDto> ConvertToListDto(this ICollection<Anime> animes)
+    public static ICollection<AnimeDto> ToListDto(this ICollection<Anime> animes)
     {
         if (animes == null || animes.Count == 0) return [];
 
-        return animes.Select(x => x.ConvertToAnimeDto()).ToList();
+        return animes.Select(x => x.ToDto()).ToList();
     }
 }

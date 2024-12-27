@@ -3,9 +3,9 @@ using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services.Converters;
 
-public static class BrandToBrandDto
+public static class BrandConverter
 {
-    public static BrandDto ConvertToDto(this Brand brand)
+    public static BrandDto ToDto(this Brand brand)
     {
         if (brand == null) return null;
         return new BrandDto
@@ -15,9 +15,9 @@ public static class BrandToBrandDto
         };
     }
 
-    public static ICollection<BrandDto> ConvertToListDto(this ICollection<Brand> brands)
+    public static ICollection<BrandDto> ToListDto(this ICollection<Brand> brands)
     {
         if (brands == null || brands.Count == 0) return [];
-        return brands.Select(x => x.ConvertToDto()).ToList();
+        return brands.Select(x => x.ToDto()).ToList();
     }
 }

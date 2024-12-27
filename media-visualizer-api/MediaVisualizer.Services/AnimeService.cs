@@ -18,18 +18,18 @@ public class AnimeService : IAnimeService
     public async Task<AnimeDto> Get(int key)
     {
         var anime = await _animeRepository.Get(key);
-        return anime.ConvertToAnimeDto();
+        return anime.ToDto();
     }
 
     public async Task<IEnumerable<AnimeDto>> GetList(FiltersRequest filters)
     {
         var animes = await _animeRepository.GetList(filters);
-        return animes.ToList().ConvertToListDto();
+        return animes.ToList().ToListDto();
     }
 }
 
 public interface IAnimeService
 {
-    public Task<AnimeDto> Get(int id);
+    public Task<AnimeDto> Get(int key);
     public Task<IEnumerable<AnimeDto>> GetList(FiltersRequest filters);
 }
