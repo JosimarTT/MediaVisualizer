@@ -4,10 +4,9 @@ using MediaVisualizer.DataAccess.Entities.Shared;
 
 namespace MediaVisualizer.DataAccess.Entities.Manga;
 
-public class Manga:AuditEntity
+public class Manga : AuditEntity
 {
-    [Key]
-    public int MangaKey { get; set; }
+    [Key] public int MangaKey { get; set; }
 
     public string Folder { get; set; }
 

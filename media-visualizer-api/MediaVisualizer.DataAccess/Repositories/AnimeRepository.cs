@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Repositories;
 
-public class AnimeRepository:IAnimeRepository
+public class AnimeRepository : IAnimeRepository
 {
     private readonly MediaVisualizerDbContext _dbContext;
 
@@ -24,7 +24,7 @@ public class AnimeRepository:IAnimeRepository
         if (filters == null)
             return await query.ToListAsync();
 
-        if(filters.SortOrder != null)
+        if (filters.SortOrder != null)
         {
             query = filters.SortOrder switch
             {
@@ -34,10 +34,10 @@ public class AnimeRepository:IAnimeRepository
             };
         }
 
-        if(filters.BrandKeys != null && filters.BrandKeys.Count != 0)
+        if (filters.BrandKeys != null && filters.BrandKeys.Count != 0)
             query = query.Where(x => x.Brands.Any(y => filters.BrandKeys.Contains(y.BrandKey)));
 
-        if(filters.TagKeys != null && filters.TagKeys.Count != 0)
+        if (filters.TagKeys != null && filters.TagKeys.Count != 0)
             query = query.Where(x => x.Tags.Any(y => filters.TagKeys.Contains(y.TagKey)));
 
         if (filters.Page != null && filters.Page > 0 && filters.Size != null && filters.Size > 0)
@@ -59,11 +59,11 @@ public class AnimeRepository:IAnimeRepository
         await _dbContext.AddAsync(anime);
     }
 
-  public async Task Update(Anime anime)
-{
-    _dbContext.Anime.Update(anime);
-    await _dbContext.SaveChangesAsync();
-}
+    public async Task Update(Anime anime)
+    {
+        _dbContext.Anime.Update(anime);
+        await _dbContext.SaveChangesAsync();
+    }
 }
 
 public interface IAnimeRepository

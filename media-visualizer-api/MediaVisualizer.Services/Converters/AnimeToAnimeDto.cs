@@ -21,7 +21,7 @@ public static class AnimeToAnimeDto
 
     public static ICollection<AnimeDto> ConvertToListDto(this ICollection<Anime> animes)
     {
-        if (animes == null || animes.Count == 0) return  [];
+        if (animes == null || animes.Count == 0) return [];
 
         return animes.Select(x => x.ConvertToAnimeDto()).ToList();
     }

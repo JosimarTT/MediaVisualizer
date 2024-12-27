@@ -5,15 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Entities.Manga;
 
-public class MangaBrand:AuditEntity
+public class MangaBrand : AuditEntity
 {
     public int MangaKey { get; set; }
 
-    [ForeignKey(nameof(MangaKey))]
-    public Manga Manga { get; set; }
+    [ForeignKey(nameof(MangaKey))] public Manga Manga { get; set; }
 
     public int BrandKey { get; set; }
 
-    [ForeignKey(nameof(BrandKey))]
-    public Brand Brand { get; set; }
+    [ForeignKey(nameof(BrandKey))] public Brand Brand { get; set; }
 }

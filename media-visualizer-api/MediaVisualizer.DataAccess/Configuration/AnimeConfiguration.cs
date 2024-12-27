@@ -18,7 +18,7 @@ public static class AnimeConfiguration
             .UsingEntity<AnimeTag>();
 
         modelBuilder.Entity<AnimeBrand>()
-            .HasKey(x => new {x.AnimeKey, x.BrandKey });
+            .HasKey(x => new { x.AnimeKey, x.BrandKey });
 
         modelBuilder.Entity<AnimeTag>()
             .HasKey(x => new { x.AnimeKey, x.TagKey });

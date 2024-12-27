@@ -6,10 +6,9 @@ using MediaVisualizer.DataAccess.Entities.Manwha;
 
 namespace MediaVisualizer.DataAccess.Entities.Shared;
 
-public class Tag:AuditEntity
+public class Tag : AuditEntity
 {
-    [Key]
-    public int TagKey { get; set; }
+    [Key] public int TagKey { get; set; }
 
     public string Name { get; set; }
 

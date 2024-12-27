@@ -9,11 +9,9 @@ public class MangaTag : AuditEntity
 {
     public int MangaKey { get; set; }
 
-    [ForeignKey(nameof(MangaKey))]
-    public Manga Manga { get; set; }
+    [ForeignKey(nameof(MangaKey))] public Manga Manga { get; set; }
 
     public int TagKey { get; set; }
 
-    [ForeignKey(nameof(TagKey))]
-    public Tag Tag { get; set; }
+    [ForeignKey(nameof(TagKey))] public Tag Tag { get; set; }
 }

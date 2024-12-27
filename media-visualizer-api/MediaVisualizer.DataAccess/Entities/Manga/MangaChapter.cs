@@ -4,15 +4,13 @@ using MediaVisualizer.DataAccess.Entities.Shared;
 
 namespace MediaVisualizer.DataAccess.Entities.Manga;
 
-public class MangaChapter: AuditEntity
+public class MangaChapter : AuditEntity
 {
-    [Key]
-    public int MangaChapterKey { get; set; }
+    [Key] public int MangaChapterKey { get; set; }
 
     public int MangaKey { get; set; }
 
-    [ForeignKey(nameof(MangaKey))]
-    public Manga Manga { get; set; }
+    [ForeignKey(nameof(MangaKey))] public Manga Manga { get; set; }
 
     public int ChapterNumber { get; set; }
 

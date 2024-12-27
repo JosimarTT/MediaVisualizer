@@ -8,7 +8,7 @@ namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AnimeController:ControllerBase
+public class AnimeController : ControllerBase
 {
     private readonly IAnimeService _animeService;
 
@@ -21,7 +21,7 @@ public class AnimeController:ControllerBase
     [Route("[action]")]
     public async Task<IActionResult> GetList([FromQuery] FiltersRequest filters)
     {
-        var animes =  await _animeService.GetList(filters);
+        var animes = await _animeService.GetList(filters);
         return Ok(animes);
     }
 

@@ -6,7 +6,7 @@ using MediaVisualizer.Shared.Requests;
 
 namespace MediaVisualizer.Services;
 
-public class AnimeService:IAnimeService
+public class AnimeService : IAnimeService
 {
     private readonly IAnimeRepository _animeRepository;
 
