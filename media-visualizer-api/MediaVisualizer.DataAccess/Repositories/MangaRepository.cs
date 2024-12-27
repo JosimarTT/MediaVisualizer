@@ -1,25 +1,26 @@
-﻿using System.Linq.Expressions;
-using MediaVisualizer.DataAccess.Entities.Anime;
+﻿using MediaVisualizer.DataAccess.Entities.Manga;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Repositories;
 
-public class AnimeRepository : IAnimeRepository
+public class MangaRepository:IMangaRepository
 {
     private readonly MediaVisualizerDbContext _dbContext;
 
-    public AnimeRepository(MediaVisualizerDbContext dbContext)
+    public MangaRepository(MediaVisualizerDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<Anime>> GetList(FiltersRequest filters)
+    public async Task<IEnumerable<Manga>> GetList(FiltersRequest filters)
     {
-        var query = _dbContext.Anime
-            .Include(x=>x.AnimeChapters)
+        var query = _dbContext.Manga
+            .Include(x=>x.MangaChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)
+            .Include(x=>x.Artists)
+            .Include(x=>x.Authors)
             .AsQueryable();
 
         if (filters == null)
@@ -47,17 +48,20 @@ public class AnimeRepository : IAnimeRepository
         return await query.ToListAsync();
     }
 
-    public async Task<Anime> Get(int animeKey)
+    public async Task<Manga> Get(int mangaKey)
     {
-        return await _dbContext.Anime
+        return await _dbContext.Manga
+            .Include(x=>x.MangaChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)
-            .SingleOrDefaultAsync(x => x.AnimeKey == animeKey);
+            .Include(x=>x.Artists)
+            .Include(x=>x.Authors)
+            .SingleOrDefaultAsync(x => x.MangaKey == mangaKey);
     }
 }
 
-public interface IAnimeRepository
+public interface IMangaRepository
 {
-    public Task<IEnumerable<Anime>> GetList(FiltersRequest filters);
-    public Task<Anime> Get(int animeKey);
+    public Task<IEnumerable<Manga>> GetList(FiltersRequest filters);
+    public Task<Manga> Get(int mangaKey);
 }

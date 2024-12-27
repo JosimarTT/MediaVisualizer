@@ -3,9 +3,9 @@ using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services.Converters;
 
-public static class TagToTagDto
+public static class TagConverter
 {
-    public static TagDto ConvertToDto(this Tag tag)
+    public static TagDto ToDto(this Tag tag)
     {
         if (tag == null) return null;
         return new TagDto()
@@ -15,9 +15,9 @@ public static class TagToTagDto
         };
     }
 
-    public static ICollection<TagDto> ConvertToListDto(this ICollection<Tag> tags)
+    public static ICollection<TagDto> ToListDto(this ICollection<Tag> tags)
     {
         if (tags == null || tags.Count == 0) return [];
-        return tags.Select(x => x.ConvertToDto()).ToList();
+        return tags.Select(x => x.ToDto()).ToList();
     }
 }
