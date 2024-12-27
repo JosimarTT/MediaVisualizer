@@ -3,7 +3,7 @@ using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services.Converters;
 
-public static class MangaToMangaDto
+public static class MangaConverter
 {
     public static MangaDto ToDto(this Manga manga)
     {
@@ -14,7 +14,7 @@ public static class MangaToMangaDto
             MangaKey = manga.MangaKey,
             Folder = manga.Folder,
             Title = manga.Title,
-            Chapters = manga.MangaChapters.ConvertToListDto(),
+            Chapters = manga.MangaChapters.ToListDto(),
             Brands = manga.Brands.ToListDto(),
             Tags = manga.Tags.ToListDto(),
             Artists = manga.Artists.ToListDto(),
@@ -43,7 +43,7 @@ public static class MangaToMangaDto
         };
     }
 
-    public static ICollection<MangaChapterDto> ConvertToListDto(this ICollection<MangaChapter> chapters)
+    public static ICollection<MangaChapterDto> ToListDto(this ICollection<MangaChapter> chapters)
     {
         if (chapters == null || chapters.Count == 0) return new List<MangaChapterDto>();
 

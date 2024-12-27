@@ -1,22 +1,22 @@
-﻿using MediaVisualizer.DataAccess.Entities.Manga;
+﻿using MediaVisualizer.DataAccess.Entities.Manwha;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Repositories;
 
-public class MangaRepository:IMangaRepository
+public class ManwhaRepository:IManwhaRepository
 {
     private readonly MediaVisualizerDbContext _dbContext;
 
-    public MangaRepository(MediaVisualizerDbContext dbContext)
+    public ManwhaRepository(MediaVisualizerDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<Manga>> GetList(FiltersRequest filters)
+    public async Task<IEnumerable<Manwha>> GetList(FiltersRequest filters)
     {
-        var query = _dbContext.Manga
-            .Include(x=>x.MangaChapters)
+        var query = _dbContext.Manwha
+            .Include(x=>x.ManwhaChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)
             .Include(x=>x.Artists)
@@ -54,20 +54,20 @@ public class MangaRepository:IMangaRepository
         return await query.ToListAsync();
     }
 
-    public async Task<Manga> Get(int mangaKey)
+    public async Task<Manwha> Get(int manwhaKey)
     {
-        return await _dbContext.Manga
-            .Include(x=>x.MangaChapters)
+        return await _dbContext.Manwha
+            .Include(x=>x.ManwhaChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)
             .Include(x=>x.Artists)
             .Include(x=>x.Authors)
-            .SingleOrDefaultAsync(x => x.MangaKey == mangaKey);
+            .SingleOrDefaultAsync(x => x.ManwhaKey == manwhaKey);
     }
 }
 
-public interface IMangaRepository
+public interface IManwhaRepository
 {
-    public Task<IEnumerable<Manga>> GetList(FiltersRequest filters);
-    public Task<Manga> Get(int mangaKey);
+    public Task<Manwha> Get(int manwhaKey);
+    public Task<IEnumerable<Manwha>> GetList(FiltersRequest filters);
 }

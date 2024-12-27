@@ -14,5 +14,7 @@ public class ManwhaChapter : AuditEntity
 
     public int ChapterNumber { get; set; }
 
+    public int PagesCount { get; set; }
+
     public string Logo { get; set; }
 }

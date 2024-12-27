@@ -19,10 +19,12 @@ builder.Services.AddDbContext<MediaVisualizerDbContext>(options =>
 // Register the repositories
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
 builder.Services.AddScoped<IMangaRepository, MangaRepository>();
+builder.Services.AddScoped<IManwhaRepository, ManwhaRepository>();
 
 // Register the services
 builder.Services.AddScoped<IAnimeService, AnimeService>();
 builder.Services.AddScoped<IMangaService, MangaService>();
+builder.Services.AddScoped<IManwhaService, ManwhaService>();
 
 var app = builder.Build();
 
