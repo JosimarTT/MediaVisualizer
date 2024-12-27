@@ -12,6 +12,8 @@ public class Manwha : AuditEntity
 
     public string Title { get; set; }
 
+    public ICollection<ManwhaChapter> ManwhaChapters { get; set; }
+
     public ICollection<Tag> Tags { get; set; }
 
     public ICollection<Artist> Artists { get; set; }
