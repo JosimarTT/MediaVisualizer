@@ -1,7 +1,7 @@
 ﻿using MediaVisualizer.DataAccess.Entities.Shared;
 using MediaVisualizer.Shared.Dtos;
 
-namespace MediaVisualizer.Shared.Converters;
+namespace MediaVisualizer.Services.Converters;
 
 public static class BrandToBrandDto
 {

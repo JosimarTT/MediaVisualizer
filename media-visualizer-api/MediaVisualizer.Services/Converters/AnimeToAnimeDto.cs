@@ -1,7 +1,7 @@
 ﻿using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.Shared.Dtos;
 
-namespace MediaVisualizer.Shared.Converters;
+namespace MediaVisualizer.Services.Converters;
 
 public static class AnimeToAnimeDto
 {

@@ -1,6 +1,7 @@
 ﻿using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.Services;
 using MediaVisualizer.Shared.Dtos;
+using MediaVisualizer.Shared.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediaVisualizer.Api.Controllers;
@@ -17,9 +18,11 @@ public class AnimeController:ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<AnimeDto>> Get()
+    [Route("[action]")]
+    public async Task<IActionResult> GetList([FromQuery] FiltersRequest filters)
     {
-        return await _animeService.GetAll();
+        var animes =  await _animeService.GetList(filters);
+        return Ok(animes);
     }
 
     [HttpGet]
