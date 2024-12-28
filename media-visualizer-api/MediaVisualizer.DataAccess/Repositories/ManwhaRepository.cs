@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Repositories;
 
-public class ManwhaRepository:IManwhaRepository
+public class ManwhaRepository : IManwhaRepository
 {
     private readonly MediaVisualizerDbContext _dbContext;
 
@@ -16,11 +16,11 @@ public class ManwhaRepository:IManwhaRepository
     public async Task<IEnumerable<Manwha>> GetList(FiltersRequest filters)
     {
         var query = _dbContext.Manwha
-            .Include(x=>x.ManwhaChapters)
+            .Include(x => x.ManwhaChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)
-            .Include(x=>x.Artists)
-            .Include(x=>x.Authors)
+            .Include(x => x.Artists)
+            .Include(x => x.Authors)
             .AsQueryable();
 
         if (filters == null)
@@ -57,11 +57,11 @@ public class ManwhaRepository:IManwhaRepository
     public async Task<Manwha> Get(int manwhaKey)
     {
         return await _dbContext.Manwha
-            .Include(x=>x.ManwhaChapters)
+            .Include(x => x.ManwhaChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)
-            .Include(x=>x.Artists)
-            .Include(x=>x.Authors)
+            .Include(x => x.Artists)
+            .Include(x => x.Authors)
             .SingleOrDefaultAsync(x => x.ManwhaKey == manwhaKey);
     }
 }

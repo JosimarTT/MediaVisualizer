@@ -8,8 +8,14 @@
 
     <ItemGroup>
         <ProjectReference Include="..\MediaVisualizer.DataAccess\MediaVisualizer.DataAccess.csproj"/>
-        <ProjectReference Include="..\MediaVisualizer.DataMigrator\MediaVisualizer.DataMigrator.csproj"/>
-        <ProjectReference Include="..\MediaVisualizer.Shared\MediaVisualizer.Shared.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ClosedXML" Version="0.104.2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Seeds\CsvFiles\"/>
     </ItemGroup>
 
 </Project>

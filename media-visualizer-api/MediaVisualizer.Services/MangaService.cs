@@ -5,7 +5,7 @@ using MediaVisualizer.Shared.Requests;
 
 namespace MediaVisualizer.Services;
 
-public class MangaService:IMangaService
+public class MangaService : IMangaService
 {
     private readonly IMangaRepository _mangaRepository;
 

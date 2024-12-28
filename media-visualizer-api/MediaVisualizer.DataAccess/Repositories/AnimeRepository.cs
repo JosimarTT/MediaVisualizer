@@ -17,7 +17,7 @@ public class AnimeRepository : IAnimeRepository
     public async Task<IEnumerable<Anime>> GetList(FiltersRequest filters)
     {
         var query = _dbContext.Anime
-            .Include(x=>x.AnimeChapters)
+            .Include(x => x.AnimeChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)
             .AsQueryable();
