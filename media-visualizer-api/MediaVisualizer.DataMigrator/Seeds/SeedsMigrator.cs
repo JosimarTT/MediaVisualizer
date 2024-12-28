@@ -14,19 +14,14 @@ public class SeedsMigrator: ISeedsMigrator
         _dbContext = dbContext;
     }
 
-    public static List<T> ReadExcelFile<T>(string filePath, Func<IXLRangeRow, T> mapRow)
+    public static List<T> ReadCsvFile<T>(string filePath, Func<string[], T> mapRow)
     {
         var list = new List<T>();
+        var rows = File.ReadAllLines(filePath).Skip(1).Select(x => x.Split(","));
 
-        using (var workbook = new XLWorkbook(filePath))
+        foreach (var row in rows)
         {
-            var worksheet = workbook.Worksheet(1);
-            var rows = worksheet.RangeUsed().RowsUsed().Skip(1);
-
-            foreach (var row in rows)
-            {
-                list.Add(mapRow(row));
-            }
+            list.Add(mapRow(row));
         }
 
         return list;
@@ -34,18 +29,19 @@ public class SeedsMigrator: ISeedsMigrator
 
     public void Migrate()
     {
-            var manwhas = ReadExcelFile(@"E:\media-visualizer\media-visualizer-api\MediaVisualizer.DataMigrator\Seeds\Excels\Anime.xlsx", row => new Manwha
-            {
-                Folder = row.Cell(1).GetValue<string>(),
-                Title = row.Cell(2).GetValue<string>(),
-                CreatedDate = row.Cell(3).GetValue<DateTime>(),
-                UpdatedDate = row.Cell(4).GetValue<DateTime>()
-            });
+        var manwhas = ReadCsvFile(
+            @"E:\media-visualizer\media-visualizer-api\MediaVisualizer.DataMigrator\Seeds\CsvFiles\Anime.csv", row =>
+                new Manwha
+                {
+                    Folder = row[0],
+                    Title = row[1],
+                    CreatedDate = DateTime.Parse(row[2]),
+                    UpdatedDate = DateTime.Parse(row[3])
+                });
 
             _dbContext.Manwha.AddRange(manwhas);
 
             _dbContext.SaveChanges();
-
     }
 }
 
