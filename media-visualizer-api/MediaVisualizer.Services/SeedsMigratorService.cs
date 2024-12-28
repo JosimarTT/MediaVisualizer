@@ -2,7 +2,7 @@
 
 namespace MediaVisualizer.Services;
 
-public class SeedsMigratorService:ISeedMigratorService
+public class SeedsMigratorService : ISeedMigratorService
 {
     private readonly ISeedsMigrator _seedsMigrator;
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Repositories;
 
-public class MangaRepository:IMangaRepository
+public class MangaRepository : IMangaRepository
 {
     private readonly MediaVisualizerDbContext _dbContext;
 
@@ -16,11 +16,11 @@ public class MangaRepository:IMangaRepository
     public async Task<IEnumerable<Manga>> GetList(FiltersRequest filters)
     {
         var query = _dbContext.Manga
-            .Include(x=>x.MangaChapters)
+            .Include(x => x.MangaChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)
-            .Include(x=>x.Artists)
-            .Include(x=>x.Authors)
+            .Include(x => x.Artists)
+            .Include(x => x.Authors)
             .AsQueryable();
 
         if (filters == null)
@@ -57,11 +57,11 @@ public class MangaRepository:IMangaRepository
     public async Task<Manga> Get(int mangaKey)
     {
         return await _dbContext.Manga
-            .Include(x=>x.MangaChapters)
+            .Include(x => x.MangaChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)
-            .Include(x=>x.Artists)
-            .Include(x=>x.Authors)
+            .Include(x => x.Artists)
+            .Include(x => x.Authors)
             .SingleOrDefaultAsync(x => x.MangaKey == mangaKey);
     }
 }

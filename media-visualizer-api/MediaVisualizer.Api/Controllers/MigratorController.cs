@@ -5,7 +5,7 @@ namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class MigratorController: ControllerBase
+public class MigratorController : ControllerBase
 {
     private readonly ISeedMigratorService _seedMigratorService;
 

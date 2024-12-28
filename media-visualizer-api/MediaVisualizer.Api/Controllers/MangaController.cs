@@ -7,7 +7,7 @@ namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class MangaController:ControllerBase
+public class MangaController : ControllerBase
 {
     private readonly IMangaService _mangaService;
 

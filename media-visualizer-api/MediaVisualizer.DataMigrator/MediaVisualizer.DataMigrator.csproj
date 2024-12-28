@@ -7,15 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MediaVisualizer.DataAccess\MediaVisualizer.DataAccess.csproj" />
+        <ProjectReference Include="..\MediaVisualizer.DataAccess\MediaVisualizer.DataAccess.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="ClosedXML" Version="0.104.2" />
+        <PackageReference Include="ClosedXML" Version="0.104.2"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Seeds\CsvFiles\" />
+        <Folder Include="Seeds\CsvFiles\"/>
     </ItemGroup>
 
 </Project>

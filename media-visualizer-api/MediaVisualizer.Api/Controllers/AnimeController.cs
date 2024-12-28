@@ -16,6 +16,7 @@ public class AnimeController : ControllerBase
     {
         _animeService = animeService;
     }
+
     [HttpGet]
     [Route("{key:int}")]
     public async Task<AnimeDto> Get(int key)
