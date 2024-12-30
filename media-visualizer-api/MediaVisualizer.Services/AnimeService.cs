@@ -26,10 +26,17 @@ public class AnimeService : IAnimeService
         var animes = await _animeRepository.GetList(filters);
         return animes.ToList().ToListDto();
     }
+
+    public async Task<AnimeDto> GetRandom()
+    {
+        var anime = await _animeRepository.GetRandom();
+        return anime.ToDto();
+    }
 }
 
 public interface IAnimeService
 {
     public Task<AnimeDto> Get(int key);
     public Task<IEnumerable<AnimeDto>> GetList(FiltersRequest filters);
+    Task<AnimeDto> GetRandom();
 }

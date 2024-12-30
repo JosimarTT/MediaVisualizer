@@ -15,16 +15,7 @@ public class ManwhaRepository : IManwhaRepository
 
     public async Task<IEnumerable<Manwha>> GetList(FiltersRequest filters)
     {
-        var query = _dbContext.Manwha
-            .Include(x => x.ManwhaChapters)
-            .Include(x => x.Brands)
-            .Include(x => x.Tags)
-            .Include(x => x.Artists)
-            .Include(x => x.Authors)
-            .AsQueryable();
-
-        if (filters == null)
-            return await query.ToListAsync();
+        var query = getBaseManwhaQuery();
 
         if (filters.SortOrder != null)
         {
@@ -54,15 +45,28 @@ public class ManwhaRepository : IManwhaRepository
         return await query.ToListAsync();
     }
 
+    public async Task<Manwha> GetRandom()
+    {
+        var query = getBaseManwhaQuery();
+        var count = await _dbContext.Manwha.CountAsync();
+        var randomIndex = new Random().Next(count);
+        return await query.Skip(randomIndex).FirstAsync();
+    }
+
     public async Task<Manwha> Get(int manwhaKey)
     {
-        return await _dbContext.Manwha
+        var query = getBaseManwhaQuery();
+        return await query.FirstAsync(x => x.ManwhaKey == manwhaKey);
+    }
+
+    private IQueryable<Manwha> getBaseManwhaQuery()
+    {
+        return _dbContext.Manwha
             .Include(x => x.ManwhaChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)
             .Include(x => x.Artists)
-            .Include(x => x.Authors)
-            .SingleOrDefaultAsync(x => x.ManwhaKey == manwhaKey);
+            .Include(x => x.Authors);
     }
 }
 
@@ -70,4 +74,5 @@ public interface IManwhaRepository
 {
     public Task<Manwha> Get(int manwhaKey);
     public Task<IEnumerable<Manwha>> GetList(FiltersRequest filters);
+    public Task<Manwha> GetRandom();
 }

@@ -15,16 +15,7 @@ public class MangaRepository : IMangaRepository
 
     public async Task<IEnumerable<Manga>> GetList(FiltersRequest filters)
     {
-        var query = _dbContext.Manga
-            .Include(x => x.MangaChapters)
-            .Include(x => x.Brands)
-            .Include(x => x.Tags)
-            .Include(x => x.Artists)
-            .Include(x => x.Authors)
-            .AsQueryable();
-
-        if (filters == null)
-            return await query.ToListAsync();
+        var query = GetBaseMangaQuery();
 
         if (filters.SortOrder != null)
         {
@@ -56,13 +47,26 @@ public class MangaRepository : IMangaRepository
 
     public async Task<Manga> Get(int mangaKey)
     {
-        return await _dbContext.Manga
+        var query = GetBaseMangaQuery();
+        return await query.FirstAsync(x => x.MangaKey == mangaKey);
+    }
+
+    public async Task<Manga> GetRandom()
+    {
+        var query = GetBaseMangaQuery();
+        var count = await _dbContext.Manga.CountAsync();
+        var randomIndex = new Random().Next(count);
+        return await query.Skip(randomIndex).FirstAsync();
+    }
+
+    private IQueryable<Manga> GetBaseMangaQuery()
+    {
+        return _dbContext.Manga
             .Include(x => x.MangaChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)
             .Include(x => x.Artists)
-            .Include(x => x.Authors)
-            .SingleOrDefaultAsync(x => x.MangaKey == mangaKey);
+            .Include(x => x.Authors);
     }
 }
 
@@ -70,4 +74,5 @@ public interface IMangaRepository
 {
     public Task<IEnumerable<Manga>> GetList(FiltersRequest filters);
     public Task<Manga> Get(int mangaKey);
+    public Task<Manga> GetRandom();
 }

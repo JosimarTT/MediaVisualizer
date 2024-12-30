@@ -8,4 +8,6 @@ public class ManwhaDto
     public ICollection<ManwhaChapterDto> ManwhaChapters { get; set; }
     public ICollection<BrandDto> Brands { get; set; }
     public ICollection<TagDto> Tags { get; set; }
+    public ICollection<ArtistDto> Artists { get; set; }
+    public ICollection<AuthorDto> Authors { get; set; }
 }

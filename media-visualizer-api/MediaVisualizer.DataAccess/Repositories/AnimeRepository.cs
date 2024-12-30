@@ -16,14 +16,7 @@ public class AnimeRepository : IAnimeRepository
 
     public async Task<IEnumerable<Anime>> GetList(FiltersRequest filters)
     {
-        var query = _dbContext.Anime
-            .Include(x => x.AnimeChapters)
-            .Include(x => x.Brands)
-            .Include(x => x.Tags)
-            .AsQueryable();
-
-        if (filters == null)
-            return await query.ToListAsync();
+        var query = GetBaseAnimeQuery();
 
         if (filters.SortOrder != null)
         {
@@ -49,10 +42,24 @@ public class AnimeRepository : IAnimeRepository
 
     public async Task<Anime> Get(int animeKey)
     {
-        return await _dbContext.Anime
+        var query = GetBaseAnimeQuery();
+        return await query.FirstAsync(x => x.AnimeKey == animeKey);
+    }
+
+    public async Task<Anime> GetRandom()
+    {
+        var query = GetBaseAnimeQuery();
+        var count = await _dbContext.Anime.CountAsync();
+        var randomIndex = new Random().Next(count);
+        return await query.Skip(randomIndex).FirstAsync();
+    }
+
+    private IQueryable<Anime> GetBaseAnimeQuery()
+    {
+        return _dbContext.Anime
+            .Include(x => x.AnimeChapters)
             .Include(x => x.Brands)
-            .Include(x => x.Tags)
-            .SingleOrDefaultAsync(x => x.AnimeKey == animeKey);
+            .Include(x => x.Tags);
     }
 }
 
@@ -60,4 +67,5 @@ public interface IAnimeRepository
 {
     public Task<IEnumerable<Anime>> GetList(FiltersRequest filters);
     public Task<Anime> Get(int animeKey);
+    Task<Anime> GetRandom();
 }

@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Seeds\CsvFiles\"/>
+        <Folder Include="SeedsMigrator\CsvFiles\"/>
     </ItemGroup>
 
 </Project>
