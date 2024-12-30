@@ -6,7 +6,7 @@ namespace MediaVisualizer.DataAccess.Entities.Anime;
 
 public class Anime : AuditEntity
 {
-    [Key] public int AnimeKey { get; set; }
+    [Key] public int AnimeId { get; set; }
 
     public string Folder { get; set; }
 

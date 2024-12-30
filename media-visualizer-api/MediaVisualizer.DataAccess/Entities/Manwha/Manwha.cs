@@ -6,7 +6,7 @@ namespace MediaVisualizer.DataAccess.Entities.Manwha;
 
 public class Manwha : AuditEntity
 {
-    [Key] public int ManwhaKey { get; set; }
+    [Key] public int ManwhaId { get; set; }
 
     public string Folder { get; set; }
 

@@ -7,7 +7,7 @@ namespace MediaVisualizer.DataAccess.Entities.Shared;
 
 public class Artist : AuditEntity
 {
-    [Key] public int ArtistKey { get; set; }
+    [Key] public int ArtistId { get; set; }
 
     public string Name { get; set; }
 

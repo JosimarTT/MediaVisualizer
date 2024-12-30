@@ -10,7 +10,7 @@ public static class TagConverter
         if (tag == null) return null;
         return new TagDto()
         {
-            TagKey = tag.TagKey,
+            TagKey = tag.TagId,
             Name = tag.Name,
         };
     }

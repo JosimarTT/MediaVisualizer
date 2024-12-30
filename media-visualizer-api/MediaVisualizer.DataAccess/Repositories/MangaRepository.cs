@@ -28,16 +28,16 @@ public class MangaRepository : IMangaRepository
         }
 
         if (filters.BrandKeys != null && filters.BrandKeys.Count != 0)
-            query = query.Where(x => x.Brands.Any(y => filters.BrandKeys.Contains(y.BrandKey)));
+            query = query.Where(x => x.Brands.Any(y => filters.BrandKeys.Contains(y.BrandId)));
 
         if (filters.TagKeys != null && filters.TagKeys.Count != 0)
-            query = query.Where(x => x.Tags.Any(y => filters.TagKeys.Contains(y.TagKey)));
+            query = query.Where(x => x.Tags.Any(y => filters.TagKeys.Contains(y.TagId)));
 
         if (filters.ArtistKeys != null && filters.ArtistKeys.Count != 0)
-            query = query.Where(x => x.Artists.Any(y => filters.ArtistKeys.Contains(y.ArtistKey)));
+            query = query.Where(x => x.Artists.Any(y => filters.ArtistKeys.Contains(y.ArtistId)));
 
         if (filters.AuthorKeys != null && filters.AuthorKeys.Count != 0)
-            query = query.Where(x => x.Authors.Any(y => filters.AuthorKeys.Contains(y.AuthorKey)));
+            query = query.Where(x => x.Authors.Any(y => filters.AuthorKeys.Contains(y.AuthorId)));
 
         if (filters.Page != null && filters.Page > 0 && filters.Size != null && filters.Size > 0)
             query = query.Skip(filters.Size.Value * (filters.Page.Value - 1)).Take(filters.Size.Value);
@@ -48,20 +48,20 @@ public class MangaRepository : IMangaRepository
     public async Task<Manga> Get(int mangaKey)
     {
         var query = GetBaseQuery();
-        return await query.FirstAsync(x => x.MangaKey == mangaKey);
+        return await query.FirstAsync(x => x.MangaId == mangaKey);
     }
 
     public async Task<Manga> GetRandom()
     {
         var query = GetBaseQuery();
-        var count = await _dbContext.Manga.CountAsync();
+        var count = await _dbContext.Mangas.CountAsync();
         var randomIndex = new Random().Next(count);
         return await query.Skip(randomIndex).FirstAsync();
     }
 
     private IQueryable<Manga> GetBaseQuery()
     {
-        return _dbContext.Manga
+        return _dbContext.Mangas
             .Include(x => x.MangaChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)

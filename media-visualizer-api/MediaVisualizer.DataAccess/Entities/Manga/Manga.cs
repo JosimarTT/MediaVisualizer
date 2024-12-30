@@ -6,7 +6,7 @@ namespace MediaVisualizer.DataAccess.Entities.Manga;
 
 public class Manga : AuditEntity
 {
-    [Key] public int MangaKey { get; set; }
+    [Key] public int MangaId { get; set; }
 
     public string Folder { get; set; }
 

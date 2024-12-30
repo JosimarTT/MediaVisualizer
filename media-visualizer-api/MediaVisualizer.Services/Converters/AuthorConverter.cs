@@ -11,7 +11,7 @@ public static class AuthorConverter
 
         return new AuthorDto
         {
-            AuthorKey = author.AuthorKey,
+            AuthorKey = author.AuthorId,
             Name = author.Name,
         };
     }

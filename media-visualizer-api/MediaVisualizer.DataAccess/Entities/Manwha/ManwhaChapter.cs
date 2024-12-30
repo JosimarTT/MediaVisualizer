@@ -6,11 +6,11 @@ namespace MediaVisualizer.DataAccess.Entities.Manwha;
 
 public class ManwhaChapter : AuditEntity
 {
-    [Key] public int ManwhaChapterKey { get; set; }
+    [Key] public int ManwhaChapterId { get; set; }
 
-    public int ManwhaKey { get; set; }
+    public int ManwhaId { get; set; }
 
-    [ForeignKey(nameof(ManwhaKey))] public Manwha Manwha { get; set; }
+    [ForeignKey(nameof(ManwhaId))] public Manwha Manwha { get; set; }
 
     public int ChapterNumber { get; set; }
 

@@ -8,7 +8,7 @@ namespace MediaVisualizer.DataAccess.Entities.Shared;
 
 public class Brand : AuditEntity
 {
-    [Key] public int BrandKey { get; set; }
+    [Key] public int BrandId { get; set; }
 
     public string Name { get; set; }
 
