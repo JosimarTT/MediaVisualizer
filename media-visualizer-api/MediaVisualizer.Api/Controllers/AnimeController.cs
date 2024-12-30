@@ -19,16 +19,15 @@ public class AnimeController : ControllerBase
 
     [HttpGet]
     [Route("{key:int}")]
-    public async Task<AnimeDto> Get(int key)
+    public async Task<IActionResult> Get(int key)
     {
-        return await _animeService.Get(key);
+        return Ok(await _animeService.Get(key));
     }
 
     [HttpGet]
     [Route("[action]")]
     public async Task<IActionResult> GetList([FromQuery] FiltersRequest filters)
     {
-        var animes = await _animeService.GetList(filters);
-        return Ok(animes);
+        return Ok(await _animeService.GetList(filters));
     }
 }

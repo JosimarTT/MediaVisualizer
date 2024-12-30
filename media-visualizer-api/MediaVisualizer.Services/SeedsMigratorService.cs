@@ -11,13 +11,13 @@ public class SeedsMigratorService : ISeedMigratorService
         _seedsMigrator = seedsMigrator;
     }
 
-    public void Migrate()
+    public async Task Migrate()
     {
-        _seedsMigrator.Migrate();
+        await _seedsMigrator.Migrate();
     }
 }
 
 public interface ISeedMigratorService
 {
-    public void Migrate();
+    public Task Migrate();
 }
