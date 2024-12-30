@@ -12,13 +12,13 @@ public class Manga : AuditEntity
 
     public string Title { get; set; }
 
-    public ICollection<Tag> Tags { get; set; }
+    public ICollection<Tag> Tags { get; set; } = new List<Tag>();
 
-    public ICollection<MangaChapter> MangaChapters { get; set; }
+    public ICollection<MangaChapter> MangaChapters { get; set; } = new List<MangaChapter>();
 
-    public ICollection<Artist> Artists { get; set; }
+    public ICollection<Artist> Artists { get; set; } = new List<Artist>();
 
-    public ICollection<Author> Authors { get; set; }
+    public ICollection<Author> Authors { get; set; } = new List<Author>();
 
-    public ICollection<Brand> Brands { get; set; }
+    public ICollection<Brand> Brands { get; set; } = new List<Brand>();
 }

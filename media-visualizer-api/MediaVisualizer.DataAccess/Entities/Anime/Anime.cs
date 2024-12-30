@@ -12,9 +12,9 @@ public class Anime : AuditEntity
 
     public string Title { get; set; }
 
-    public ICollection<AnimeChapter> AnimeChapters { get; set; }
+    public ICollection<AnimeChapter> AnimeChapters { get; set; } = new List<AnimeChapter>();
 
-    public ICollection<Brand> Brands { get; set; }
+    public ICollection<Brand> Brands { get; set; } = new List<Brand>();
 
-    public ICollection<Tag> Tags { get; set; }
+    public ICollection<Tag> Tags { get; set; } = new List<Tag>();
 }
