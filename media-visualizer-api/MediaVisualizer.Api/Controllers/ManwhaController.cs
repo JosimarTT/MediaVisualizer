@@ -18,7 +18,7 @@ namespace MediaVisualizer.Api.Controllers
 
         [HttpGet]
         [Route("{key:int}")]
-        public async Task<ActionResult<ManwhaDto>> Get(int key)
+        public async Task<IActionResult> Get(int key)
         {
             var manwha = await _manwhaService.Get(key);
             return Ok(manwha);
@@ -26,7 +26,7 @@ namespace MediaVisualizer.Api.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public async Task<ActionResult<IEnumerable<ManwhaDto>>> GetList([FromQuery] FiltersRequest filters)
+        public async Task<IActionResult> GetList([FromQuery] FiltersRequest filters)
         {
             var manwhas = await _manwhaService.GetList(filters);
             return Ok(manwhas);

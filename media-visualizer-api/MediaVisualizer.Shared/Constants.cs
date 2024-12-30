@@ -28,4 +28,6 @@ public static class Constants
     public const string AnimeChapterCsvFilePath = "AnimeChapter.csv";
     public const string MangaChapterCsvFilePath = "MangaChapter.csv";
     public const string ManwhaChapterCsvFilePath = "ManwhaChapter.csv";
+
+    public const string DateFormat = "yyyy-MM-dd";
 }

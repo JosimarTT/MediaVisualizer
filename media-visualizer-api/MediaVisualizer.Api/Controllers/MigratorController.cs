@@ -15,9 +15,9 @@ public class MigratorController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Migrate()
+    public async Task<IActionResult> Migrate()
     {
-        _seedMigratorService.Migrate();
+        await _seedMigratorService.Migrate();
         return Ok();
     }
 }

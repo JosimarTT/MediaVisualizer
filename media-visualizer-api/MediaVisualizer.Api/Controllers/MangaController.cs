@@ -18,16 +18,15 @@ public class MangaController : ControllerBase
 
     [HttpGet]
     [Route("{key:int}")]
-    public async Task<MangaDto> Get(int key)
+    public async Task<IActionResult> Get(int key)
     {
-        return await _mangaService.Get(key);
+        return Ok(await _mangaService.Get(key));
     }
 
     [HttpGet]
     [Route("[action]")]
     public async Task<IActionResult> GetList([FromQuery] FiltersRequest filters)
     {
-        var mangas = await _mangaService.GetList(filters);
-        return Ok(mangas);
+        return Ok(await _mangaService.GetList(filters));
     }
 }
