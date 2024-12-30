@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 public class MangaController : ControllerBase
 {
     private readonly IMangaService _mangaService;
@@ -24,9 +24,14 @@ public class MangaController : ControllerBase
     }
 
     [HttpGet]
-    [Route("[action]")]
     public async Task<IActionResult> GetList([FromQuery] FiltersRequest filters)
     {
         return Ok(await _mangaService.GetList(filters));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetRandom()
+    {
+        return Ok(await _mangaService.GetRandom());
     }
 }

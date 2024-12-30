@@ -25,10 +25,17 @@ public class MangaService : IMangaService
         var mangas = await _mangaRepository.GetList(filters);
         return mangas.ToList().ToListDto();
     }
+
+    public async Task<MangaDto> GetRandom()
+    {
+        var manga = await _mangaRepository.GetRandom();
+        return manga.ToDto();
+    }
 }
 
 public interface IMangaService
 {
     public Task<MangaDto> Get(int key);
     public Task<IEnumerable<MangaDto>> GetList(FiltersRequest filters);
+    public Task<MangaDto> GetRandom();
 }

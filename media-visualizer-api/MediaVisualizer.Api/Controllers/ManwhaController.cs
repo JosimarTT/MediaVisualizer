@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MediaVisualizer.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class ManwhaController : ControllerBase
     {
         private readonly IManwhaService _manwhaService;
@@ -20,16 +20,19 @@ namespace MediaVisualizer.Api.Controllers
         [Route("{key:int}")]
         public async Task<IActionResult> Get(int key)
         {
-            var manwha = await _manwhaService.Get(key);
-            return Ok(manwha);
+            return Ok(await _manwhaService.Get(key));
         }
 
         [HttpGet]
-        [Route("[action]")]
         public async Task<IActionResult> GetList([FromQuery] FiltersRequest filters)
         {
-            var manwhas = await _manwhaService.GetList(filters);
-            return Ok(manwhas);
+            return Ok(await _manwhaService.GetList(filters));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetRandom()
+        {
+            return Ok(await _manwhaService.GetRandom());
         }
     }
 }

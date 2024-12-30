@@ -25,10 +25,17 @@ public class ManwhaService : IManwhaService
         var manwhas = await _manwhaRepository.GetList(filters);
         return manwhas.ToList().ToListDto();
     }
+
+    public async Task<ManwhaDto> GetRandom()
+    {
+        var manwha = await _manwhaRepository.GetRandom();
+        return manwha.ToDto();
+    }
 }
 
 public interface IManwhaService
 {
     public Task<ManwhaDto> Get(int key);
     public Task<IEnumerable<ManwhaDto>> GetList(FiltersRequest filters);
+    public Task<ManwhaDto> GetRandom();
 }

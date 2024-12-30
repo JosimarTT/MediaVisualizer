@@ -16,7 +16,9 @@ public static class ManwhaConverter
             Title = manwha.Title,
             ManwhaChapters = manwha.ManwhaChapters.ToListDto(),
             Brands = manwha.Brands.ToListDto(),
-            Tags = manwha.Tags.ToListDto()
+            Tags = manwha.Tags.ToListDto(),
+            Artists = manwha.Artists.ToListDto(),
+            Authors = manwha.Authors.ToListDto()
         };
     }
 

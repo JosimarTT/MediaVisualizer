@@ -7,7 +7,9 @@ public static class Constants
     public const string MangaFolderPath = "Mangas";
     public const string ManwhaFolderPath = "Manwhas";
 
-    public const string BaseCsvFilesPath = @"E:\media-visualizer\media-visualizer-api\MediaVisualizer.DataMigrator\Seeds\CsvFiles";
+    public const string BaseCsvFilesPath =
+        @"E:\media-visualizer\media-visualizer-api\MediaVisualizer.DataMigrator\Seeds\CsvFiles";
+
     public const string AnimeCsvFilePath = "Anime.csv";
     public const string MangaCsvFilePath = "Manga.csv";
     public const string ManwhaCsvFilePath = "Manwha.csv";
