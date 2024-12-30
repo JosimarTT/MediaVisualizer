@@ -11,7 +11,7 @@ public static class ManwhaConverter
 
         return new ManwhaDto
         {
-            ManwhaKey = manwha.ManwhaKey,
+            ManwhaKey = manwha.ManwhaId,
             Folder = manwha.Folder,
             Title = manwha.Title,
             ManwhaChapters = manwha.ManwhaChapters.ToListDto(),
@@ -35,8 +35,8 @@ public static class ManwhaConverter
 
         return new ManwhaChapterDto
         {
-            ManwhaChapterKey = chapter.ManwhaChapterKey,
-            ManwhaKey = chapter.ManwhaKey,
+            ManwhaChapterKey = chapter.ManwhaChapterId,
+            ManwhaKey = chapter.ManwhaId,
             ChapterNumber = chapter.ChapterNumber,
             PagesCount = chapter.PagesCount,
             Logo = chapter.Logo

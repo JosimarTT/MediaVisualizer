@@ -1,10 +1,12 @@
-﻿using ClosedXML.Excel;
+﻿using System.Text;
+using ClosedXML.Excel;
 using MediaVisualizer.DataAccess;
 using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.DataAccess.Entities.Manga;
 using MediaVisualizer.DataAccess.Entities.Manwha;
 using MediaVisualizer.DataAccess.Entities.Shared;
 using MediaVisualizer.Shared;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataMigrator.Seeds;
 
@@ -90,8 +92,8 @@ public class SeedsMigrator : ISeedsMigrator
             row =>
                 new AnimeChapter
                 {
-                    AnimeChapterKey = int.Parse(row[0]),
-                    AnimeKey = int.Parse(row[1]),
+                    AnimeChapterId = int.Parse(row[0]),
+                    AnimeId = int.Parse(row[1]),
                     ChapterNumber = int.Parse(row[2]),
                     Logo = row[3],
                     CreatedDate = DateTime.Parse(row[4]),
@@ -102,8 +104,8 @@ public class SeedsMigrator : ISeedsMigrator
             row =>
                 new MangaChapter
                 {
-                    MangaChapterKey = int.Parse(row[0]),
-                    MangaKey = int.Parse(row[1]),
+                    MangaChapterId = int.Parse(row[0]),
+                    MangaId = int.Parse(row[1]),
                     ChapterNumber = int.Parse(row[2]),
                     Logo = row[3],
                     CreatedDate = DateTime.Parse(row[4]),
@@ -115,8 +117,8 @@ public class SeedsMigrator : ISeedsMigrator
             Path.Combine(Constants.BaseCsvFilesPath, Constants.ManwhaChapterCsvFilePath), row =>
                 new ManwhaChapter
                 {
-                    ManwhaChapterKey = int.Parse(row[0]),
-                    ManwhaKey = int.Parse(row[1]),
+                    ManwhaChapterId = int.Parse(row[0]),
+                    ManwhaId = int.Parse(row[1]),
                     ChapterNumber = int.Parse(row[2]),
                     Logo = row[3],
                     CreatedDate = DateTime.Parse(row[4]),
@@ -125,38 +127,38 @@ public class SeedsMigrator : ISeedsMigrator
                 });
 
         var animeTagsTask = ReadCsvFile(Path.Combine(Constants.BaseCsvFilesPath, Constants.AnimeTagCsvFilePath), row =>
-            new AnimeTag
+            new
             {
-                AnimeKey = int.Parse(row[0]),
-                TagKey = int.Parse(row[1]),
+                AnimeId = int.Parse(row[0]),
+                TagId = int.Parse(row[1]),
                 CreatedDate = DateTime.Parse(row[2]),
                 UpdatedDate = DateTime.Parse(row[3])
             });
 
         var mangaTagsTask = ReadCsvFile(Path.Combine(Constants.BaseCsvFilesPath, Constants.MangaTagCsvFilePath), row =>
-            new MangaTag
+            new
             {
-                MangaKey = int.Parse(row[0]),
-                TagKey = int.Parse(row[1]),
+                MangaId = int.Parse(row[0]),
+                TagId = int.Parse(row[1]),
                 CreatedDate = DateTime.Parse(row[2]),
                 UpdatedDate = DateTime.Parse(row[3])
             });
 
         var manwhaTagsTask = ReadCsvFile(Path.Combine(Constants.BaseCsvFilesPath, Constants.ManwhaTagCsvFilePath),
             row =>
-                new ManwhaTag
+                new
                 {
-                    ManwhaKey = int.Parse(row[0]),
-                    TagKey = int.Parse(row[1]),
+                    ManwhaId = int.Parse(row[0]),
+                    TagId = int.Parse(row[1]),
                     CreatedDate = DateTime.Parse(row[2]),
                     UpdatedDate = DateTime.Parse(row[3])
                 });
 
         var animeBrandsTask = ReadCsvFile(Path.Combine(Constants.BaseCsvFilesPath, Constants.AnimeBrandCsvFilePath),
             row =>
-                new AnimeBrand
+                new
                 {
-                    AnimeKey = int.Parse(row[0]),
+                    AnimeId = int.Parse(row[0]),
                     BrandKey = int.Parse(row[1]),
                     CreatedDate = DateTime.Parse(row[2]),
                     UpdatedDate = DateTime.Parse(row[3])
@@ -164,9 +166,9 @@ public class SeedsMigrator : ISeedsMigrator
 
         var mangaBrandsTask = ReadCsvFile(Path.Combine(Constants.BaseCsvFilesPath, Constants.MangaBrandCsvFilePath),
             row =>
-                new MangaBrand
+                new
                 {
-                    MangaKey = int.Parse(row[0]),
+                    MangaId = int.Parse(row[0]),
                     BrandKey = int.Parse(row[1]),
                     CreatedDate = DateTime.Parse(row[2]),
                     UpdatedDate = DateTime.Parse(row[3])
@@ -174,9 +176,9 @@ public class SeedsMigrator : ISeedsMigrator
 
         var manwhaBrandsTask = ReadCsvFile(Path.Combine(Constants.BaseCsvFilesPath, Constants.ManwhaBrandCsvFilePath),
             row =>
-                new ManwhaBrand
+                new
                 {
-                    ManwhaKey = int.Parse(row[0]),
+                    ManwhaId = int.Parse(row[0]),
                     BrandKey = int.Parse(row[1]),
                     CreatedDate = DateTime.Parse(row[2]),
                     UpdatedDate = DateTime.Parse(row[3])
@@ -184,9 +186,9 @@ public class SeedsMigrator : ISeedsMigrator
 
         var mangaAuthorsTask = ReadCsvFile(Path.Combine(Constants.BaseCsvFilesPath, Constants.MangaAuthorCsvFilePath),
             row =>
-                new MangaAuthor
+                new
                 {
-                    MangaKey = int.Parse(row[0]),
+                    MangaId = int.Parse(row[0]),
                     AuthorKey = int.Parse(row[1]),
                     CreatedDate = DateTime.Parse(row[2]),
                     UpdatedDate = DateTime.Parse(row[3])
@@ -194,9 +196,9 @@ public class SeedsMigrator : ISeedsMigrator
 
         var manwhaAuthorsTask = ReadCsvFile(Path.Combine(Constants.BaseCsvFilesPath, Constants.ManwhaAuthorCsvFilePath),
             row =>
-                new ManwhaAuthor
+                new
                 {
-                    ManwhaKey = int.Parse(row[0]),
+                    ManwhaId = int.Parse(row[0]),
                     AuthorKey = int.Parse(row[1]),
                     CreatedDate = DateTime.Parse(row[2]),
                     UpdatedDate = DateTime.Parse(row[3])
@@ -204,20 +206,20 @@ public class SeedsMigrator : ISeedsMigrator
 
         var mangaArtistsTask = ReadCsvFile(Path.Combine(Constants.BaseCsvFilesPath, Constants.MangaArtistCsvFilePath),
             row =>
-                new MangaArtist
+                new
                 {
-                    MangaKey = int.Parse(row[0]),
-                    ArtistKey = int.Parse(row[1]),
+                    MangaId = int.Parse(row[0]),
+                    ArtistId = int.Parse(row[1]),
                     CreatedDate = DateTime.Parse(row[2]),
                     UpdatedDate = DateTime.Parse(row[3])
                 });
 
         var manwhaArtistsTask = ReadCsvFile(Path.Combine(Constants.BaseCsvFilesPath, Constants.ManwhaArtistCsvFilePath),
             row =>
-                new ManwhaArtist
+                new
                 {
-                    ManwhaKey = int.Parse(row[0]),
-                    ArtistKey = int.Parse(row[1]),
+                    ManwhaId = int.Parse(row[0]),
+                    ArtistId = int.Parse(row[1]),
                     CreatedDate = DateTime.Parse(row[2]),
                     UpdatedDate = DateTime.Parse(row[3])
                 });
@@ -252,29 +254,135 @@ public class SeedsMigrator : ISeedsMigrator
         {
             await _dbContext.Database.BeginTransactionAsync();
 
-            _dbContext.Anime.AddRange(animes);
-            _dbContext.Manga.AddRange(mangas);
-            _dbContext.Manwha.AddRange(manwhas);
-            _dbContext.Tag.AddRange(tags);
-            _dbContext.Brand.AddRange(brands);
-            _dbContext.Author.AddRange(authors);
-            _dbContext.Artist.AddRange(artists);
+            _dbContext.Animes.AddRange(animes);
+            _dbContext.Mangas.AddRange(mangas);
+            _dbContext.Manwhas.AddRange(manwhas);
+            _dbContext.Tags.AddRange(tags);
+            _dbContext.Brands.AddRange(brands);
+            _dbContext.Authors.AddRange(authors);
+            _dbContext.Artists.AddRange(artists);
+
             await _dbContext.SaveChangesAsync();
 
-            _dbContext.AnimeChapter.AddRange(animeChapters);
-            _dbContext.MangaChapter.AddRange(mangaChapters);
-            _dbContext.ManwhaChapter.AddRange(manwhaChapters);
-            _dbContext.AnimeTag.AddRange(animeTags);
-            _dbContext.MangaTag.AddRange(mangaTags);
-            _dbContext.ManwhaTag.AddRange(manwhaTags);
-            _dbContext.AnimeBrand.AddRange(animeBrands);
-            _dbContext.MangaBrand.AddRange(mangaBrands);
-            _dbContext.ManwhaBrand.AddRange(manwhaBrands);
-            _dbContext.MangaAuthor.AddRange(mangaAuthors);
-            _dbContext.ManwhaAuthor.AddRange(manwhaAuthors);
-            _dbContext.MangaArtist.AddRange(mangaArtists);
-            _dbContext.ManwhaArtist.AddRange(manwhaArtists);
+            _dbContext.AnimeChapters.AddRange(animeChapters);
+            _dbContext.MangaChapters.AddRange(mangaChapters);
+            _dbContext.ManwhaChapters.AddRange(manwhaChapters);
+
             await _dbContext.SaveChangesAsync();
+
+            foreach (var animeTag in animeTags)
+            {
+                var anime = animes.FirstOrDefault(a => a.AnimeId == animeTag.AnimeId);
+                var tag = tags.FirstOrDefault(t => t.TagId == animeTag.TagId);
+
+                if (anime != null && tag != null)
+                {
+                    anime.Tags.Add(tag);
+                }
+            }
+
+            foreach (var mangaTag in mangaTags)
+            {
+                var manga = mangas.FirstOrDefault(a => a.MangaId == mangaTag.MangaId);
+                var tag = tags.FirstOrDefault(t => t.TagId == mangaTag.TagId);
+
+                if (manga != null && tag != null)
+                {
+                    manga.Tags.Add(tag);
+                }
+            }
+
+            foreach (var manwhaTag in manwhaTags)
+            {
+                var manwha = manwhas.FirstOrDefault(a => a.ManwhaId == manwhaTag.ManwhaId);
+                var tag = tags.FirstOrDefault(t => t.TagId == manwhaTag.TagId);
+
+                if (manwha != null && tag != null)
+                {
+                    manwha.Tags.Add(tag);
+                }
+            }
+
+            foreach (var animeBrand in animeBrands)
+            {
+                var anime = animes.FirstOrDefault(a => a.AnimeId == animeBrand.AnimeId);
+                var brand = brands.FirstOrDefault(b => b.BrandId == animeBrand.BrandKey);
+
+                if (anime != null && brand != null)
+                {
+                    anime.Brands.Add(brand);
+                }
+            }
+
+            foreach (var mangaBrand in mangaBrands)
+            {
+                var manga = mangas.FirstOrDefault(a => a.MangaId == mangaBrand.MangaId);
+                var brand = brands.FirstOrDefault(b => b.BrandId == mangaBrand.BrandKey);
+
+                if (manga != null && brand != null)
+                {
+                    manga.Brands.Add(brand);
+                }
+            }
+
+            foreach (var manwhaBrand in manwhaBrands)
+            {
+                var manwha = manwhas.FirstOrDefault(a => a.ManwhaId == manwhaBrand.ManwhaId);
+                var brand = brands.FirstOrDefault(b => b.BrandId == manwhaBrand.BrandKey);
+
+                if (manwha != null && brand != null)
+                {
+                    manwha.Brands.Add(brand);
+                }
+            }
+
+            foreach (var mangaAuthor in mangaAuthors)
+            {
+                var manga = mangas.FirstOrDefault(a => a.MangaId == mangaAuthor.MangaId);
+                var author = authors.FirstOrDefault(b => b.AuthorId == mangaAuthor.AuthorKey);
+
+                if (manga != null && author != null)
+                {
+                    manga.Authors.Add(author);
+                }
+            }
+
+            foreach (var manwhaAuthor in manwhaAuthors)
+            {
+                var manwha = manwhas.FirstOrDefault(a => a.ManwhaId == manwhaAuthor.ManwhaId);
+                var author = authors.FirstOrDefault(b => b.AuthorId == manwhaAuthor.AuthorKey);
+
+                if (manwha != null && author != null)
+                {
+                    manwha.Authors.Add(author);
+                }
+            }
+
+            foreach (var mangaArtist in mangaArtists)
+            {
+                var manga = mangas.FirstOrDefault(a => a.MangaId == mangaArtist.MangaId);
+                var artist = artists.FirstOrDefault(b => b.ArtistId == mangaArtist.ArtistId);
+
+                if (manga != null && artist != null)
+                {
+                    manga.Artists.Add(artist);
+                }
+            }
+
+            foreach (var manwhaArtist in manwhaArtists)
+            {
+                var manwha = manwhas.FirstOrDefault(a => a.ManwhaId == manwhaArtist.ManwhaId);
+                var artist = artists.FirstOrDefault(b => b.ArtistId == manwhaArtist.ArtistId);
+
+                if (manwha != null && artist != null)
+                {
+                    manwha.Artists.Add(artist);
+                }
+            }
+
+
+            await _dbContext.SaveChangesAsync();
+
 
             await _dbContext.Database.CommitTransactionAsync();
         }

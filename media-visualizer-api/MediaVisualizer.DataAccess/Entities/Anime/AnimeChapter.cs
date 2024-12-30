@@ -6,11 +6,11 @@ namespace MediaVisualizer.DataAccess.Entities.Anime;
 
 public class AnimeChapter : AuditEntity
 {
-    [Key] public int AnimeChapterKey { get; set; }
+    [Key] public int AnimeChapterId { get; set; }
 
-    public int AnimeKey { get; set; }
+    public int AnimeId { get; set; }
 
-    [ForeignKey(nameof(AnimeKey))] public Anime Anime { get; set; }
+    [ForeignKey(nameof(AnimeId))] public Anime Anime { get; set; }
 
     public int ChapterNumber { get; set; }
 

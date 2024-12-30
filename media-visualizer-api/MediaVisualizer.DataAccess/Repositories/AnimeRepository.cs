@@ -29,10 +29,10 @@ public class AnimeRepository : IAnimeRepository
         }
 
         if (filters.BrandKeys != null && filters.BrandKeys.Count != 0)
-            query = query.Where(x => x.Brands.Any(y => filters.BrandKeys.Contains(y.BrandKey)));
+            query = query.Where(x => x.Brands.Any(y => filters.BrandKeys.Contains(y.BrandId)));
 
         if (filters.TagKeys != null && filters.TagKeys.Count != 0)
-            query = query.Where(x => x.Tags.Any(y => filters.TagKeys.Contains(y.TagKey)));
+            query = query.Where(x => x.Tags.Any(y => filters.TagKeys.Contains(y.TagId)));
 
         if (filters.Page != null && filters.Page > 0 && filters.Size != null && filters.Size > 0)
             query = query.Skip(filters.Size.Value * (filters.Page.Value - 1)).Take(filters.Size.Value);
@@ -43,20 +43,20 @@ public class AnimeRepository : IAnimeRepository
     public async Task<Anime> Get(int animeKey)
     {
         var query = GetBaseQuery();
-        return await query.FirstAsync(x => x.AnimeKey == animeKey);
+        return await query.FirstAsync(x => x.AnimeId == animeKey);
     }
 
     public async Task<Anime> GetRandom()
     {
         var query = GetBaseQuery();
-        var count = await _dbContext.Anime.CountAsync();
+        var count = await _dbContext.Animes.CountAsync();
         var randomIndex = new Random().Next(count);
         return await query.Skip(randomIndex).FirstAsync();
     }
 
     private IQueryable<Anime> GetBaseQuery()
     {
-        return _dbContext.Anime
+        return _dbContext.Animes
             .Include(x => x.AnimeChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags);
