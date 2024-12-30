@@ -15,7 +15,7 @@ public class ManwhaRepository : IManwhaRepository
 
     public async Task<IEnumerable<Manwha>> GetList(FiltersRequest filters)
     {
-        var query = getBaseManwhaQuery();
+        var query = GetBaseQuery();
 
         if (filters.SortOrder != null)
         {
@@ -40,14 +40,14 @@ public class ManwhaRepository : IManwhaRepository
             query = query.Where(x => x.Authors.Any(y => filters.AuthorKeys.Contains(y.AuthorKey)));
 
         if (filters.Page != null && filters.Page > 0 && filters.Size != null && filters.Size > 0)
-            query = query.Skip(filters.Size.Value * filters.Page.Value).Take(filters.Size.Value);
+            query = query.Skip(filters.Size.Value * (filters.Page.Value - 1)).Take(filters.Size.Value);
 
         return await query.ToListAsync();
     }
 
     public async Task<Manwha> GetRandom()
     {
-        var query = getBaseManwhaQuery();
+        var query = GetBaseQuery();
         var count = await _dbContext.Manwha.CountAsync();
         var randomIndex = new Random().Next(count);
         return await query.Skip(randomIndex).FirstAsync();
@@ -55,11 +55,11 @@ public class ManwhaRepository : IManwhaRepository
 
     public async Task<Manwha> Get(int manwhaKey)
     {
-        var query = getBaseManwhaQuery();
+        var query = GetBaseQuery();
         return await query.FirstAsync(x => x.ManwhaKey == manwhaKey);
     }
 
-    private IQueryable<Manwha> getBaseManwhaQuery()
+    private IQueryable<Manwha> GetBaseQuery()
     {
         return _dbContext.Manwha
             .Include(x => x.ManwhaChapters)

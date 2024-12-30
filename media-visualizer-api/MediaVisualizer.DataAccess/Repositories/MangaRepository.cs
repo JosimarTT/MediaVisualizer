@@ -15,7 +15,7 @@ public class MangaRepository : IMangaRepository
 
     public async Task<IEnumerable<Manga>> GetList(FiltersRequest filters)
     {
-        var query = GetBaseMangaQuery();
+        var query = GetBaseQuery();
 
         if (filters.SortOrder != null)
         {
@@ -40,26 +40,26 @@ public class MangaRepository : IMangaRepository
             query = query.Where(x => x.Authors.Any(y => filters.AuthorKeys.Contains(y.AuthorKey)));
 
         if (filters.Page != null && filters.Page > 0 && filters.Size != null && filters.Size > 0)
-            query = query.Skip(filters.Size.Value * filters.Page.Value).Take(filters.Size.Value);
+            query = query.Skip(filters.Size.Value * (filters.Page.Value - 1)).Take(filters.Size.Value);
 
         return await query.ToListAsync();
     }
 
     public async Task<Manga> Get(int mangaKey)
     {
-        var query = GetBaseMangaQuery();
+        var query = GetBaseQuery();
         return await query.FirstAsync(x => x.MangaKey == mangaKey);
     }
 
     public async Task<Manga> GetRandom()
     {
-        var query = GetBaseMangaQuery();
+        var query = GetBaseQuery();
         var count = await _dbContext.Manga.CountAsync();
         var randomIndex = new Random().Next(count);
         return await query.Skip(randomIndex).FirstAsync();
     }
 
-    private IQueryable<Manga> GetBaseMangaQuery()
+    private IQueryable<Manga> GetBaseQuery()
     {
         return _dbContext.Manga
             .Include(x => x.MangaChapters)
