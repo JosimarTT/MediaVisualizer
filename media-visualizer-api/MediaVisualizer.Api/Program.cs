@@ -1,6 +1,6 @@
 using MediaVisualizer.DataAccess;
 using MediaVisualizer.DataAccess.Repositories;
-using MediaVisualizer.DataMigrator.Seeds;
+using MediaVisualizer.DataMigrator;
 using MediaVisualizer.Services;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +21,10 @@ builder.Services.AddDbContext<MediaVisualizerDbContext>(options =>
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
 builder.Services.AddScoped<IMangaRepository, MangaRepository>();
 builder.Services.AddScoped<IManwhaRepository, ManwhaRepository>();
-builder.Services.AddScoped<ISeedsMigrator, SeedsMigrator>();
+
+// Register the migrators
+builder.Services.AddScoped<ISeedsMigratorRepository, SeedsMigratorRepository>();
+builder.Services.AddScoped<IAnimeMigratorRepository, AnimeMigratorRepository>();
 
 // Register the services
 builder.Services.AddScoped<IAnimeService, AnimeService>();

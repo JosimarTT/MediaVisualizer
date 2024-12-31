@@ -1,20 +1,17 @@
-﻿using System.Text;
-using ClosedXML.Excel;
-using MediaVisualizer.DataAccess;
+﻿using MediaVisualizer.DataAccess;
 using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.DataAccess.Entities.Manga;
 using MediaVisualizer.DataAccess.Entities.Manwha;
 using MediaVisualizer.DataAccess.Entities.Shared;
 using MediaVisualizer.Shared;
-using Microsoft.EntityFrameworkCore;
 
-namespace MediaVisualizer.DataMigrator.Seeds;
+namespace MediaVisualizer.DataMigrator;
 
-public class SeedsMigrator : ISeedsMigrator
+public class SeedsMigratorRepository : ISeedsMigratorRepository
 {
     private readonly MediaVisualizerDbContext _dbContext;
 
-    public SeedsMigrator(MediaVisualizerDbContext dbContext)
+    public SeedsMigratorRepository(MediaVisualizerDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -380,9 +377,7 @@ public class SeedsMigrator : ISeedsMigrator
                 }
             }
 
-
             await _dbContext.SaveChangesAsync();
-
 
             await _dbContext.Database.CommitTransactionAsync();
         }
@@ -394,7 +389,7 @@ public class SeedsMigrator : ISeedsMigrator
     }
 }
 
-public interface ISeedsMigrator
+public interface ISeedsMigratorRepository
 {
     Task Migrate();
 }
