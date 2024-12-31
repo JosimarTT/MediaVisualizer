@@ -15,4 +15,6 @@ public class AnimeChapter : AuditEntity
     public int ChapterNumber { get; set; }
 
     public string Logo { get; set; }
+
+    public string Video { get; set; }
 }

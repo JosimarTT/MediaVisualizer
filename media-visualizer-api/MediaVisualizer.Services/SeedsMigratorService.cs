@@ -1,19 +1,19 @@
-﻿using MediaVisualizer.DataMigrator.Seeds;
+﻿using MediaVisualizer.DataMigrator;
 
 namespace MediaVisualizer.Services;
 
 public class SeedsMigratorService : ISeedMigratorService
 {
-    private readonly ISeedsMigrator _seedsMigrator;
+    private readonly ISeedsMigratorRepository _seedsMigratorRepository;
 
-    public SeedsMigratorService(ISeedsMigrator seedsMigrator)
+    public SeedsMigratorService(ISeedsMigratorRepository seedsMigratorRepository)
     {
-        _seedsMigrator = seedsMigrator;
+        _seedsMigratorRepository = seedsMigratorRepository;
     }
 
     public async Task Migrate()
     {
-        await _seedsMigrator.Migrate();
+        await _seedsMigratorRepository.Migrate();
     }
 }
 
