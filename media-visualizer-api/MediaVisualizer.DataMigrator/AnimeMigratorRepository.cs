@@ -18,10 +18,7 @@ public class AnimeMigratorRepository : IAnimeMigratorRepository
     public async Task Migrate()
     {
         var newAnimes = new List<Anime>();
-        var directories = Directory.GetDirectories(basePath, "*", SearchOption.AllDirectories);
-        var files = directories
-            .SelectMany(dir => Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories))
-            .ToList();
+        var files = Directory.GetFiles(basePath, "*.*", SearchOption.AllDirectories).ToList();
         var groupedFiles = files
             .GroupBy(file => new DirectoryInfo(Path.GetDirectoryName(file)).Name)
             .ToDictionary(group => group.Key, group => group.Select(file => Path.GetFileName(file)).ToList());

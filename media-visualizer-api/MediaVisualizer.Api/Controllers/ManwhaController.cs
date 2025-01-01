@@ -34,5 +34,12 @@ namespace MediaVisualizer.Api.Controllers
         {
             return Ok(await _manwhaService.GetRandom());
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Migrate()
+        {
+            await _manwhaService.Migrate();
+            return Ok();
+        }
     }
 }

@@ -295,6 +295,10 @@ namespace MediaVisualizer.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Logos")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -325,6 +329,10 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.Property<int>("ManwhaId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("PageExtension")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PagesCount")
                         .HasColumnType("INTEGER");
