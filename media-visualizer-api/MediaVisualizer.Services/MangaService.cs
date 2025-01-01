@@ -2,6 +2,7 @@
 using MediaVisualizer.Services.Converters;
 using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.Requests;
+using MediaVisualizer.Shared.Responses;
 
 namespace MediaVisualizer.Services;
 
@@ -20,10 +21,11 @@ public class MangaService : IMangaService
         return manga.ToDto();
     }
 
-    public async Task<IEnumerable<MangaDto>> GetList(FiltersRequest filters)
+    public async Task<ListResponse<MangaDto>> GetList(FiltersRequest filters)
     {
-        var mangas = await _mangaRepository.GetList(filters);
-        return mangas.ToList().ToListDto();
+        var (totalCount, mangas) = await _mangaRepository.GetList(filters);
+        var mangaListDto = mangas.ToList().ToListDto();
+        return new ListResponse<MangaDto>(mangaListDto, totalCount, filters.Size!.Value, filters.Page!.Value);
     }
 
     public async Task<MangaDto> GetRandom()
@@ -36,6 +38,6 @@ public class MangaService : IMangaService
 public interface IMangaService
 {
     public Task<MangaDto> Get(int key);
-    public Task<IEnumerable<MangaDto>> GetList(FiltersRequest filters);
+    public Task<ListResponse<MangaDto>> GetList(FiltersRequest filters);
     public Task<MangaDto> GetRandom();
 }

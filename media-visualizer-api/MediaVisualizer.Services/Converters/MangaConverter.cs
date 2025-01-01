@@ -29,7 +29,7 @@ public static class MangaConverter
         return mangas.Select(x => x.ToDto()).ToList();
     }
 
-    public static MangaChapterDto ConvertToMangaChapterDto(this MangaChapter chapter)
+    public static MangaChapterDto ToDto(this MangaChapter chapter)
     {
         if (chapter == null) return null;
 
@@ -47,6 +47,6 @@ public static class MangaConverter
     {
         if (chapters == null || chapters.Count == 0) return new List<MangaChapterDto>();
 
-        return chapters.Select(x => x.ConvertToMangaChapterDto()).ToList();
+        return chapters.Select(x => x.ToDto()).ToList();
     }
 }

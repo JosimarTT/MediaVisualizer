@@ -29,7 +29,7 @@ public static class ManwhaConverter
         return manwhas.Select(x => x.ToDto()).ToList();
     }
 
-    public static ManwhaChapterDto ConvertToManwhaChapterDto(this ManwhaChapter chapter)
+    public static ManwhaChapterDto ToDto(this ManwhaChapter chapter)
     {
         if (chapter == null) return null;
 
@@ -47,6 +47,6 @@ public static class ManwhaConverter
     {
         if (chapters == null || chapters.Count == 0) return [];
 
-        return chapters.Select(x => x.ConvertToManwhaChapterDto()).ToList();
+        return chapters.Select(x => x.ToDto()).ToList();
     }
 }
