@@ -54,7 +54,7 @@ public class ManwhaMigratorRepository : IManwhaMigratorRepository
                     var chapter = new ManwhaChapter
                     {
                         ChapterNumber = int.Parse(chapterNumber),
-                        PagesCount = chapterGroup.Count-1,
+                        PagesCount = chapterGroup.Count - 1,
                         Logo = chapterGroup.First(file =>
                             Path.GetFileNameWithoutExtension(file).Split('-')[1] == "0"),
                         PageExtension = Path.GetExtension(chapterGroup.First(file =>

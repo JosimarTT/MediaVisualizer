@@ -2,7 +2,7 @@
 
 public class MangaDto
 {
-    public int MangaKey { get; set; }
+    public int MangaId { get; set; }
     public string Folder { get; set; }
     public string Title { get; set; }
     public ICollection<MangaChapterDto> Chapters { get; set; }

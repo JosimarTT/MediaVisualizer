@@ -11,7 +11,7 @@ public static class MangaConverter
 
         return new MangaDto
         {
-            MangaKey = manga.MangaId,
+            MangaId = manga.MangaId,
             Folder = manga.Folder,
             Title = manga.Title,
             Chapters = manga.MangaChapters.ToListDto(),
@@ -35,7 +35,7 @@ public static class MangaConverter
 
         return new MangaChapterDto
         {
-            MangaChapterKey = chapter.MangaChapterId,
+            MangaChapterId = chapter.MangaChapterId,
             MangaKey = chapter.MangaId,
             ChapterNumber = chapter.ChapterNumber,
             PagesCount = chapter.PagesCount,

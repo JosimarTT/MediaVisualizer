@@ -5,8 +5,8 @@ public class FiltersRequest
     public int? Size { get; set; }
     public int? Page { get; set; }
     public string? SortOrder { get; set; }
-    public List<int>? AuthorKeys { get; set; }
-    public List<int>? TagKeys { get; set; }
-    public List<int>? BrandKeys { get; set; }
-    public List<int>? ArtistKeys { get; set; }
+    public List<int>? AuthorIds { get; set; }
+    public List<int>? TagIds { get; set; }
+    public List<int>? BrandIds { get; set; }
+    public List<int>? ArtistIds { get; set; }
 }

@@ -2,6 +2,6 @@
 
 public class BrandDto
 {
-    public int BrandKey { get; set; }
+    public int BrandId { get; set; }
     public string Name { get; set; }
 }

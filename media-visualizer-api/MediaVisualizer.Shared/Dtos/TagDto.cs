@@ -2,6 +2,6 @@
 
 public class TagDto
 {
-    public int TagKey { get; set; }
+    public int TagId { get; set; }
     public string Name { get; set; }
 }

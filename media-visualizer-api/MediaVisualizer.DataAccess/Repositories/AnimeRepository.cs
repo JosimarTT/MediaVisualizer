@@ -28,11 +28,11 @@ public class AnimeRepository : IAnimeRepository
             };
         }
 
-        if (filters.BrandKeys != null && filters.BrandKeys.Count != 0)
-            query = query.Where(x => x.Brands.Any(y => filters.BrandKeys.Contains(y.BrandId)));
+        if (filters.BrandIds != null && filters.BrandIds.Count != 0)
+            query = query.Where(x => x.Brands.Any(y => filters.BrandIds.Contains(y.BrandId)));
 
-        if (filters.TagKeys != null && filters.TagKeys.Count != 0)
-            query = query.Where(x => x.Tags.Any(y => filters.TagKeys.Contains(y.TagId)));
+        if (filters.TagIds != null && filters.TagIds.Count != 0)
+            query = query.Where(x => x.Tags.Any(y => filters.TagIds.Contains(y.TagId)));
 
         if (filters.Page != null && filters.Page > 0 && filters.Size != null && filters.Size > 0)
             query = query.Skip(filters.Size.Value * (filters.Page.Value - 1)).Take(filters.Size.Value);

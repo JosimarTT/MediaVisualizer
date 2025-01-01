@@ -2,7 +2,7 @@
 
 public class MangaChapterDto
 {
-    public int MangaChapterKey { get; set; }
+    public int MangaChapterId { get; set; }
     public int MangaKey { get; set; }
     public int ChapterNumber { get; set; }
     public int PagesCount { get; set; }

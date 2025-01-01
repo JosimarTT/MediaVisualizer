@@ -2,7 +2,7 @@
 
 public class ManwhaDto
 {
-    public int ManwhaKey { get; set; }
+    public int ManwhaId { get; set; }
     public string Folder { get; set; }
     public string Title { get; set; }
     public ICollection<ManwhaChapterDto> ManwhaChapters { get; set; }

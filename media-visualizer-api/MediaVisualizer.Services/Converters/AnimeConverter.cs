@@ -11,7 +11,7 @@ public static class AnimeConverter
 
         return new AnimeDto
         {
-            AnimeKey = anime.AnimeId,
+            AnimeId = anime.AnimeId,
             Folder = anime.Folder,
             Title = anime.Title,
             Brands = anime.Brands.ToListDto(),
