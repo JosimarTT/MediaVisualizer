@@ -11,7 +11,7 @@ public static class ArtistConverter
 
         return new ArtistDto
         {
-            ArtistKey = artist.ArtistId,
+            ArtistId = artist.ArtistId,
             Name = artist.Name,
         };
     }

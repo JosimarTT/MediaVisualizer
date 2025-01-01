@@ -2,7 +2,7 @@
 
 public class AnimeDto
 {
-    public int AnimeKey { get; set; }
+    public int AnimeId { get; set; }
     public string Folder { get; set; }
     public string Title { get; set; }
     public ICollection<BrandDto> Brands { get; set; }

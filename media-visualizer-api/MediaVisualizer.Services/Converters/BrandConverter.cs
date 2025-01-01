@@ -10,7 +10,7 @@ public static class BrandConverter
         if (brand == null) return null;
         return new BrandDto
         {
-            BrandKey = brand.BrandId,
+            BrandId = brand.BrandId,
             Name = brand.Name,
         };
     }

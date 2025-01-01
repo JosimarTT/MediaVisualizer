@@ -96,6 +96,7 @@ namespace MediaVisualizer.DataAccess.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Folder = table.Column<string>(type: "TEXT", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Logos = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
@@ -128,6 +129,7 @@ namespace MediaVisualizer.DataAccess.Migrations
                     AnimeId = table.Column<int>(type: "INTEGER", nullable: false),
                     ChapterNumber = table.Column<int>(type: "INTEGER", nullable: false),
                     Logo = table.Column<string>(type: "TEXT", nullable: false),
+                    Video = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
@@ -344,6 +346,7 @@ namespace MediaVisualizer.DataAccess.Migrations
                     ChapterNumber = table.Column<int>(type: "INTEGER", nullable: false),
                     PagesCount = table.Column<int>(type: "INTEGER", nullable: false),
                     Logo = table.Column<string>(type: "TEXT", nullable: false),
+                    PageExtension = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },

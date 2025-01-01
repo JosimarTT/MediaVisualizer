@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaVisualizer.DataAccess.Migrations
 {
     [DbContext(typeof(MediaVisualizerDbContext))]
-    [Migration("20241230221108_Initial")]
+    [Migration("20250101230708_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -217,6 +217,10 @@ namespace MediaVisualizer.DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Video")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("AnimeChapterId");
 
                     b.HasIndex("AnimeId");
@@ -294,6 +298,10 @@ namespace MediaVisualizer.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Logos")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -324,6 +332,10 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.Property<int>("ManwhaId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("PageExtension")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PagesCount")
                         .HasColumnType("INTEGER");
