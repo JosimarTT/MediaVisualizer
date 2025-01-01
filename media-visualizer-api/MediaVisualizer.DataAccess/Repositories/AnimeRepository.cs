@@ -14,9 +14,11 @@ public class AnimeRepository : IAnimeRepository
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<Anime>> GetList(FiltersRequest filters)
+    public async Task<(int totalCount, IEnumerable<Anime>)> GetList(FiltersRequest filters)
     {
         var query = GetBaseQuery();
+
+        var totalCount = await query.CountAsync();
 
         if (filters.SortOrder != null)
         {
@@ -37,7 +39,9 @@ public class AnimeRepository : IAnimeRepository
         if (filters.Page != null && filters.Page > 0 && filters.Size != null && filters.Size > 0)
             query = query.Skip(filters.Size.Value * (filters.Page.Value - 1)).Take(filters.Size.Value);
 
-        return await query.ToListAsync();
+        var animes = await query.ToListAsync();
+
+        return (totalCount, animes);
     }
 
     public async Task<Anime> Get(int animeKey)
@@ -65,7 +69,7 @@ public class AnimeRepository : IAnimeRepository
 
 public interface IAnimeRepository
 {
-    public Task<IEnumerable<Anime>> GetList(FiltersRequest filters);
+    public Task<(int totalCount, IEnumerable<Anime>)> GetList(FiltersRequest filters);
     public Task<Anime> Get(int animeKey);
     Task<Anime> GetRandom();
 }

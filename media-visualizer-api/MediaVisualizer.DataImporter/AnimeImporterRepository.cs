@@ -1,16 +1,16 @@
 ﻿using MediaVisualizer.DataAccess;
 using MediaVisualizer.DataAccess.Entities.Anime;
+using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.ExtensionMethods;
-using Constants = MediaVisualizer.Shared.Constants;
 
-namespace MediaVisualizer.DataMigrator;
+namespace MediaVisualizer.DataImporter;
 
-public class AnimeMigratorRepository : IAnimeMigratorRepository
+public class AnimeImporterRepository : IAnimeImporterRepository
 {
     private readonly MediaVisualizerDbContext _dbContext;
     private readonly string basePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.AnimeFolderPath);
 
-    public AnimeMigratorRepository(MediaVisualizerDbContext dbContext)
+    public AnimeImporterRepository(MediaVisualizerDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -65,7 +65,7 @@ public class AnimeMigratorRepository : IAnimeMigratorRepository
     }
 }
 
-public interface IAnimeMigratorRepository
+public interface IAnimeImporterRepository
 {
     Task Migrate();
 }

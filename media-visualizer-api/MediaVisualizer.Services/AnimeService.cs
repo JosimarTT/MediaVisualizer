@@ -1,21 +1,22 @@
 ﻿using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.DataAccess.Repositories;
-using MediaVisualizer.DataMigrator;
+using MediaVisualizer.DataImporter;
 using MediaVisualizer.Services.Converters;
 using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.Requests;
+using MediaVisualizer.Shared.Responses;
 
 namespace MediaVisualizer.Services;
 
 public class AnimeService : IAnimeService
 {
     private readonly IAnimeRepository _animeRepository;
-    private readonly IAnimeMigratorRepository _animeMigratorRepository;
+    private readonly IAnimeImporterRepository _animeImporterRepository;
 
-    public AnimeService(IAnimeRepository animeRepository, IAnimeMigratorRepository animeMigratorRepository)
+    public AnimeService(IAnimeRepository animeRepository, IAnimeImporterRepository animeImporterRepository)
     {
         _animeRepository = animeRepository;
-        _animeMigratorRepository = animeMigratorRepository;
+        _animeImporterRepository = animeImporterRepository;
     }
 
     public async Task<AnimeDto> Get(int key)
@@ -24,10 +25,11 @@ public class AnimeService : IAnimeService
         return anime.ToDto();
     }
 
-    public async Task<IEnumerable<AnimeDto>> GetList(FiltersRequest filters)
+    public async Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters)
     {
-        var animes = await _animeRepository.GetList(filters);
-        return animes.ToList().ToListDto();
+        var (totalCount, animes) = await _animeRepository.GetList(filters);
+        var animeListDto = animes.ToList().ToListDto();
+        return new ListResponse<AnimeDto>(animeListDto, totalCount, filters.Size!.Value, filters.Page!.Value);
     }
 
     public async Task<AnimeDto> GetRandom()
@@ -38,14 +40,14 @@ public class AnimeService : IAnimeService
 
     public async Task Migrate()
     {
-        await _animeMigratorRepository.Migrate();
+        await _animeImporterRepository.Migrate();
     }
 }
 
 public interface IAnimeService
 {
     public Task<AnimeDto> Get(int key);
-    public Task<IEnumerable<AnimeDto>> GetList(FiltersRequest filters);
+    public Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters);
     Task<AnimeDto> GetRandom();
     Task Migrate();
 }

@@ -8,7 +8,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\MediaVisualizer.DataAccess\MediaVisualizer.DataAccess.csproj"/>
-        <ProjectReference Include="..\MediaVisualizer.DataMigrator\MediaVisualizer.DataMigrator.csproj"/>
+        <ProjectReference Include="..\MediaVisualizer.DataImporter\MediaVisualizer.DataImporter.csproj"/>
         <ProjectReference Include="..\MediaVisualizer.Shared\MediaVisualizer.Shared.csproj"/>
     </ItemGroup>
 

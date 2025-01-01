@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.DataAccess"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.Shared", "MediaVisualizer.Shared\MediaVisualizer.Shared.csproj", "{67E08597-A6AA-4860-8065-7ECC580D2672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.DataMigrator", "MediaVisualizer.DataMigrator\MediaVisualizer.DataMigrator.csproj", "{A98FC51E-BD89-4F58-A1FA-24A81014552B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.DataImporter", "MediaVisualizer.DataImporter\MediaVisualizer.DataImporter.csproj", "{A98FC51E-BD89-4F58-A1FA-24A81014552B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,6 @@
 ﻿using MediaVisualizer.DataAccess.Entities.Manga;
 using MediaVisualizer.Shared.Requests;
+using MediaVisualizer.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Repositories;
@@ -13,9 +14,11 @@ public class MangaRepository : IMangaRepository
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<Manga>> GetList(FiltersRequest filters)
+    public async Task<(int totalCount, IEnumerable<Manga>)> GetList(FiltersRequest filters)
     {
         var query = GetBaseQuery();
+
+        var totalCount = await query.CountAsync();
 
         if (filters.SortOrder != null)
         {
@@ -42,7 +45,9 @@ public class MangaRepository : IMangaRepository
         if (filters.Page != null && filters.Page > 0 && filters.Size != null && filters.Size > 0)
             query = query.Skip(filters.Size.Value * (filters.Page.Value - 1)).Take(filters.Size.Value);
 
-        return await query.ToListAsync();
+        var mangas = await query.ToListAsync();
+
+        return (totalCount, mangas);
     }
 
     public async Task<Manga> Get(int mangaKey)
@@ -72,7 +77,7 @@ public class MangaRepository : IMangaRepository
 
 public interface IMangaRepository
 {
-    public Task<IEnumerable<Manga>> GetList(FiltersRequest filters);
+    public Task<(int totalCount, IEnumerable<Manga>)> GetList(FiltersRequest filters);
     public Task<Manga> Get(int mangaKey);
     public Task<Manga> GetRandom();
 }

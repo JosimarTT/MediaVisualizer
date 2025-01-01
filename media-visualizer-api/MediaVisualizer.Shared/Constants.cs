@@ -8,7 +8,7 @@ public static class Constants
     public const string ManwhaFolderPath = "Manwhas";
 
     public const string BaseCsvFilesPath =
-        @"E:\media-visualizer\media-visualizer-api\MediaVisualizer.DataMigrator\CsvFiles";
+        @"E:\media-visualizer\media-visualizer-api\MediaVisualizer.DataImporter\CsvFiles";
 
     public const string AnimeCsvFilePath = "Anime.csv";
     public const string MangaCsvFilePath = "Manga.csv";
@@ -34,4 +34,7 @@ public static class Constants
     public const string DateFormat = "yyyy-MM-dd HH:mm:ss";
     public static readonly List<string> imageExtensions = [".jpg", ".jpeg", ".png", ".gif"];
     public static readonly List<string> videoExtensions = [".mp4", ".mkv", ".avi", ".flv", ".wmv"];
+
+    public const int DefaultPage = 1;
+    public const int DefaultSize = 10;
 }

@@ -13,9 +13,11 @@ public class ManwhaRepository : IManwhaRepository
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<Manwha>> GetList(FiltersRequest filters)
+    public async Task<(int totalCount, IEnumerable<Manwha>)> GetList(FiltersRequest filters)
     {
         var query = GetBaseQuery();
+
+        var totalCount = await query.CountAsync();
 
         if (filters.SortOrder != null)
         {
@@ -42,7 +44,9 @@ public class ManwhaRepository : IManwhaRepository
         if (filters.Page != null && filters.Page > 0 && filters.Size != null && filters.Size > 0)
             query = query.Skip(filters.Size.Value * (filters.Page.Value - 1)).Take(filters.Size.Value);
 
-        return await query.ToListAsync();
+        var manwhas = await query.ToListAsync();
+
+        return (totalCount, manwhas);
     }
 
     public async Task<Manwha> GetRandom()
@@ -73,6 +77,6 @@ public class ManwhaRepository : IManwhaRepository
 public interface IManwhaRepository
 {
     public Task<Manwha> Get(int manwhaKey);
-    public Task<IEnumerable<Manwha>> GetList(FiltersRequest filters);
+    public Task<(int totalCount, IEnumerable<Manwha>)> GetList(FiltersRequest filters);
     public Task<Manwha> GetRandom();
 }

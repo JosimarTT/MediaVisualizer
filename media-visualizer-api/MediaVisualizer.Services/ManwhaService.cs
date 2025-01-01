@@ -1,20 +1,21 @@
 ﻿using MediaVisualizer.DataAccess.Repositories;
-using MediaVisualizer.DataMigrator;
+using MediaVisualizer.DataImporter;
 using MediaVisualizer.Services.Converters;
 using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.Requests;
+using MediaVisualizer.Shared.Responses;
 
 namespace MediaVisualizer.Services;
 
 public class ManwhaService : IManwhaService
 {
     private readonly IManwhaRepository _manwhaRepository;
-    private readonly IManwhaMigratorRepository _manwhaMigratorRepository;
+    private readonly IManwhaImporterRepository _manwhaImporterRepository;
 
-    public ManwhaService(IManwhaRepository manwhaRepository, IManwhaMigratorRepository manwhaMigratorRepository)
+    public ManwhaService(IManwhaRepository manwhaRepository, IManwhaImporterRepository manwhaImporterRepository)
     {
         _manwhaRepository = manwhaRepository;
-        _manwhaMigratorRepository = manwhaMigratorRepository;
+        _manwhaImporterRepository = manwhaImporterRepository;
     }
 
     public async Task<ManwhaDto> Get(int key)
@@ -23,10 +24,11 @@ public class ManwhaService : IManwhaService
         return manwha.ToDto();
     }
 
-    public async Task<IEnumerable<ManwhaDto>> GetList(FiltersRequest filters)
+    public async Task<ListResponse<ManwhaDto>> GetList(FiltersRequest filters)
     {
-        var manwhas = await _manwhaRepository.GetList(filters);
-        return manwhas.ToList().ToListDto();
+        var (totalCount, manwhas) = await _manwhaRepository.GetList(filters);
+        var manwhaListDto = manwhas.ToList().ToListDto();
+        return new ListResponse<ManwhaDto>(manwhaListDto, totalCount, filters.Size!.Value, filters.Page!.Value);
     }
 
     public async Task<ManwhaDto> GetRandom()
@@ -37,14 +39,14 @@ public class ManwhaService : IManwhaService
 
     public async Task Migrate()
     {
-        await _manwhaMigratorRepository.Migrate();
+        await _manwhaImporterRepository.Migrate();
     }
 }
 
 public interface IManwhaService
 {
     public Task<ManwhaDto> Get(int key);
-    public Task<IEnumerable<ManwhaDto>> GetList(FiltersRequest filters);
+    public Task<ListResponse<ManwhaDto>> GetList(FiltersRequest filters);
     public Task<ManwhaDto> GetRandom();
     public Task Migrate();
 }

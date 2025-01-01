@@ -2,14 +2,14 @@
 using MediaVisualizer.DataAccess.Entities.Manwha;
 using MediaVisualizer.Shared;
 
-namespace MediaVisualizer.DataMigrator;
+namespace MediaVisualizer.DataImporter;
 
-public class ManwhaMigratorRepository : IManwhaMigratorRepository
+public class ManwhaImporterRepository : IManwhaImporterRepository
 {
     private readonly MediaVisualizerDbContext _dbContext;
     private readonly string basePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.ManwhaFolderPath);
 
-    public ManwhaMigratorRepository(MediaVisualizerDbContext dbContext)
+    public ManwhaImporterRepository(MediaVisualizerDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -83,7 +83,7 @@ public class ManwhaMigratorRepository : IManwhaMigratorRepository
     }
 }
 
-public interface IManwhaMigratorRepository
+public interface IManwhaImporterRepository
 {
     Task Migrate();
 }
