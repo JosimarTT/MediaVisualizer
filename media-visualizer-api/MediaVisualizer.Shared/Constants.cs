@@ -7,33 +7,15 @@ public static class Constants
     public const string MangaFolderPath = "Mangas";
     public const string ManwhaFolderPath = "Manwhas";
 
-    public const string BaseCsvFilesPath =
-        @"E:\media-visualizer\media-visualizer-api\MediaVisualizer.DataImporter\CsvFiles";
-
-    public const string AnimeCsvFilePath = "Anime.csv";
-    public const string MangaCsvFilePath = "Manga.csv";
-    public const string ManwhaCsvFilePath = "Manwha.csv";
-    public const string TagCsvFilePath = "Tag.csv";
-    public const string BrandCsvFilePath = "Brand.csv";
-    public const string ArtistCsvFilePath = "Artist.csv";
-    public const string AuthorCsvFilePath = "Author.csv";
-    public const string AnimeTagCsvFilePath = "AnimeTag.csv";
-    public const string MangaTagCsvFilePath = "MangaTag.csv";
-    public const string ManwhaTagCsvFilePath = "ManwhaTag.csv";
-    public const string AnimeBrandCsvFilePath = "AnimeBrand.csv";
-    public const string MangaBrandCsvFilePath = "MangaBrand.csv";
-    public const string ManwhaBrandCsvFilePath = "ManwhaBrand.csv";
-    public const string MangaArtistCsvFilePath = "MangaArtist.csv";
-    public const string ManwhaArtistCsvFilePath = "ManwhaArtist.csv";
-    public const string MangaAuthorCsvFilePath = "MangaAuthor.csv";
-    public const string ManwhaAuthorCsvFilePath = "ManwhaAuthor.csv";
-    public const string AnimeChapterCsvFilePath = "AnimeChapter.csv";
-    public const string MangaChapterCsvFilePath = "MangaChapter.csv";
-    public const string ManwhaChapterCsvFilePath = "ManwhaChapter.csv";
+    public static readonly List<string> MangaFolders =
+    [
+        "[#]", "[A]", "[B]", "[C]", "[D]", "[E]", "[F]", "[G]", "[H]", "[I]", "[J]", "[K]", "[L]", "[M]", "[N]", "[O]",
+        "[P]", "[Q]", "[R]", "[S]", "[T]", "[U]", "[V]", "[W]", "[X]", "[Y]", "[Z]"
+    ];
 
     public const string DateFormat = "yyyy-MM-dd HH:mm:ss";
-    public static readonly List<string> imageExtensions = [".jpg", ".jpeg", ".png", ".gif"];
-    public static readonly List<string> videoExtensions = [".mp4", ".mkv", ".avi", ".flv", ".wmv"];
+    public static readonly List<string> ImageExtensions = [".jpg", ".jpeg", ".png", ".gif"];
+    public static readonly List<string> VideoExtensions = [".mp4", ".mkv", ".avi", ".flv", ".wmv"];
 
     public const int DefaultPage = 1;
     public const int DefaultSize = 10;

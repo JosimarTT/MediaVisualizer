@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaVisualizer.DataAccess.Migrations
 {
     [DbContext(typeof(MediaVisualizerDbContext))]
-    [Migration("20250101230708_Initial")]
+    [Migration("20250102054718_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -271,6 +271,10 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.Property<int>("MangaId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("PageExtension")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PagesCount")
                         .HasColumnType("INTEGER");

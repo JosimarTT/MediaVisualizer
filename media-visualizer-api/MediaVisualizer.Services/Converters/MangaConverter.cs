@@ -36,10 +36,11 @@ public static class MangaConverter
         return new MangaChapterDto
         {
             MangaChapterId = chapter.MangaChapterId,
-            MangaKey = chapter.MangaId,
+            MangaId = chapter.MangaId,
             ChapterNumber = chapter.ChapterNumber,
             PagesCount = chapter.PagesCount,
-            Logo = chapter.Logo
+            Logo = chapter.Logo,
+            PageExtension = chapter.PageExtension,
         };
     }
 

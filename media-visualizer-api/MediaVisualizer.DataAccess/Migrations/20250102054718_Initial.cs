@@ -250,6 +250,7 @@ namespace MediaVisualizer.DataAccess.Migrations
                     ChapterNumber = table.Column<int>(type: "INTEGER", nullable: false),
                     PagesCount = table.Column<int>(type: "INTEGER", nullable: false),
                     Logo = table.Column<string>(type: "TEXT", nullable: false),
+                    PageExtension = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },

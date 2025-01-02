@@ -17,4 +17,6 @@ public class MangaChapter : AuditEntity
     public int PagesCount { get; set; }
 
     public string Logo { get; set; }
+
+    public string PageExtension { get; set; }
 }

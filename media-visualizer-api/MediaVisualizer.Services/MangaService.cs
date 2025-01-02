@@ -1,4 +1,5 @@
 ﻿using MediaVisualizer.DataAccess.Repositories;
+using MediaVisualizer.DataImporter;
 using MediaVisualizer.Services.Converters;
 using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.Requests;
@@ -9,10 +10,12 @@ namespace MediaVisualizer.Services;
 public class MangaService : IMangaService
 {
     private readonly IMangaRepository _mangaRepository;
+    private readonly IMangaImporterRepository _mangaImporterRepository;
 
-    public MangaService(IMangaRepository mangaRepository)
+    public MangaService(IMangaRepository mangaRepository, IMangaImporterRepository mangaImporterRepository)
     {
         _mangaRepository = mangaRepository;
+        _mangaImporterRepository = mangaImporterRepository;
     }
 
     public async Task<MangaDto> Get(int key)
@@ -33,6 +36,11 @@ public class MangaService : IMangaService
         var manga = await _mangaRepository.GetRandom();
         return manga.ToDto();
     }
+
+    public async Task Migrate()
+    {
+         await _mangaImporterRepository.Migrate();
+    }
 }
 
 public interface IMangaService
@@ -40,4 +48,5 @@ public interface IMangaService
     public Task<MangaDto> Get(int key);
     public Task<ListResponse<MangaDto>> GetList(FiltersRequest filters);
     public Task<MangaDto> GetRandom();
+    public Task Migrate();
 }

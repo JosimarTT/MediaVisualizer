@@ -16,6 +16,10 @@ public class ManwhaImporterRepository : IManwhaImporterRepository
 
     public async Task Migrate()
     {
+        if (_dbContext.Manwhas.Any())
+        {
+            return;
+        }
         var newManwhas = new List<Manwha>();
         var files = Directory.GetFiles(basePath, "*.*", SearchOption.AllDirectories).ToList();
         var groupedFiles = files
