@@ -7,4 +7,5 @@ public class ManwhaChapterDto
     public int ChapterNumber { get; set; }
     public int PagesCount { get; set; }
     public string Logo { get; set; }
+    public string PageExtension { get; set; }
 }

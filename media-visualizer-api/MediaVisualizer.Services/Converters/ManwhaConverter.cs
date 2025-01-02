@@ -41,7 +41,8 @@ public static class ManwhaConverter
             ManwhaId = chapter.ManwhaId,
             ChapterNumber = chapter.ChapterNumber,
             PagesCount = chapter.PagesCount,
-            Logo = chapter.Logo
+            Logo = chapter.Logo,
+            PageExtension = chapter.PageExtension
         };
     }
 
