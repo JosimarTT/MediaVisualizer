@@ -269,6 +269,10 @@ namespace MediaVisualizer.DataAccess.Migrations
                     b.Property<int>("MangaId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("PageExtension")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("PagesCount")
                         .HasColumnType("INTEGER");
 

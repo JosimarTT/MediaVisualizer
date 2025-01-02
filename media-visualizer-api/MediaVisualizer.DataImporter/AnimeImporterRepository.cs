@@ -17,6 +17,10 @@ public class AnimeImporterRepository : IAnimeImporterRepository
 
     public async Task Migrate()
     {
+        if (_dbContext.Animes.Any())
+        {
+            return;
+        }
         var newAnimes = new List<Anime>();
         var files = Directory.GetFiles(basePath, "*.*", SearchOption.AllDirectories).ToList();
         var groupedFiles = files
