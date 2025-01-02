@@ -18,10 +18,10 @@ public class AnimeController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{key:int}")]
-    public async Task<IActionResult> Get(int key)
+    [Route("~/[controller]/{id:int}")]
+    public async Task<IActionResult> Get(int id)
     {
-        return Ok(await _animeService.Get(key));
+        return Ok(await _animeService.Get(id));
     }
 
     [HttpGet]
