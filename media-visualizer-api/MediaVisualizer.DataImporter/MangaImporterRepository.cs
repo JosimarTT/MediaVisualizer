@@ -4,7 +4,7 @@ using MediaVisualizer.Shared;
 
 namespace MediaVisualizer.DataImporter;
 
-public class MangaImporterRepository:IMangaImporterRepository
+public class MangaImporterRepository : IMangaImporterRepository
 {
     private readonly MediaVisualizerDbContext _dbContext;
     private readonly string basePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.MangaFolderPath);
@@ -24,6 +24,7 @@ public class MangaImporterRepository:IMangaImporterRepository
             {
                 return;
             }
+
             var folderPath = Path.Combine(basePath, folder);
             if (Directory.Exists(folderPath))
             {

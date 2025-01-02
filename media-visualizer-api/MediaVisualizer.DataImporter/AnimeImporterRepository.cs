@@ -21,6 +21,7 @@ public class AnimeImporterRepository : IAnimeImporterRepository
         {
             return;
         }
+
         var newAnimes = new List<Anime>();
         var files = Directory.GetFiles(basePath, "*.*", SearchOption.AllDirectories).ToList();
         var groupedFiles = files

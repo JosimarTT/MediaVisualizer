@@ -1,4 +1,5 @@
 ﻿using MediaVisualizer.DataAccess.Entities.Anime;
+using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services.Converters;
@@ -16,7 +17,8 @@ public static class AnimeConverter
             Title = anime.Title,
             Chapters = anime.AnimeChapters.ToListDto(),
             Brands = anime.Brands.ToListDto(),
-            Tags = anime.Tags.ToListDto()
+            Tags = anime.Tags.ToListDto(),
+            BasePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.AnimeFolderPath, anime.Folder)
         };
     }
 

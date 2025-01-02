@@ -1,4 +1,5 @@
 ﻿using MediaVisualizer.DataAccess.Entities.Manwha;
+using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services.Converters;
@@ -18,7 +19,8 @@ public static class ManwhaConverter
             Brands = manwha.Brands.ToListDto(),
             Tags = manwha.Tags.ToListDto(),
             Artists = manwha.Artists.ToListDto(),
-            Authors = manwha.Authors.ToListDto()
+            Authors = manwha.Authors.ToListDto(),
+            BasePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.ManwhaFolderPath, manwha.Folder)
         };
     }
 

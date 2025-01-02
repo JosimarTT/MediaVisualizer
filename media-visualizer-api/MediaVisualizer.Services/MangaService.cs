@@ -39,7 +39,7 @@ public class MangaService : IMangaService
 
     public async Task Migrate()
     {
-         await _mangaImporterRepository.Migrate();
+        await _mangaImporterRepository.Migrate();
     }
 }
 
