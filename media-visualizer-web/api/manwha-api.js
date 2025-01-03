@@ -1,18 +1,20 @@
 'use strict'
 
-const apiBaseUrl = 'http://localhost:5216/Manwha';
+const manwhaApi = {
+    apiBaseUrl: 'http://localhost:5216/Manwha',
 
-let get = async (id) => {
-    const response = await fetch(`${apiBaseUrl}/${id}`);
-    return response.json();
-}
+    get: async (id) => {
+        const response = await fetch(`${manwhaApi.apiBaseUrl}/${id}`);
+        return response.json();
+    },
 
-let getList = async () => {
-    const response = await fetch(`${apiBaseUrl}/GetList`);
-    return response.json();
-}
+    getList: async () => {
+        const response = await fetch(`${manwhaApi.apiBaseUrl}/GetList`);
+        return response.json();
+    },
 
-let getRandom = async () => {
-    const response = await fetch(`${apiBaseUrl}/GetRandom`);
-    return response.json();
-}
+    getRandom: async () => {
+        const response = await fetch(`${manwhaApi.apiBaseUrl}/GetRandom`);
+        return response.json();
+    }
+};

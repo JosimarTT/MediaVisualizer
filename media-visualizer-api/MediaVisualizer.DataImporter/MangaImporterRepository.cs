@@ -58,7 +58,6 @@ public class MangaImporterRepository : IMangaImporterRepository
 
         try
         {
-            // transaction
             await _dbContext.Database.BeginTransactionAsync();
             await _dbContext.Mangas.AddRangeAsync(mangas);
             await _dbContext.SaveChangesAsync();
