@@ -1,7 +1,7 @@
 'use strict'
 
 const animeApi = {
-    apiBaseUrl:'http://localhost:5216/Manwha',
+    apiBaseUrl: 'http://localhost:5216/Anime',
 
     get: async (id) => {
         const response = await fetch(`${animeApi.apiBaseUrl}/${id}`);

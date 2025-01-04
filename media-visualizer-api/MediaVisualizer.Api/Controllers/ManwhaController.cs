@@ -17,10 +17,10 @@ namespace MediaVisualizer.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{key:int}")]
-        public async Task<IActionResult> Get(int key)
+        [Route("~/[controller]/{id:int}")]
+        public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _manwhaService.Get(key));
+            return Ok(await _manwhaService.Get(id));
         }
 
         [HttpGet]

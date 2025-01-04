@@ -1,7 +1,7 @@
 'use strict'
 
 const mangaApi = {
-    apiBaseUrl : 'http://localhost:5216/Manga',
+    apiBaseUrl: 'http://localhost:5216/Manga',
 
     get: async (id) => {
         const response = await fetch(`${mangaApi.apiBaseUrl}/${id}`);
