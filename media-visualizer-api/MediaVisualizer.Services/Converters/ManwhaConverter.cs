@@ -15,7 +15,7 @@ public static class ManwhaConverter
             ManwhaId = manwha.ManwhaId,
             Folder = manwha.Folder,
             Title = manwha.Title,
-            ManwhaChapters = manwha.ManwhaChapters.ToListDto(),
+            Chapters = manwha.ManwhaChapters.ToListDto(),
             Brands = manwha.Brands.ToListDto(),
             Tags = manwha.Tags.ToListDto(),
             Artists = manwha.Artists.ToListDto(),
