@@ -10,4 +10,5 @@ public class MangaDto
     public ICollection<ArtistDto> Artists { get; set; }
     public ICollection<AuthorDto> Authors { get; set; }
     public ICollection<BrandDto> Brands { get; set; }
+    public string BasePath { get; set; }
 }

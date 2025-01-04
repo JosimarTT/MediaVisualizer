@@ -8,4 +8,5 @@ public class AnimeDto
     public ICollection<AnimeChapterDto> Chapters { get; set; }
     public ICollection<BrandDto> Brands { get; set; }
     public ICollection<TagDto> Tags { get; set; }
+    public string BasePath { get; set; }
 }

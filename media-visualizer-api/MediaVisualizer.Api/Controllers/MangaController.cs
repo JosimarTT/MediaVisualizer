@@ -17,10 +17,10 @@ public class MangaController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{key:int}")]
-    public async Task<IActionResult> Get(int key)
+    [Route("~/[controller]/{id:int}")]
+    public async Task<IActionResult> Get(int id)
     {
-        return Ok(await _mangaService.Get(key));
+        return Ok(await _mangaService.Get(id));
     }
 
     [HttpGet]

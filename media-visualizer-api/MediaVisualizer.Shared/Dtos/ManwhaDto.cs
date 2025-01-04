@@ -10,4 +10,5 @@ public class ManwhaDto
     public ICollection<TagDto> Tags { get; set; }
     public ICollection<ArtistDto> Artists { get; set; }
     public ICollection<AuthorDto> Authors { get; set; }
+    public string BasePath { get; set; }
 }

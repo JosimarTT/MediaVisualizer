@@ -13,6 +13,19 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
 // Register the DbContext with the connection string
 builder.Services.AddDbContext<MediaVisualizerDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MediaVisualizerDB")));
@@ -44,6 +57,8 @@ if (app.Environment.IsDevelopment())
         options.RoutePrefix = string.Empty;
     });
 }
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 
