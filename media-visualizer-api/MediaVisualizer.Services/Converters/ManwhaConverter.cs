@@ -1,4 +1,5 @@
-﻿using MediaVisualizer.DataAccess.Entities.Manwha;
+﻿using System.Text.Json;
+using MediaVisualizer.DataAccess.Entities.Manwha;
 using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
 
@@ -16,6 +17,7 @@ public static class ManwhaConverter
             Folder = manwha.Folder,
             Title = manwha.Title,
             Chapters = manwha.ManwhaChapters.ToListDto(),
+            Logos = JsonSerializer.Deserialize<ICollection<string>>(manwha.Logos),
             Brands = manwha.Brands.ToListDto(),
             Tags = manwha.Tags.ToListDto(),
             Artists = manwha.Artists.ToListDto(),

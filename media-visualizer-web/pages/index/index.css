@@ -1,0 +1,19 @@
+.container {
+    min-height: 100vh;
+    min-width: 80%;
+}
+
+.card {
+    cursor: pointer;
+    width: 35rem;
+}
+
+p {
+    font-size: 5rem;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
