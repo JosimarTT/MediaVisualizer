@@ -16,15 +16,15 @@ public class MangaImporterRepository : IMangaImporterRepository
 
     public async Task Migrate()
     {
+        if (_dbContext.Mangas.Any())
+        {
+            return;
+        }
+
         var mangas = new List<Manga>();
 
         foreach (var folder in Constants.MangaFolders)
         {
-            if (_dbContext.Mangas.Any())
-            {
-                return;
-            }
-
             var folderPath = Path.Combine(basePath, folder);
             if (Directory.Exists(folderPath))
             {
@@ -40,7 +40,7 @@ public class MangaImporterRepository : IMangaImporterRepository
                     var manga = new Manga
                     {
                         Title = mangaFolder,
-                        Folder = mangaFolder
+                        Folder = $"{folder}\\{mangaFolder}"
                     };
 
                     var mangaChapter = new MangaChapter
