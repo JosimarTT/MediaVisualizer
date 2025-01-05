@@ -3,10 +3,6 @@ html, body {
     margin: 0;
 }
 
-.container-fluid {
-    height: 100%;
-}
-
 .hover-effect {
     transition: transform 0.3s ease, background-color 0.3s;
 }

@@ -15,3 +15,8 @@ async function initialize() {
     document.getElementById('manga-card').querySelector('img').src = parseFilePath(manga.basePath, [mangaChapter.logo]);
     document.getElementById('manwha-card').querySelector('img').src = parseFilePath(manwha.basePath, [manwhaLogo]);
 }
+
+
+function redirectToAnimeView() {
+    window.location.href = '../anime/anime-view.html';
+}
