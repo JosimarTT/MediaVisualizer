@@ -6,7 +6,14 @@ function getRandomElement(arr) {
 }
 
 function parseFilePath(basePath, paths) {
-    return `file:\\${encodeURIComponent(`${basePath}\\${paths.join('\\')}`)}`;
+    console.log('basePath', basePath);
+    console.log('paths', paths);
+    const concatPath = `${basePath}\\${paths.join('\\')}`;
+    console.log('concatPath', concatPath);
+    const encodedPath = concatPath.split('\\').map(encodeURIComponent).join('\\');
+    console.log('encodedPath', encodedPath);
+    console.log('fileUrl', `file:///${encodedPath}`);
+    return `file:///${encodedPath}`;
 }
 
 function redirectToMangaView() {
@@ -19,4 +26,8 @@ function redirectToManwhaView() {
 
 function redirectToAnimeView() {
     window.location.href = '../anime/anime-view.html';
+}
+
+function openInNewTab(url) {
+    window.open(url, '_blank');
 }
