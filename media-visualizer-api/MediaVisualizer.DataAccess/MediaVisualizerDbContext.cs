@@ -14,7 +14,6 @@ public class MediaVisualizerDbContext : DbContext
     }
 
     public DbSet<Anime> Animes { get; set; }
-    public DbSet<AnimeChapter> AnimeChapters { get; set; }
     public DbSet<Manga> Mangas { get; set; }
     public DbSet<MangaChapter> MangaChapters { get; set; }
     public DbSet<Manwha> Manwhas { get; set; }

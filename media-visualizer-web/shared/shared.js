@@ -6,13 +6,8 @@ function getRandomElement(arr) {
 }
 
 function parseFilePath(basePath, paths) {
-    console.log('basePath', basePath);
-    console.log('paths', paths);
     const concatPath = `${basePath}\\${paths.join('\\')}`;
-    console.log('concatPath', concatPath);
     const encodedPath = concatPath.split('\\').map(encodeURIComponent).join('\\');
-    console.log('encodedPath', encodedPath);
-    console.log('fileUrl', `file:///${encodedPath}`);
     return `file:///${encodedPath}`;
 }
 

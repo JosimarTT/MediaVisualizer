@@ -36,7 +36,7 @@ builder.Services.AddScoped<IMangaRepository, MangaRepository>();
 builder.Services.AddScoped<IManwhaRepository, ManwhaRepository>();
 
 // Register the migrators
-builder.Services.AddScoped<IAnimeImporterRepository, AnimeImporterRepository>();
+builder.Services.AddScoped<IAnimeImporter, AnimeImporter>();
 builder.Services.AddScoped<IManwhaImporterRepository, ManwhaImporterRepository>();
 builder.Services.AddScoped<IMangaImporterRepository, MangaImporterRepository>();
 
