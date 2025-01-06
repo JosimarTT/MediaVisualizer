@@ -37,9 +37,9 @@ public class AnimeController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Migrate()
+    public async Task<IActionResult> Import()
     {
-        await _animeService.Migrate();
+        await _animeService.Import();
         return Ok();
     }
 }
