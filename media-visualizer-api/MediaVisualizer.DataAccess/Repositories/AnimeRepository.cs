@@ -65,7 +65,9 @@ public class AnimeRepository : IAnimeRepository
     {
         return _dbContext.Animes
             .Include(x => x.Brands)
-            .Include(x => x.Tags);
+            .Include(x => x.Tags)
+            .OrderBy(x=>x.Folder)
+            .ThenBy(x=>x.ChapterNumber);
     }
 }
 

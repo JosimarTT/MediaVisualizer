@@ -18,5 +18,5 @@ public static class Constants
     public static readonly List<string> VideoExtensions = [".mp4", ".mkv", ".avi", ".flv", ".wmv"];
 
     public const int DefaultPage = 1;
-    public const int DefaultSize = 10;
+    public const int DefaultSize = 18;
 }
