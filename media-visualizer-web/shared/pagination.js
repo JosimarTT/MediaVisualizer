@@ -14,10 +14,7 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
 
     let apiResponse = await apiCallback();
 
-    paginationState.page = apiResponse.page;
-    paginationState.size = apiResponse.size;
-    paginationState.totalCount = apiResponse.totalCount;
-    paginationState.totalPages = apiResponse.totalPages;
+    updatePaginationState(apiResponse);
 
     updateCollectionContentCallback(apiResponse.items);
 
@@ -103,6 +100,26 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
                 });
             }
         });
+
+        document.getElementById('search-title').addEventListener('input', function (e) {
+            const query = e.target.value;
+            if (query.length >= 3) {
+                apiCallback({title: query}).then(response => {
+                    updatePaginationState(response);
+                    createPageButtons();
+                    enableDisableNextButton();
+                    updateCollectionContent(response.items);
+                });
+            } else if (query.length === 0) {
+                apiCallback().then(response => {
+                    updatePaginationState(response);
+                    createPageButtons();
+                    enableDisableNextButton();
+                    updateCollectionContent(response.items);
+                });
+            }
+        });
+
         paginationState.areEventListenersAdded = true;
     }
 
@@ -118,5 +135,36 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         let pageButtons = paginationDiv.querySelectorAll('.page-number');
         pageButtons.forEach(button => button.classList.remove('active'));
         pageButtons[paginationState.page - 1].classList.add('active');
+    }
+
+    function updatePaginationState(apiResponse) {
+        paginationState.page = apiResponse.page;
+        paginationState.size = apiResponse.size;
+        paginationState.totalCount = apiResponse.totalCount;
+        paginationState.totalPages = apiResponse.totalPages;
+    }
+
+    function createPageButtons() {
+        let pageButtons = paginationDiv.querySelectorAll('.page-number');
+        pageButtons.forEach(button => button.remove());
+
+        for (let i = 1; i <= paginationState.totalPages; i++) {
+            let button = document.createElement('li');
+            button.className = 'page-item page-number';
+            button.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+            if (i === paginationState.page) {
+                button.classList.add('active');
+            }
+            button.addEventListener('click', function () {
+                paginationState.page = i;
+                enableDisablePrevButton();
+                enableDisableNextButton();
+                updateActivePageButton();
+                apiCallback({page: paginationState.page}).then(response => {
+                    updateCollectionContentCallback(response.items);
+                });
+            });
+            paginationDiv.insertBefore(button, nextButton);
+        }
     }
 }

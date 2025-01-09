@@ -20,3 +20,4 @@ function updateCollectionContent(items) {
             </div>`
     ).join('');
 }
+
