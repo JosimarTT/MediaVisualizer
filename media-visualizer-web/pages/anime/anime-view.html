@@ -1,0 +1,65 @@
+<!doctype html>
+<html data-bs-theme="dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="../../dist/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../../shared/shared.css" rel="stylesheet">
+</head>
+<body>
+<div class="container d-flex flex-column h-100">
+    <header class="border-bottom py-3">
+        <div class="col-12 d-flex flex-wrap justify-content-center">
+            <div class="d-flex align-items-center me-md-auto">
+                <ul class="nav d-flex align-items-center">
+                    <li class="nav-item">
+                        <button class="btn btn-dark fs-4 disabled opacity-100">Animes</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-dark" onclick="redirectToMangaView()">Mangas</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-dark" onclick="redirectToManwhaView()">Manwhas</button>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav d-flex align-items-center">
+                <li class="nav-item">
+                    <button class="btn btn-dark">Brands</button>
+                </li>
+                <li class="nav-item me-2">
+                    <button class="btn btn-dark">Tags</button>
+                </li>
+                <li class="nav-item">
+                    <div class="input-group" style="width: 500px">
+                        <input id="search-title" type="text" class="form-control" placeholder="Search title">
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="m-auto">
+        <div class="collection-grid" id="collection"></div>
+    </main>
+
+    <footer class="footer py-3 border-top">
+        <div class="container">
+            <nav aria-label="Page navigation">
+                <ul id="pagination" class="pagination m-0 justify-content-center">
+                </ul>
+            </nav>
+        </div>
+    </footer>
+</div>
+
+<script src="../../dist/bootstrap/bootstrap.min.js"></script>
+<script src="../../shared/shared.js"></script>
+<script src="../../shared/pagination.js"></script>
+<script src="../../api/anime-api.js"></script>
+<script src="anime-view.js"></script>
+</body>
+</html>

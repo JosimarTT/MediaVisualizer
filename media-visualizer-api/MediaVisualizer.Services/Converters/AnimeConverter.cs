@@ -15,7 +15,9 @@ public static class AnimeConverter
             AnimeId = anime.AnimeId,
             Folder = anime.Folder,
             Title = anime.Title,
-            Chapters = anime.AnimeChapters.ToListDto(),
+            ChapterNumber = anime.ChapterNumber,
+            Logo = anime.Logo,
+            Video = anime.Video,
             Brands = anime.Brands.ToListDto(),
             Tags = anime.Tags.ToListDto(),
             BasePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.AnimeFolderPath, anime.Folder)
@@ -27,26 +29,5 @@ public static class AnimeConverter
         if (animes == null || animes.Count == 0) return [];
 
         return animes.Select(x => x.ToDto()).ToList();
-    }
-
-    public static AnimeChapterDto ToDto(this AnimeChapter chapter)
-    {
-        if (chapter == null) return null;
-
-        return new AnimeChapterDto
-        {
-            AnimeChapterId = chapter.AnimeChapterId,
-            AnimeId = chapter.AnimeId,
-            ChapterNumber = chapter.ChapterNumber,
-            Logo = chapter.Logo,
-            Video = chapter.Video
-        };
-    }
-
-    public static ICollection<AnimeChapterDto> ToListDto(this ICollection<AnimeChapter> chapters)
-    {
-        if (chapters == null || chapters.Count == 0) return [];
-
-        return chapters.Select(x => x.ToDto()).ToList();
     }
 }

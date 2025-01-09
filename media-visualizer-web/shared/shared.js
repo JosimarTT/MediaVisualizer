@@ -6,5 +6,24 @@ function getRandomElement(arr) {
 }
 
 function parseFilePath(basePath, paths) {
-    return `file:\\${encodeURIComponent(`${basePath}\\${paths.join('\\')}`)}`;
+    const concatPath = `${basePath}\\${paths.join('\\')}`;
+    const normalizedPath = concatPath.replace(/\\/g, '/');
+    const encodedPath = normalizedPath.split('/').map(encodeURIComponent).join('/');
+    return `file:///${encodedPath}`;
+}
+
+function redirectToMangaView() {
+    window.location.href = '../manga/manga-view.html';
+}
+
+function redirectToManwhaView() {
+    window.location.href = '../manwha/manwha-view.html';
+}
+
+function redirectToAnimeView() {
+    window.location.href = '../anime/anime-view.html';
+}
+
+function openInNewTab(url) {
+    window.open(url, '_blank');
 }

@@ -19,6 +19,9 @@ namespace MediaVisualizer.DataAccess.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Folder = table.Column<string>(type: "TEXT", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
+                    ChapterNumber = table.Column<int>(type: "INTEGER", nullable: false),
+                    Logo = table.Column<string>(type: "TEXT", nullable: false),
+                    Video = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
@@ -118,30 +121,6 @@ namespace MediaVisualizer.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.TagId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AnimeChapters",
-                columns: table => new
-                {
-                    AnimeChapterId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    AnimeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ChapterNumber = table.Column<int>(type: "INTEGER", nullable: false),
-                    Logo = table.Column<string>(type: "TEXT", nullable: false),
-                    Video = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AnimeChapters", x => x.AnimeChapterId);
-                    table.ForeignKey(
-                        name: "FK_AnimeChapters_Animes_AnimeId",
-                        column: x => x.AnimeId,
-                        principalTable: "Animes",
-                        principalColumn: "AnimeId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -440,11 +419,6 @@ namespace MediaVisualizer.DataAccess.Migrations
                 column: "BrandsBrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AnimeChapters_AnimeId",
-                table: "AnimeChapters",
-                column: "AnimeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AnimeTag_TagsTagId",
                 table: "AnimeTag",
                 column: "TagsTagId");
@@ -505,9 +479,6 @@ namespace MediaVisualizer.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AnimeBrand");
-
-            migrationBuilder.DropTable(
-                name: "AnimeChapters");
 
             migrationBuilder.DropTable(
                 name: "AnimeTag");

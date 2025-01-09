@@ -18,8 +18,6 @@ public class AnimeRepository : IAnimeRepository
     {
         var query = GetBaseQuery();
 
-        var totalCount = await query.CountAsync();
-
         if (filters.SortOrder != null)
         {
             query = filters.SortOrder switch
@@ -35,6 +33,11 @@ public class AnimeRepository : IAnimeRepository
 
         if (filters.TagIds != null && filters.TagIds.Count != 0)
             query = query.Where(x => x.Tags.Any(y => filters.TagIds.Contains(y.TagId)));
+
+        if (!string.IsNullOrWhiteSpace(filters.Title))
+            query = query.Where(x => x.Title.ToLower().Contains(filters.Title.ToLower()));
+
+        var totalCount = await query.CountAsync();
 
         if (filters.Page != null && filters.Page > 0 && filters.Size != null && filters.Size > 0)
             query = query.Skip(filters.Size.Value * (filters.Page.Value - 1)).Take(filters.Size.Value);
@@ -61,9 +64,10 @@ public class AnimeRepository : IAnimeRepository
     private IQueryable<Anime> GetBaseQuery()
     {
         return _dbContext.Animes
-            .Include(x => x.AnimeChapters)
             .Include(x => x.Brands)
-            .Include(x => x.Tags);
+            .Include(x => x.Tags)
+            .OrderBy(x=>x.Folder)
+            .ThenBy(x=>x.ChapterNumber);
     }
 }
 

@@ -3,10 +3,6 @@ html, body {
     margin: 0;
 }
 
-.container-fluid {
-    height: 100%;
-}
-
 .hover-effect {
     transition: transform 0.3s ease, background-color 0.3s;
 }
@@ -14,4 +10,19 @@ html, body {
 .hover-effect:hover {
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+}
+
+.collection-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-auto-flow: row;
+    gap: 1em;
+}
+
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 170px;
 }

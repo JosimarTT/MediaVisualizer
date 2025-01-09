@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaVisualizer.DataAccess.Migrations
 {
     [DbContext(typeof(MediaVisualizerDbContext))]
-    [Migration("20250102054718_Initial")]
+    [Migration("20250106011322_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -176,10 +176,17 @@ namespace MediaVisualizer.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ChapterNumber")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Folder")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Logo")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -190,42 +197,13 @@ namespace MediaVisualizer.DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("AnimeId");
-
-                    b.ToTable("Animes");
-                });
-
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.AnimeChapter", b =>
-                {
-                    b.Property<int>("AnimeChapterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("AnimeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ChapterNumber")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Logo")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Video")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("AnimeChapterId");
+                    b.HasKey("AnimeId");
 
-                    b.HasIndex("AnimeId");
-
-                    b.ToTable("AnimeChapters");
+                    b.ToTable("Animes");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.Manga", b =>
@@ -588,17 +566,6 @@ namespace MediaVisualizer.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.AnimeChapter", b =>
-                {
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Anime.Anime", "Anime")
-                        .WithMany("AnimeChapters")
-                        .HasForeignKey("AnimeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Anime");
-                });
-
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.MangaChapter", b =>
                 {
                     b.HasOne("MediaVisualizer.DataAccess.Entities.Manga.Manga", "Manga")
@@ -619,11 +586,6 @@ namespace MediaVisualizer.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Manwha");
-                });
-
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.Anime", b =>
-                {
-                    b.Navigation("AnimeChapters");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.Manga", b =>
