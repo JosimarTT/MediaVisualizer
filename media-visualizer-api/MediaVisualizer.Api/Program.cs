@@ -34,6 +34,10 @@ builder.Services.AddDbContext<MediaVisualizerDbContext>(options =>
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
 builder.Services.AddScoped<IMangaRepository, MangaRepository>();
 builder.Services.AddScoped<IManwhaRepository, ManwhaRepository>();
+builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
+builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 
 // Register the migrators
 builder.Services.AddScoped<IAnimeImporter, AnimeImporter>();
@@ -44,6 +48,10 @@ builder.Services.AddScoped<IMangaImporterRepository, MangaImporterRepository>();
 builder.Services.AddScoped<IAnimeService, AnimeService>();
 builder.Services.AddScoped<IMangaService, MangaService>();
 builder.Services.AddScoped<IManwhaService, ManwhaService>();
+builder.Services.AddScoped<IArtistService, ArtistService>();
+builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
 
 var app = builder.Build();
 
