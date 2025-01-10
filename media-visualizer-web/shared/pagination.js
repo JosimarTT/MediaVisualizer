@@ -75,19 +75,6 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
     paginationDiv.appendChild(nextButton);
 
     if (!paginationState.areEventListenersAdded) {
-        window.addEventListener('wheel', function (e) {
-            if ((e.deltaY < 0 && paginationState.page < paginationState.totalPages) ||
-                (e.deltaY > 0 && paginationState.page > 1)) {
-                paginationState.page += e.deltaY < 0 ? 1 : -1;
-                enableDisablePrevButton();
-                enableDisableNextButton();
-                updateActivePageButton();
-                apiCallback({page: paginationState.page}).then(response => {
-                    updateCollectionContentCallback(response.items);
-                });
-            }
-        });
-
         window.addEventListener('keydown', function (e) {
             if ((['ArrowUp', 'ArrowRight'].includes(e.key) && paginationState.page < paginationState.totalPages) ||
                 (['ArrowDown', 'ArrowLeft'].includes(e.key) && paginationState.page > 1)) {
