@@ -34,11 +34,4 @@ public class MangaController : ControllerBase
     {
         return Ok(await _mangaService.GetRandom());
     }
-
-    [HttpGet]
-    public async Task<IActionResult> Migrate()
-    {
-        await _mangaService.Migrate();
-        return Ok();
-    }
 }

@@ -1,17 +1,12 @@
 ﻿using MediaVisualizer.DataAccess;
 using MediaVisualizer.DataAccess.Entities.Shared;
-using MediaVisualizer.Shared;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using MediaVisualizer.DataImporter.Models;
+using MediaVisualizer.Shared;
 using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
-namespace MediaVisualizer.DataImporter
+namespace MediaVisualizer.DataImporter.Importers
 {
-    public class TagImporter : ITagImporter
+    public class TagImporter
     {
         private readonly MediaVisualizerDbContext _context;
         private readonly string basePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.MangaFolderPath);
@@ -83,10 +78,5 @@ namespace MediaVisualizer.DataImporter
                 throw;
             }
         }
-    }
-
-    public interface ITagImporter
-    {
-        Task ImportData();
     }
 }

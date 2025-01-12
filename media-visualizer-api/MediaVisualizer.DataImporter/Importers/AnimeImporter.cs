@@ -3,9 +3,9 @@ using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.ExtensionMethods;
 
-namespace MediaVisualizer.DataImporter;
+namespace MediaVisualizer.DataImporter.Importers;
 
-public class AnimeImporter : IAnimeImporter
+public class AnimeImporter
 {
     private readonly MediaVisualizerDbContext _dbContext;
     private readonly string basePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.AnimeFolderPath);
@@ -15,7 +15,7 @@ public class AnimeImporter : IAnimeImporter
         _dbContext = dbContext;
     }
 
-    public async Task Import()
+    public async Task ImportData()
     {
         if (_dbContext.Animes.Any())
         {
@@ -42,7 +42,7 @@ public class AnimeImporter : IAnimeImporter
                     Title = folder,
                     ChapterNumber = chapterNumber,
                     Logo = Path.GetFileName(chapters.FirstOrDefault(x => x.IsImage())),
-                    Video =Path.GetFileName( chapters.FirstOrDefault(x => x.IsVideo()))
+                    Video = Path.GetFileName(chapters.FirstOrDefault(x => x.IsVideo()))
                 };
                 newAnimes.Add(anime);
             }
@@ -61,9 +61,4 @@ public class AnimeImporter : IAnimeImporter
             throw;
         }
     }
-}
-
-public interface IAnimeImporter
-{
-    Task Import();
 }

@@ -2,19 +2,19 @@
 using MediaVisualizer.DataAccess.Entities.Manga;
 using MediaVisualizer.Shared;
 
-namespace MediaVisualizer.DataImporter;
+namespace MediaVisualizer.DataImporter.Importers;
 
-public class MangaImporterRepository : IMangaImporterRepository
+public class MangaImporter
 {
     private readonly MediaVisualizerDbContext _dbContext;
     private readonly string basePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.MangaFolderPath);
 
-    public MangaImporterRepository(MediaVisualizerDbContext dbContext)
+    public MangaImporter(MediaVisualizerDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public async Task Migrate()
+    public async Task ImportData()
     {
         if (_dbContext.Mangas.Any())
         {
@@ -69,9 +69,4 @@ public class MangaImporterRepository : IMangaImporterRepository
             throw;
         }
     }
-}
-
-public interface IMangaImporterRepository
-{
-    Task Migrate();
 }

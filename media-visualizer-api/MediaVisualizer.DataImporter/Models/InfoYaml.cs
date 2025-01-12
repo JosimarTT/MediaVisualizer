@@ -20,7 +20,7 @@ public class InfoYaml
 
     public List<string> Tags { get; set; } = [];
 
-    public List<string> General { get; set; }   = [];
+    public List<string> General { get; set; } = [];
 
     public long Released { get; set; }
 

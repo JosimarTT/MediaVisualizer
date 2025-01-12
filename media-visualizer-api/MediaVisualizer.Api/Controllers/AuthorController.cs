@@ -5,7 +5,7 @@ namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class AuthorController:ControllerBase
+public class AuthorController : ControllerBase
 {
     private readonly IAuthorService _artistService;
 

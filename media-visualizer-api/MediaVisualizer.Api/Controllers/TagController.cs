@@ -5,7 +5,7 @@ namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class TagController:ControllerBase
+public class TagController : ControllerBase
 {
     private readonly ITagService _artistService;
 
@@ -18,12 +18,5 @@ public class TagController:ControllerBase
     public async Task<IActionResult> GetList()
     {
         return Ok(await _artistService.GetList());
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> ImportData()
-    {
-        await _artistService.ImportData();
-        return Ok();
     }
 }

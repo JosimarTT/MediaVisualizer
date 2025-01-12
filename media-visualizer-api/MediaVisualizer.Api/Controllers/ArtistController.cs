@@ -5,7 +5,7 @@ namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class ArtistController:ControllerBase
+public class ArtistController : ControllerBase
 {
     private readonly IArtistService _artistService;
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Repositories;
 
-public class BrandRepository:IBrandRepository
+public class BrandRepository : IBrandRepository
 {
     private readonly MediaVisualizerDbContext _dbContext;
 
@@ -16,11 +16,9 @@ public class BrandRepository:IBrandRepository
     {
         return await _dbContext.Brands.ToListAsync();
     }
-
-    
 }
 
 public interface IBrandRepository
 {
-    public Task< IEnumerable<Brand>> GetList();
+    public Task<IEnumerable<Brand>> GetList();
 }
