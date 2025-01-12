@@ -14,7 +14,15 @@ public class TagRepository:ITagRepository
 
     public async Task<IEnumerable<Tag>> GetList()
     {
-        return await _dbContext.Tags.ToListAsync();
+        // return await _dbContext.Tags.ToListAsync();
+        var tags = new List<Tag>
+        {
+            new Tag { TagId = 1, Name = "Action" },
+            new Tag { TagId = 2, Name = "Adventure" },
+            new Tag { TagId = 3, Name = "Comedy" }
+        };
+
+        return await Task.FromResult<IEnumerable<Tag>>(tags);
     }
 
     

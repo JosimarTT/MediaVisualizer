@@ -39,10 +39,11 @@ builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 
-// Register the migrators
+// Register the data importers
 builder.Services.AddScoped<IAnimeImporter, AnimeImporter>();
 builder.Services.AddScoped<IManwhaImporterRepository, ManwhaImporterRepository>();
 builder.Services.AddScoped<IMangaImporterRepository, MangaImporterRepository>();
+builder.Services.AddScoped<ITagImporter, TagImporter>();
 
 // Register the services
 builder.Services.AddScoped<IAnimeService, AnimeService>();

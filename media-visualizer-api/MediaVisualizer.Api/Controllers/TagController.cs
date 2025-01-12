@@ -19,4 +19,11 @@ public class TagController:ControllerBase
     {
         return Ok(await _artistService.GetList());
     }
+
+    [HttpGet]
+    public async Task<IActionResult> ImportData()
+    {
+        await _artistService.ImportData();
+        return Ok();
+    }
 }
