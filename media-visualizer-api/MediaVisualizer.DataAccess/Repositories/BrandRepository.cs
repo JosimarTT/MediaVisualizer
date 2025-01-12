@@ -5,16 +5,16 @@ namespace MediaVisualizer.DataAccess.Repositories;
 
 public class BrandRepository : IBrandRepository
 {
-    private readonly MediaVisualizerDbContext _dbContext;
+    private readonly MediaVisualizerDbContext _context;
 
-    public BrandRepository(MediaVisualizerDbContext dbContext)
+    public BrandRepository(MediaVisualizerDbContext context)
     {
-        _dbContext = dbContext;
+        _context = context;
     }
 
     public async Task<IEnumerable<Brand>> GetList()
     {
-        return await _dbContext.Brands.ToListAsync();
+        return await _context.Brands.ToListAsync();
     }
 }
 

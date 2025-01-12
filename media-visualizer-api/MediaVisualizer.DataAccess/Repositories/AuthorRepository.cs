@@ -5,16 +5,16 @@ namespace MediaVisualizer.DataAccess.Repositories;
 
 public class AuthorRepository : IAuthorRepository
 {
-    private readonly MediaVisualizerDbContext _dbContext;
+    private readonly MediaVisualizerDbContext _context;
 
-    public AuthorRepository(MediaVisualizerDbContext dbContext)
+    public AuthorRepository(MediaVisualizerDbContext context)
     {
-        _dbContext = dbContext;
+        _context = context;
     }
 
     public async Task<IEnumerable<Author>> GetList()
     {
-        return await _dbContext.Authors.ToListAsync();
+        return await _context.Authors.ToListAsync();
     }
 }
 

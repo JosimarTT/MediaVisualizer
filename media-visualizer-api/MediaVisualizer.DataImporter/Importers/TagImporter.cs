@@ -42,12 +42,11 @@ namespace MediaVisualizer.DataImporter.Importers
                                 .Build();
 
                             var yamlContent = await File.ReadAllTextAsync(infoFilePath);
-                            Console.WriteLine(infoFilePath);
                             var info = deserializer.Deserialize<InfoYaml>(yamlContent);
 
                             foreach (var tagName in info.Tags)
                             {
-                                if (!tags.Any(t => t.Name == tagName))
+                                if (!tags.Any(t => t.Name.ToLower() == tagName.ToLower()))
                                 {
                                     tags.Add(new Tag { Name = tagName });
                                 }
@@ -55,7 +54,7 @@ namespace MediaVisualizer.DataImporter.Importers
 
                             foreach (var tagName in info.General)
                             {
-                                if (!tags.Any(t => t.Name == tagName))
+                                if (!tags.Any(t => t.Name.ToLower() == tagName.ToLower()))
                                 {
                                     tags.Add(new Tag { Name = tagName });
                                 }

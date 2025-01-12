@@ -6,11 +6,11 @@ namespace MediaVisualizer.DataAccess.Repositories;
 
 public class ManwhaRepository : IManwhaRepository
 {
-    private readonly MediaVisualizerDbContext _dbContext;
+    private readonly MediaVisualizerDbContext _context;
 
-    public ManwhaRepository(MediaVisualizerDbContext dbContext)
+    public ManwhaRepository(MediaVisualizerDbContext context)
     {
-        _dbContext = dbContext;
+        _context = context;
     }
 
     public async Task<(int totalCount, IEnumerable<Manwha>)> GetList(FiltersRequest filters)
@@ -52,7 +52,7 @@ public class ManwhaRepository : IManwhaRepository
     public async Task<Manwha> GetRandom()
     {
         var query = GetBaseQuery();
-        var count = await _dbContext.Manwhas.CountAsync();
+        var count = await _context.Manwhas.CountAsync();
         var randomIndex = new Random().Next(count);
         return await query.Skip(randomIndex).FirstAsync();
     }
@@ -65,7 +65,7 @@ public class ManwhaRepository : IManwhaRepository
 
     private IQueryable<Manwha> GetBaseQuery()
     {
-        return _dbContext.Manwhas
+        return _context.Manwhas
             .Include(x => x.ManwhaChapters)
             .Include(x => x.Brands)
             .Include(x => x.Tags)

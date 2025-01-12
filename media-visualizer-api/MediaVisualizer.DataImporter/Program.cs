@@ -34,6 +34,7 @@ namespace MediaVisualizer.DataImporter
             Console.WriteLine("Starting Manwha import...");
             var manwhaImporter = serviceProvider.GetRequiredService<ManwhaImporter>();
             await manwhaImporter.ImportData();
+            Console.WriteLine("Manwha data import completed.");
         }
 
         private static void ConfigureServices(IServiceCollection services)

@@ -6,17 +6,17 @@ namespace MediaVisualizer.DataImporter.Importers;
 
 public class ManwhaImporter
 {
-    private readonly MediaVisualizerDbContext _dbContext;
+    private readonly MediaVisualizerDbContext _context;
     private readonly string basePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.ManwhaFolderPath);
 
-    public ManwhaImporter(MediaVisualizerDbContext dbContext)
+    public ManwhaImporter(MediaVisualizerDbContext context)
     {
-        _dbContext = dbContext;
+        _context = context;
     }
 
     public async Task ImportData()
     {
-        if (_dbContext.Manwhas.Any())
+        if (_context.Manwhas.Any())
         {
             return;
         }
@@ -75,14 +75,14 @@ public class ManwhaImporter
 
         try
         {
-            await _dbContext.Database.BeginTransactionAsync();
-            await _dbContext.Manwhas.AddRangeAsync(newManwhas);
-            await _dbContext.SaveChangesAsync();
-            await _dbContext.Database.CommitTransactionAsync();
+            await _context.Database.BeginTransactionAsync();
+            await _context.Manwhas.AddRangeAsync(newManwhas);
+            await _context.SaveChangesAsync();
+            await _context.Database.CommitTransactionAsync();
         }
         catch (Exception e)
         {
-            await _dbContext.Database.RollbackTransactionAsync();
+            await _context.Database.RollbackTransactionAsync();
             throw;
         }
     }

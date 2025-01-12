@@ -5,24 +5,16 @@ namespace MediaVisualizer.DataAccess.Repositories;
 
 public class TagRepository : ITagRepository
 {
-    private readonly MediaVisualizerDbContext _dbContext;
+    private readonly MediaVisualizerDbContext _context;
 
-    public TagRepository(MediaVisualizerDbContext dbContext)
+    public TagRepository(MediaVisualizerDbContext context)
     {
-        _dbContext = dbContext;
+        _context = context;
     }
 
     public async Task<IEnumerable<Tag>> GetList()
     {
-        // return await _dbContext.Tags.ToListAsync();
-        var tags = new List<Tag>
-        {
-            new Tag { TagId = 1, Name = "Action" },
-            new Tag { TagId = 2, Name = "Adventure" },
-            new Tag { TagId = 3, Name = "Comedy" }
-        };
-
-        return await Task.FromResult<IEnumerable<Tag>>(tags);
+         return await _context.Tags.ToListAsync();
     }
 }
 
