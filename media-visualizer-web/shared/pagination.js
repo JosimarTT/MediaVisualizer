@@ -11,7 +11,6 @@ let paginationState = {
 
 async function initializePagination(apiCallback, updateCollectionContentCallback) {
     let paginationDiv = document.getElementById('pagination');
-    paginationDiv.innerHTML = '';
 
     let apiResponse = await apiCallback();
 
@@ -19,99 +18,20 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
 
     updateCollectionContentCallback(apiResponse.items);
 
-    // Create Previous button
-    let prevButton = document.createElement('li');
-    prevButton.className = 'page-item';
-    prevButton.innerHTML = '<a class="page-link" href="#">Previous</a>';
-    enableDisablePrevButton();
-    prevButton.addEventListener('click', function () {
-        if (paginationState.page > 1) {
-            paginationState.page--;
-            enableDisablePrevButton();
-            enableDisableNextButton();
-            updateActivePageButton();
-            apiCallback({page: paginationState.page}).then(response => {
-                updateCollectionContentCallback(response.items);
-            });
-        }
-    });
-    paginationDiv.appendChild(prevButton);
-
-    // Create page buttons
-    for (let i = 1; i <= paginationState.totalPages; i++) {
-        let button = document.createElement('li');
-        button.className = 'page-item page-number';
-        button.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-        if (i === paginationState.page) {
-            button.classList.add('active');
-        }
-        button.addEventListener('click', function () {
-            paginationState.page = i;
-            enableDisablePrevButton();
-            enableDisableNextButton();
-            updateActivePageButton();
-            apiCallback({page: paginationState.page}).then(response => {
-                updateCollectionContentCallback(response.items);
-            });
-        });
-        paginationDiv.appendChild(button);
-    }
-
-    // Create Next button
-    let nextButton = document.createElement('li');
-    nextButton.className = 'page-item';
-    nextButton.innerHTML = '<a class="page-link" href="#">Next</a>';
-    enableDisableNextButton();
-    nextButton.addEventListener('click', function () {
-        if (paginationState.page < paginationState.totalPages) {
-            paginationState.page++;
-            enableDisablePrevButton();
-            enableDisableNextButton();
-            updateActivePageButton();
-            apiCallback({page: paginationState.page}).then(response => {
-                updateCollectionContentCallback(response.items);
-            });
-        }
-    });
-    paginationDiv.appendChild(nextButton);
-
-    window.addEventListener('keydown', function (e) {
-        if ((['ArrowUp', 'ArrowRight'].includes(e.key) && paginationState.page < paginationState.totalPages) ||
-            (['ArrowDown', 'ArrowLeft'].includes(e.key) && paginationState.page > 1)) {
-            paginationState.page += ['ArrowUp', 'ArrowRight'].includes(e.key) ? 1 : -1;
-            enableDisablePrevButton();
-            enableDisableNextButton();
-            updateActivePageButton();
-            apiCallback({page: paginationState.page}).then(response => {
-                updateCollectionContentCallback(response.items);
-            });
-        }
-    });
-
-    document.getElementById('search-title').addEventListener('input', function (e) {
-        const query = e.target.value;
-        if (query.length >= 3) {
-            apiCallback({title: query}).then(response => {
-                updatePaginationState(response);
-                createPageButtons();
-                enableDisableNextButton();
-                updateCollectionContent(response.items);
-            });
-        } else if (query.length === 0) {
-            apiCallback().then(response => {
-                updatePaginationState(response);
-                createPageButtons();
-                enableDisableNextButton();
-                updateCollectionContent(response.items);
-            });
-        }
-    });
+    createPreviousButton();
+    createPageButtons();
+    createNextButton();
+    addEventListenerToArrowKeys();
+    addEventListenerToSearchInput();
+    addEventListenerToTagFilter();
 
     function enableDisablePrevButton() {
+        const prevButton = document.getElementById('prev-button');
         paginationState.page === 1 ? prevButton.classList.add('disabled') : prevButton.classList.remove('disabled');
     }
 
     function enableDisableNextButton() {
+        const nextButton = document.getElementById('next-button');
         paginationState.totalPages === paginationState.page ? nextButton.classList.add('disabled') : nextButton.classList.remove('disabled');
     }
 
@@ -128,7 +48,105 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         paginationState.totalPages = apiResponse.totalPages;
     }
 
+    function addEventListenerToTagFilter() {
+        let tagColumns = document.getElementById('tag-columns');
+        if (tagColumns == null) return;
+        tagColumns.addEventListener('click', async (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                let tagId = e.target.getAttribute('data-tag-id');
+                if (e.target.classList.contains('active')) {
+                    animeApi.options.tagIds.push(tagId);
+                } else {
+                    let index = animeApi.options.tagIds.indexOf(tagId);
+                    if (index > -1) {
+                        animeApi.options.tagIds.splice(index, 1);
+                    }
+                }
+
+                apiCallback({tagIds: animeApi.options.tagIds}).then(response => {
+                    updatePaginationState(response);
+                    createPageButtons();
+                    enableDisableNextButton();
+                    updateCollectionContent(response.items);
+                });
+                console.log(animeApi.options.tagIds);
+            }
+        });
+
+        document.getElementById('btn-reset-filters').addEventListener('click', function () {
+            let buttons = tagColumns.querySelectorAll('button');
+            buttons.forEach(button => button.classList.remove('active'));
+            animeApi.options.tagIds = [];
+            apiCallback({tagIds: animeApi.options.tagIds}).then(response => {
+                updatePaginationState(response);
+                createPageButtons();
+                enableDisableNextButton();
+                updateCollectionContent(response.items);
+            });
+        });
+    }
+
+    function addEventListenerToSearchInput() {
+        let searchInput = document.getElementById('search-title');
+        if (searchInput == null) return;
+        searchInput.addEventListener('input', function (e) {
+            const query = e.target.value.trim();
+            if (query.length >= 3) {
+                apiCallback({title: query}).then(response => {
+                    updatePaginationState(response);
+                    createPageButtons();
+                    enableDisableNextButton();
+                    updateCollectionContent(response.items);
+                });
+            } else if (query.length === 0) {
+                apiCallback().then(response => {
+                    updatePaginationState(response);
+                    createPageButtons();
+                    enableDisableNextButton();
+                    updateCollectionContent(response.items);
+                });
+            }
+        });
+
+    }
+
+    function addEventListenerToArrowKeys() {
+        window.addEventListener('keydown', function (e) {
+            if ((['ArrowUp', 'ArrowRight'].includes(e.key) && paginationState.page < paginationState.totalPages) ||
+                (['ArrowDown', 'ArrowLeft'].includes(e.key) && paginationState.page > 1)) {
+                paginationState.page += ['ArrowUp', 'ArrowRight'].includes(e.key) ? 1 : -1;
+                enableDisablePrevButton();
+                enableDisableNextButton();
+                updateActivePageButton();
+                apiCallback({page: paginationState.page}).then(response => {
+                    updateCollectionContentCallback(response.items);
+                });
+            }
+        });
+    }
+
+    function createPreviousButton() {
+        let prevButton = document.createElement('li');
+        prevButton.id = 'prev-button';
+        prevButton.className = 'page-item';
+        prevButton.innerHTML = '<a class="page-link" href="#">Previous</a>';
+        paginationDiv.appendChild(prevButton);
+        enableDisablePrevButton();
+        prevButton.addEventListener('click', function () {
+            if (paginationState.page > 1) {
+                paginationState.page--;
+                enableDisablePrevButton();
+                enableDisableNextButton();
+                updateActivePageButton();
+                apiCallback({page: paginationState.page}).then(response => {
+                    updateCollectionContentCallback(response.items);
+                });
+            }
+        });
+    }
+
     function createPageButtons() {
+        let nextButton = document.getElementById('next-button');
         let pageButtons = paginationDiv.querySelectorAll('.page-number');
         pageButtons.forEach(button => button.remove());
 
@@ -152,27 +170,23 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         }
     }
 
-    function addEventListenerToTagFilter() {
-        let tagFilter = document.getElementById('tag-filter');
-        if (tagFilter != null) {
-            tagFilter.addEventListener('change', function (e) {
-                let tagId = e.target.value;
-                if (tagId === '0') {
-                    apiCallback().then(response => {
-                        updatePaginationState(response);
-                        createPageButtons();
-                        enableDisableNextButton();
-                        updateCollectionContent(response.items);
-                    });
-                } else {
-                    apiCallback({tagIds: [tagId]}).then(response => {
-                        updatePaginationState(response);
-                        createPageButtons();
-                        enableDisableNextButton();
-                        updateCollectionContent(response.items);
-                    });
-                }
-            });
-        }
+    function createNextButton() {
+        let nextButton = document.createElement('li');
+        nextButton.id = 'next-button';
+        nextButton.className = 'page-item';
+        nextButton.innerHTML = '<a class="page-link" href="#">Next</a>';
+        paginationDiv.appendChild(nextButton);
+        enableDisableNextButton();
+        nextButton.addEventListener('click', function () {
+            if (paginationState.page < paginationState.totalPages) {
+                paginationState.page++;
+                enableDisablePrevButton();
+                enableDisableNextButton();
+                updateActivePageButton();
+                apiCallback({page: paginationState.page}).then(response => {
+                    updateCollectionContentCallback(response.items);
+                });
+            }
+        });
     }
 }

@@ -7,8 +7,8 @@ initialize().then(r => {
 });
 
 async function initialize() {
-    await initializePagination(animeApi.getList, updateCollectionContent);
     await initializeTagModal();
+    await initializePagination(animeApi.getList, updateCollectionContent);
 
 }
 

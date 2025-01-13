@@ -18,7 +18,7 @@ async function initializeTagModal() {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button id="btn-reset-filters" type="button" class="btn btn-primary">Reset filters</button>
                     </div>
                 </div>
             </div>
@@ -44,10 +44,4 @@ async function initializeTagModal() {
         }
         tagColumns.appendChild(div);
     }
-
-    tagColumns.addEventListener('click', async (e) => {
-        let tagId = e.target.getAttribute('data-tag-id');
-        animeApi.options.tagIds.push(tagId);
-        console.log(animeApi.options.tagIds);
-    });
 }
