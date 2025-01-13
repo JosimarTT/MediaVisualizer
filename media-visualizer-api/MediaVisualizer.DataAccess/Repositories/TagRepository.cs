@@ -14,7 +14,9 @@ public class TagRepository : ITagRepository
 
     public async Task<IEnumerable<Tag>> GetList()
     {
-         return await _context.Tags.ToListAsync();
+         return await _context.Tags
+             .OrderBy(x=>x.Name)
+             .ToListAsync();
     }
 }
 

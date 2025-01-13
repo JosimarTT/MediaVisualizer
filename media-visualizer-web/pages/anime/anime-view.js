@@ -1,6 +1,6 @@
 'use strict'
 
-let getListResponse;
+let tagsResponse;
 
 initialize().then(r => {
     console.log('Initialized');
@@ -8,6 +8,8 @@ initialize().then(r => {
 
 async function initialize() {
     await initializePagination(animeApi.getList, updateCollectionContent);
+    await initializeTagModal();
+
 }
 
 function updateCollectionContent(items) {
@@ -20,4 +22,3 @@ function updateCollectionContent(items) {
             </div>`
     ).join('');
 }
-

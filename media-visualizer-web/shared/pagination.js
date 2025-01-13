@@ -5,7 +5,8 @@ let paginationState = {
     size: 0,
     totalCount: 0,
     totalPages: 0,
-    areEventListenersAdded: false
+    areEventListenersAdded: false,
+    searchQuery: animeApi.options
 }
 
 async function initializePagination(apiCallback, updateCollectionContentCallback) {
@@ -74,41 +75,37 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
     });
     paginationDiv.appendChild(nextButton);
 
-    if (!paginationState.areEventListenersAdded) {
-        window.addEventListener('keydown', function (e) {
-            if ((['ArrowUp', 'ArrowRight'].includes(e.key) && paginationState.page < paginationState.totalPages) ||
-                (['ArrowDown', 'ArrowLeft'].includes(e.key) && paginationState.page > 1)) {
-                paginationState.page += ['ArrowUp', 'ArrowRight'].includes(e.key) ? 1 : -1;
-                enableDisablePrevButton();
+    window.addEventListener('keydown', function (e) {
+        if ((['ArrowUp', 'ArrowRight'].includes(e.key) && paginationState.page < paginationState.totalPages) ||
+            (['ArrowDown', 'ArrowLeft'].includes(e.key) && paginationState.page > 1)) {
+            paginationState.page += ['ArrowUp', 'ArrowRight'].includes(e.key) ? 1 : -1;
+            enableDisablePrevButton();
+            enableDisableNextButton();
+            updateActivePageButton();
+            apiCallback({page: paginationState.page}).then(response => {
+                updateCollectionContentCallback(response.items);
+            });
+        }
+    });
+
+    document.getElementById('search-title').addEventListener('input', function (e) {
+        const query = e.target.value;
+        if (query.length >= 3) {
+            apiCallback({title: query}).then(response => {
+                updatePaginationState(response);
+                createPageButtons();
                 enableDisableNextButton();
-                updateActivePageButton();
-                apiCallback({page: paginationState.page}).then(response => {
-                    updateCollectionContentCallback(response.items);
-                });
-            }
-        });
-
-        document.getElementById('search-title').addEventListener('input', function (e) {
-            const query = e.target.value;
-            if (query.length >= 3) {
-                apiCallback({title: query}).then(response => {
-                    updatePaginationState(response);
-                    createPageButtons();
-                    enableDisableNextButton();
-                    updateCollectionContent(response.items);
-                });
-            } else if (query.length === 0) {
-                apiCallback().then(response => {
-                    updatePaginationState(response);
-                    createPageButtons();
-                    enableDisableNextButton();
-                    updateCollectionContent(response.items);
-                });
-            }
-        });
-
-        paginationState.areEventListenersAdded = true;
-    }
+                updateCollectionContent(response.items);
+            });
+        } else if (query.length === 0) {
+            apiCallback().then(response => {
+                updatePaginationState(response);
+                createPageButtons();
+                enableDisableNextButton();
+                updateCollectionContent(response.items);
+            });
+        }
+    });
 
     function enableDisablePrevButton() {
         paginationState.page === 1 ? prevButton.classList.add('disabled') : prevButton.classList.remove('disabled');
@@ -152,6 +149,30 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
                 });
             });
             paginationDiv.insertBefore(button, nextButton);
+        }
+    }
+
+    function addEventListenerToTagFilter() {
+        let tagFilter = document.getElementById('tag-filter');
+        if (tagFilter != null) {
+            tagFilter.addEventListener('change', function (e) {
+                let tagId = e.target.value;
+                if (tagId === '0') {
+                    apiCallback().then(response => {
+                        updatePaginationState(response);
+                        createPageButtons();
+                        enableDisableNextButton();
+                        updateCollectionContent(response.items);
+                    });
+                } else {
+                    apiCallback({tagIds: [tagId]}).then(response => {
+                        updatePaginationState(response);
+                        createPageButtons();
+                        enableDisableNextButton();
+                        updateCollectionContent(response.items);
+                    });
+                }
+            });
         }
     }
 }
