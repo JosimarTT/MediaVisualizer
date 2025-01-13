@@ -1,21 +1,23 @@
 ﻿using MediaVisualizer.DataAccess.Repositories;
+using MediaVisualizer.DataImporter;
+using MediaVisualizer.DataImporter.Importers;
 using MediaVisualizer.Services.Converters;
 using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services;
 
-public class TagService:ITagService
+public class TagService : ITagService
 {
-    private readonly ITagRepository _artistRepository;
+    private readonly ITagRepository _tagRepository;
 
-    public TagService(ITagRepository artistRepository)
+    public TagService(ITagRepository tagRepository)
     {
-        _artistRepository = artistRepository;
+        _tagRepository = tagRepository;
     }
 
     public async Task<ICollection<TagDto>> GetList()
     {
-        var artists = await _artistRepository.GetList();
+        var artists = await _tagRepository.GetList();
         return artists.ToList().ToListDto();
     }
 }

@@ -1,13 +1,15 @@
 'use strict'
 
-let getListResponse;
+let tagsResponse;
 
 initialize().then(r => {
     console.log('Initialized');
 });
 
 async function initialize() {
+    await initializeTagModal();
     await initializePagination(animeApi.getList, updateCollectionContent);
+
 }
 
 function updateCollectionContent(items) {
@@ -20,4 +22,3 @@ function updateCollectionContent(items) {
             </div>`
     ).join('');
 }
-

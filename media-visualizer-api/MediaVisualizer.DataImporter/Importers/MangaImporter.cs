@@ -2,21 +2,21 @@
 using MediaVisualizer.DataAccess.Entities.Manga;
 using MediaVisualizer.Shared;
 
-namespace MediaVisualizer.DataImporter;
+namespace MediaVisualizer.DataImporter.Importers;
 
-public class MangaImporterRepository : IMangaImporterRepository
+public class MangaImporter
 {
-    private readonly MediaVisualizerDbContext _dbContext;
+    private readonly MediaVisualizerDbContext _context;
     private readonly string basePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.MangaFolderPath);
 
-    public MangaImporterRepository(MediaVisualizerDbContext dbContext)
+    public MangaImporter(MediaVisualizerDbContext context)
     {
-        _dbContext = dbContext;
+        _context = context;
     }
 
-    public async Task Migrate()
+    public async Task ImportData()
     {
-        if (_dbContext.Mangas.Any())
+        if (_context.Mangas.Any())
         {
             return;
         }
@@ -58,20 +58,15 @@ public class MangaImporterRepository : IMangaImporterRepository
 
         try
         {
-            await _dbContext.Database.BeginTransactionAsync();
-            await _dbContext.Mangas.AddRangeAsync(mangas);
-            await _dbContext.SaveChangesAsync();
-            await _dbContext.Database.CommitTransactionAsync();
+            await _context.Database.BeginTransactionAsync();
+            await _context.Mangas.AddRangeAsync(mangas);
+            await _context.SaveChangesAsync();
+            await _context.Database.CommitTransactionAsync();
         }
         catch (Exception e)
         {
-            await _dbContext.Database.RollbackTransactionAsync();
+            await _context.Database.RollbackTransactionAsync();
             throw;
         }
     }
-}
-
-public interface IMangaImporterRepository
-{
-    Task Migrate();
 }

@@ -1,6 +1,7 @@
 using MediaVisualizer.DataAccess;
 using MediaVisualizer.DataAccess.Repositories;
 using MediaVisualizer.DataImporter;
+using MediaVisualizer.DataImporter.Importers;
 using MediaVisualizer.Services;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
@@ -38,11 +39,6 @@ builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
-
-// Register the migrators
-builder.Services.AddScoped<IAnimeImporter, AnimeImporter>();
-builder.Services.AddScoped<IManwhaImporterRepository, ManwhaImporterRepository>();
-builder.Services.AddScoped<IMangaImporterRepository, MangaImporterRepository>();
 
 // Register the services
 builder.Services.AddScoped<IAnimeService, AnimeService>();

@@ -1,5 +1,6 @@
 ﻿using MediaVisualizer.DataAccess.Repositories;
 using MediaVisualizer.DataImporter;
+using MediaVisualizer.DataImporter.Importers;
 using MediaVisualizer.Services.Converters;
 using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.Requests;
@@ -10,12 +11,10 @@ namespace MediaVisualizer.Services;
 public class ManwhaService : IManwhaService
 {
     private readonly IManwhaRepository _manwhaRepository;
-    private readonly IManwhaImporterRepository _manwhaImporterRepository;
 
-    public ManwhaService(IManwhaRepository manwhaRepository, IManwhaImporterRepository manwhaImporterRepository)
+    public ManwhaService(IManwhaRepository manwhaRepository)
     {
         _manwhaRepository = manwhaRepository;
-        _manwhaImporterRepository = manwhaImporterRepository;
     }
 
     public async Task<ManwhaDto> Get(int key)
@@ -36,11 +35,6 @@ public class ManwhaService : IManwhaService
         var manwha = await _manwhaRepository.GetRandom();
         return manwha.ToDto();
     }
-
-    public async Task Migrate()
-    {
-        await _manwhaImporterRepository.Migrate();
-    }
 }
 
 public interface IManwhaService
@@ -48,5 +42,4 @@ public interface IManwhaService
     public Task<ManwhaDto> Get(int key);
     public Task<ListResponse<ManwhaDto>> GetList(FiltersRequest filters);
     public Task<ManwhaDto> GetRandom();
-    public Task Migrate();
 }

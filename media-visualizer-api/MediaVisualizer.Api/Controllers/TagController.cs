@@ -5,7 +5,7 @@ namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class TagController:ControllerBase
+public class TagController : ControllerBase
 {
     private readonly ITagService _artistService;
 

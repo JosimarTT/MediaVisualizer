@@ -1,6 +1,7 @@
 ﻿using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.DataAccess.Repositories;
 using MediaVisualizer.DataImporter;
+using MediaVisualizer.DataImporter.Importers;
 using MediaVisualizer.Services.Converters;
 using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.Requests;
@@ -11,12 +12,10 @@ namespace MediaVisualizer.Services;
 public class AnimeService : IAnimeService
 {
     private readonly IAnimeRepository _animeRepository;
-    private readonly IAnimeImporter _animeImporter;
 
-    public AnimeService(IAnimeRepository animeRepository, IAnimeImporter animeImporter)
+    public AnimeService(IAnimeRepository animeRepository )
     {
         _animeRepository = animeRepository;
-        _animeImporter = animeImporter;
     }
 
     public async Task<AnimeDto> Get(int key)
@@ -37,11 +36,6 @@ public class AnimeService : IAnimeService
         var anime = await _animeRepository.GetRandom();
         return anime.ToDto();
     }
-
-    public async Task Import()
-    {
-        await _animeImporter.Import();
-    }
 }
 
 public interface IAnimeService
@@ -49,5 +43,4 @@ public interface IAnimeService
     public Task<AnimeDto> Get(int key);
     public Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters);
     Task<AnimeDto> GetRandom();
-    Task Import();
 }

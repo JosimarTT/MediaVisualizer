@@ -7,11 +7,11 @@ namespace MediaVisualizer.DataAccess.Repositories;
 
 public class AnimeRepository : IAnimeRepository
 {
-    private readonly MediaVisualizerDbContext _dbContext;
+    private readonly MediaVisualizerDbContext _context;
 
-    public AnimeRepository(MediaVisualizerDbContext dbContext)
+    public AnimeRepository(MediaVisualizerDbContext context)
     {
-        _dbContext = dbContext;
+        _context = context;
     }
 
     public async Task<(int totalCount, IEnumerable<Anime>)> GetList(FiltersRequest filters)
@@ -56,18 +56,18 @@ public class AnimeRepository : IAnimeRepository
     public async Task<Anime> GetRandom()
     {
         var query = GetBaseQuery();
-        var count = await _dbContext.Animes.CountAsync();
+        var count = await _context.Animes.CountAsync();
         var randomIndex = new Random().Next(count);
         return await query.Skip(randomIndex).FirstAsync();
     }
 
     private IQueryable<Anime> GetBaseQuery()
     {
-        return _dbContext.Animes
+        return _context.Animes
             .Include(x => x.Brands)
             .Include(x => x.Tags)
-            .OrderBy(x=>x.Folder)
-            .ThenBy(x=>x.ChapterNumber);
+            .OrderBy(x => x.Folder)
+            .ThenBy(x => x.ChapterNumber);
     }
 }
 

@@ -35,11 +35,4 @@ public class AnimeController : ControllerBase
     {
         return Ok(await _animeService.GetRandom());
     }
-
-    [HttpGet]
-    public async Task<IActionResult> Import()
-    {
-        await _animeService.Import();
-        return Ok();
-    }
 }

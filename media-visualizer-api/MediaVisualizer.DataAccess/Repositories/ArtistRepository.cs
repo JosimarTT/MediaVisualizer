@@ -3,24 +3,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Repositories;
 
-public class ArtistRepository:IArtistRepository
+public class ArtistRepository : IArtistRepository
 {
-    private readonly MediaVisualizerDbContext _dbContext;
+    private readonly MediaVisualizerDbContext _context;
 
-    public ArtistRepository(MediaVisualizerDbContext dbContext)
+    public ArtistRepository(MediaVisualizerDbContext context)
     {
-        _dbContext = dbContext;
+        _context = context;
     }
 
     public async Task<IEnumerable<Artist>> GetList()
     {
-        return await _dbContext.Artists.ToListAsync();
+        return await _context.Artists.ToListAsync();
     }
-
-    
 }
 
 public interface IArtistRepository
 {
-    public Task< IEnumerable<Artist>> GetList();
+    public Task<IEnumerable<Artist>> GetList();
 }

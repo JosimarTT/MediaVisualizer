@@ -3,24 +3,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Repositories;
 
-public class TagRepository:ITagRepository
+public class TagRepository : ITagRepository
 {
-    private readonly MediaVisualizerDbContext _dbContext;
+    private readonly MediaVisualizerDbContext _context;
 
-    public TagRepository(MediaVisualizerDbContext dbContext)
+    public TagRepository(MediaVisualizerDbContext context)
     {
-        _dbContext = dbContext;
+        _context = context;
     }
 
     public async Task<IEnumerable<Tag>> GetList()
     {
-        return await _dbContext.Tags.ToListAsync();
+         return await _context.Tags
+             .OrderBy(x=>x.Name)
+             .ToListAsync();
     }
-
-    
 }
 
 public interface ITagRepository
 {
-    public Task< IEnumerable<Tag>> GetList();
+    public Task<IEnumerable<Tag>> GetList();
 }

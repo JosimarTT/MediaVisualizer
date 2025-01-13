@@ -4,7 +4,7 @@ using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services;
 
-public class BrandService:IBrandService
+public class BrandService : IBrandService
 {
     private readonly IBrandRepository _artistRepository;
 

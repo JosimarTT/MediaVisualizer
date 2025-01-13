@@ -3,21 +3,21 @@ using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.ExtensionMethods;
 
-namespace MediaVisualizer.DataImporter;
+namespace MediaVisualizer.DataImporter.Importers;
 
-public class AnimeImporter : IAnimeImporter
+public class AnimeImporter
 {
-    private readonly MediaVisualizerDbContext _dbContext;
+    private readonly MediaVisualizerDbContext _context;
     private readonly string basePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.AnimeFolderPath);
 
-    public AnimeImporter(MediaVisualizerDbContext dbContext)
+    public AnimeImporter(MediaVisualizerDbContext context)
     {
-        _dbContext = dbContext;
+        _context = context;
     }
 
-    public async Task Import()
+    public async Task ImportData()
     {
-        if (_dbContext.Animes.Any())
+        if (_context.Animes.Any())
         {
             return;
         }
@@ -42,7 +42,7 @@ public class AnimeImporter : IAnimeImporter
                     Title = folder,
                     ChapterNumber = chapterNumber,
                     Logo = Path.GetFileName(chapters.FirstOrDefault(x => x.IsImage())),
-                    Video =Path.GetFileName( chapters.FirstOrDefault(x => x.IsVideo()))
+                    Video = Path.GetFileName(chapters.FirstOrDefault(x => x.IsVideo()))
                 };
                 newAnimes.Add(anime);
             }
@@ -50,20 +50,15 @@ public class AnimeImporter : IAnimeImporter
 
         try
         {
-            await _dbContext.Database.BeginTransactionAsync();
-            await _dbContext.Animes.AddRangeAsync(newAnimes);
-            await _dbContext.SaveChangesAsync();
-            await _dbContext.Database.CommitTransactionAsync();
+            await _context.Database.BeginTransactionAsync();
+            await _context.Animes.AddRangeAsync(newAnimes);
+            await _context.SaveChangesAsync();
+            await _context.Database.CommitTransactionAsync();
         }
         catch (Exception e)
         {
-            await _dbContext.Database.RollbackTransactionAsync();
+            await _context.Database.RollbackTransactionAsync();
             throw;
         }
     }
-}
-
-public interface IAnimeImporter
-{
-    Task Import();
 }
