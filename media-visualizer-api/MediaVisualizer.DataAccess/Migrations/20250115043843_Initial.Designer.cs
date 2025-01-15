@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaVisualizer.DataAccess.Migrations
 {
     [DbContext(typeof(MediaVisualizerDbContext))]
-    [Migration("20250106011322_Initial")]
+    [Migration("20250115043843_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

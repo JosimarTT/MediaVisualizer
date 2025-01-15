@@ -21,6 +21,12 @@ namespace MediaVisualizer.DataImporter
             await tagImporter.ImportData();
             Console.WriteLine("Tags data import completed.");
 
+            Console.WriteLine("Starting Brands import...");
+            var brandImporter = serviceProvider.GetRequiredService<BrandImporter>();
+            await brandImporter.ImportData();
+            Console.WriteLine("Brands data import completed.");
+
+
             Console.WriteLine("Starting Anime import...");
             var animeImporter = serviceProvider.GetRequiredService<AnimeImporter>();
             await animeImporter.ImportData();
@@ -50,6 +56,7 @@ namespace MediaVisualizer.DataImporter
             services.AddTransient<MangaImporter>();
             services.AddTransient<ManwhaImporter>();
             services.AddTransient<TagImporter>();
+            services.AddTransient<BrandImporter>();
         }
     }
 }
