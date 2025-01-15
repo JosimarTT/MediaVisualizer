@@ -23,7 +23,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
     createNextButton();
     addEventListenerToArrowKeys();
     addEventListenerToSearchInput();
-    addEventListenerToTagFilter();
+    addEventListenerToBrandsFilter();
+    addEventListenerToTagsFilter();
 
     function enableDisablePrevButton() {
         const prevButton = document.getElementById('prev-button');
@@ -48,12 +49,13 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         paginationState.totalPages = apiResponse.totalPages;
     }
 
-    function addEventListenerToTagFilter() {
+    function addEventListenerToTagsFilter() {
         let tagColumns = document.getElementById('tag-columns');
         if (tagColumns == null) return;
         tagColumns.addEventListener('click', async (e) => {
             if (e.target.tagName === 'BUTTON') {
                 let tagId = e.target.getAttribute('data-tag-id');
+                console.log('tagId: ' + tagId)
                 if (e.target.classList.contains('active')) {
                     animeApi.options.tagIds.push(tagId);
                 } else {
@@ -73,11 +75,50 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
             }
         });
 
-        document.getElementById('btn-reset-filters').addEventListener('click', function () {
+        document.getElementById('btn-tag-reset-filters').addEventListener('click', function () {
             let buttons = tagColumns.querySelectorAll('button');
             buttons.forEach(button => button.classList.remove('active'));
             animeApi.options.tagIds = [];
             apiCallback({tagIds: animeApi.options.tagIds}).then(response => {
+                updatePaginationState(response);
+                createPageButtons();
+                enableDisableNextButton();
+                updateCollectionContent(response.items);
+            });
+        });
+    }
+
+    function addEventListenerToBrandsFilter() {
+        let brandColumns = document.getElementById('brand-columns');
+        if (brandColumns == null) return;
+        brandColumns.addEventListener('click', async (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                let brandId = e.target.getAttribute('data-brand-id');
+                console.log('brandId: ' + brandId)
+                if (e.target.classList.contains('active')) {
+                    animeApi.options.brandIds.push(brandId);
+                } else {
+                    let index = animeApi.options.brandIds.indexOf(brandId);
+                    if (index > -1) {
+                        animeApi.options.brandIds.splice(index, 1);
+                    }
+                }
+
+                apiCallback({brandIds: animeApi.options.brandIds}).then(response => {
+                    updatePaginationState(response);
+                    createPageButtons();
+                    enableDisableNextButton();
+                    updateCollectionContent(response.items);
+                });
+                console.log(animeApi.options.brandIds);
+            }
+        });
+
+        document.getElementById('btn-brand-reset-filters').addEventListener('click', function () {
+            let buttons = brandColumns.querySelectorAll('button');
+            buttons.forEach(button => button.classList.remove('active'));
+            animeApi.options.brandIds = [];
+            apiCallback({brandIds: animeApi.options.brandIds}).then(response => {
                 updatePaginationState(response);
                 createPageButtons();
                 enableDisableNextButton();
