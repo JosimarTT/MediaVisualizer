@@ -55,7 +55,6 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         tagColumns.addEventListener('click', async (e) => {
             if (e.target.tagName === 'BUTTON') {
                 let tagId = e.target.getAttribute('data-tag-id');
-                console.log('tagId: ' + tagId)
                 if (e.target.classList.contains('active')) {
                     animeApi.options.tagIds.push(tagId);
                 } else {
@@ -65,13 +64,12 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
                     }
                 }
 
-                apiCallback({tagIds: animeApi.options.tagIds}).then(response => {
+                apiCallback(animeApi.options).then(response => {
                     updatePaginationState(response);
                     createPageButtons();
                     enableDisableNextButton();
                     updateCollectionContent(response.items);
                 });
-                console.log(animeApi.options.tagIds);
             }
         });
 
@@ -79,7 +77,7 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
             let buttons = tagColumns.querySelectorAll('button');
             buttons.forEach(button => button.classList.remove('active'));
             animeApi.options.tagIds = [];
-            apiCallback({tagIds: animeApi.options.tagIds}).then(response => {
+            apiCallback(animeApi.options).then(response => {
                 updatePaginationState(response);
                 createPageButtons();
                 enableDisableNextButton();
@@ -94,7 +92,6 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         brandColumns.addEventListener('click', async (e) => {
             if (e.target.tagName === 'BUTTON') {
                 let brandId = e.target.getAttribute('data-brand-id');
-                console.log('brandId: ' + brandId)
                 if (e.target.classList.contains('active')) {
                     animeApi.options.brandIds.push(brandId);
                 } else {
@@ -104,13 +101,12 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
                     }
                 }
 
-                apiCallback({brandIds: animeApi.options.brandIds}).then(response => {
+                apiCallback(animeApi.options).then(response => {
                     updatePaginationState(response);
                     createPageButtons();
                     enableDisableNextButton();
                     updateCollectionContent(response.items);
                 });
-                console.log(animeApi.options.brandIds);
             }
         });
 
@@ -118,7 +114,7 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
             let buttons = brandColumns.querySelectorAll('button');
             buttons.forEach(button => button.classList.remove('active'));
             animeApi.options.brandIds = [];
-            apiCallback({brandIds: animeApi.options.brandIds}).then(response => {
+            apiCallback(animeApi.options).then(response => {
                 updatePaginationState(response);
                 createPageButtons();
                 enableDisableNextButton();
@@ -132,21 +128,13 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         if (searchInput == null) return;
         searchInput.addEventListener('input', function (e) {
             const query = e.target.value.trim();
-            if (query.length >= 3) {
-                apiCallback({title: query}).then(response => {
-                    updatePaginationState(response);
-                    createPageButtons();
-                    enableDisableNextButton();
-                    updateCollectionContent(response.items);
-                });
-            } else if (query.length === 0) {
-                apiCallback().then(response => {
-                    updatePaginationState(response);
-                    createPageButtons();
-                    enableDisableNextButton();
-                    updateCollectionContent(response.items);
-                });
-            }
+            animeApi.options.title = query;
+            apiCallback(animeApi.options).then(response => {
+                updatePaginationState(response);
+                createPageButtons();
+                enableDisableNextButton();
+                updateCollectionContent(response.items);
+            });
         });
 
     }
