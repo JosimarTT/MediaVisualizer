@@ -5,8 +5,7 @@ let paginationState = {
     size: 0,
     totalCount: 0,
     totalPages: 0,
-    areEventListenersAdded: false,
-    searchQuery: animeApi.options
+    areEventListenersAdded: false
 }
 
 async function initializePagination(apiCallback, updateCollectionContentCallback) {
@@ -54,7 +53,7 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         if (tagColumns == null) return;
         tagColumns.addEventListener('click', async (e) => {
             if (e.target.tagName === 'BUTTON') {
-                let tagId = e.target.getAttribute('data-tag-id');
+                let tagId = e.target.getAttribute('data-id');
                 if (e.target.classList.contains('active')) {
                     animeApi.options.tagIds.push(tagId);
                 } else {
@@ -91,7 +90,7 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         if (brandColumns == null) return;
         brandColumns.addEventListener('click', async (e) => {
             if (e.target.tagName === 'BUTTON') {
-                let brandId = e.target.getAttribute('data-brand-id');
+                let brandId = e.target.getAttribute('data-id');
                 if (e.target.classList.contains('active')) {
                     animeApi.options.brandIds.push(brandId);
                 } else {

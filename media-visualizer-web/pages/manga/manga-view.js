@@ -5,9 +5,9 @@ initialize().then(r => {
 });
 
 async function initialize() {
-    await initializeModal(tagModalProperties);
-    await initializeModal(brandModalProperties);
-    await initializePagination(animeApi.getList, updateCollectionContent);
+    await initializeModal(tagApi.getList, 'tagsModal', 'Tags', 'tag-columns', 'btn-tag-reset-filters');
+    await initializeModal(brandApi.getList, 'brandsModal', 'Brands', 'brand-columns', 'btn-brand-reset-filters');
+    // await initializePagination(animeApi.getList, updateCollectionContent);
 }
 
 function updateCollectionContent(items) {
