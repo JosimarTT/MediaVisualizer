@@ -1,7 +1,7 @@
 'use strict'
 
 const animeApi = {
-    apiBaseUrl: 'http://localhost:5216/Anime',
+    url: `${apiBaseUrl}/Anime`,
 
     options: {
         size: 0,
@@ -15,7 +15,7 @@ const animeApi = {
     },
 
     get: async (id) => {
-        const response = await fetch(`${animeApi.apiBaseUrl}/${id}`);
+        const response = await fetch(`${animeApi.url}/${id}`);
         return response.json();
     },
 
@@ -31,12 +31,12 @@ const animeApi = {
         if (options.artistIds) options.artistIds.forEach(id => queryParams.append('ArtistIds', id));
         if (options.title) queryParams.append('Title', options.title);
 
-        const response = await fetch(`${animeApi.apiBaseUrl}/GetList?${queryParams.toString()}`);
+        const response = await fetch(`${animeApi.url}/GetList?${queryParams.toString()}`);
         return response.json();
     },
 
     getRandom: async () => {
-        const response = await fetch(`${animeApi.apiBaseUrl}/GetRandom`);
+        const response = await fetch(`${animeApi.url}/GetRandom`);
         return response.json();
     }
 };

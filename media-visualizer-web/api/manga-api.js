@@ -1,20 +1,20 @@
 'use strict'
 
 const mangaApi = {
-    apiBaseUrl: 'http://localhost:5216/Manga',
+    url: `${apiBaseUrl}/Manga`,
 
     get: async (id) => {
-        const response = await fetch(`${mangaApi.apiBaseUrl}/${id}`);
+        const response = await fetch(`${mangaApi.url}/${id}`);
         return response.json();
     },
 
     getList: async () => {
-        const response = await fetch(`${mangaApi.apiBaseUrl}/GetList`);
+        const response = await fetch(`${mangaApi.url}/GetList`);
         return response.json();
     },
 
     getRandom: async () => {
-        const response = await fetch(`${mangaApi.apiBaseUrl}/GetRandom`);
+        const response = await fetch(`${mangaApi.url}/GetRandom`);
         return response.json();
     }
 };

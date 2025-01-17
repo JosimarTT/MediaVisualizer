@@ -1,15 +1,15 @@
 'use strict'
 
 const brandApi = {
-    apiBaseUrl: 'http://localhost:5216/Brand',
+    url: `${apiBaseUrl}/Brand`,
 
     get: async (id) => {
-        const response = await fetch(`${brandApi.apiBaseUrl}/${id}`);
+        const response = await fetch(`${brandApi.url}/${id}`);
         return response.json();
     },
 
     getList: async () => {
-        const response = await fetch(`${brandApi.apiBaseUrl}/GetList`);
+        const response = await fetch(`${brandApi.url}/GetList`);
         return response.json();
     }
 };
