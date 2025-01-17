@@ -12,7 +12,7 @@ public class MangaService : IMangaService
 {
     private readonly IMangaRepository _mangaRepository;
 
-    public MangaService(IMangaRepository mangaRepository )
+    public MangaService(IMangaRepository mangaRepository)
     {
         _mangaRepository = mangaRepository;
     }

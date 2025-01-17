@@ -18,16 +18,6 @@ public class AnimeRepository : IAnimeRepository
     {
         var query = GetBaseQuery();
 
-        if (filters.SortOrder != null)
-        {
-            query = filters.SortOrder switch
-            {
-                "asc" => query.OrderBy(x => x.Title),
-                "desc" => query.OrderByDescending(x => x.Title),
-                _ => query
-            };
-        }
-
         if (filters.BrandIds != null && filters.BrandIds.Count != 0)
             query = query.Where(x => x.Brands.Any(y => filters.BrandIds.Contains(y.BrandId)));
 

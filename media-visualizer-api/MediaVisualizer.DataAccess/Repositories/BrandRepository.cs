@@ -14,7 +14,9 @@ public class BrandRepository : IBrandRepository
 
     public async Task<IEnumerable<Brand>> GetList()
     {
-        return await _context.Brands.ToListAsync();
+        return await _context.Brands
+            .OrderBy(x => x.Name)
+            .ToListAsync();
     }
 }
 

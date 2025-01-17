@@ -13,7 +13,7 @@ public class AnimeService : IAnimeService
 {
     private readonly IAnimeRepository _animeRepository;
 
-    public AnimeService(IAnimeRepository animeRepository )
+    public AnimeService(IAnimeRepository animeRepository)
     {
         _animeRepository = animeRepository;
     }
