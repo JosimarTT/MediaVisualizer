@@ -8,8 +8,8 @@ const mangaApi = {
         return response.json();
     },
 
-    getList: async () => {
-        const response = await fetch(`${mangaApi.url}/GetList`);
+    getList: async (filters = {}) => {
+        const response = await fetch(`${mangaApi.url}/GetList?${buildRequestQueryParams(filters)}`);
         return response.json();
     },
 

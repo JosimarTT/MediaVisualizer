@@ -55,15 +55,15 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
             if (e.target.tagName === 'BUTTON') {
                 let tagId = e.target.getAttribute('data-id');
                 if (e.target.classList.contains('active')) {
-                    animeApi.options.tagIds.push(tagId);
+                    requestFilters.tagIds.push(tagId);
                 } else {
-                    let index = animeApi.options.tagIds.indexOf(tagId);
+                    let index = requestFilters.tagIds.indexOf(tagId);
                     if (index > -1) {
-                        animeApi.options.tagIds.splice(index, 1);
+                        requestFilters.tagIds.splice(index, 1);
                     }
                 }
 
-                apiCallback(animeApi.options).then(response => {
+                apiCallback(requestFilters).then(response => {
                     updatePaginationState(response);
                     createPageButtons();
                     enableDisableNextButton();
@@ -75,8 +75,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         document.getElementById('btn-tag-reset-filters').addEventListener('click', function () {
             let buttons = tagColumns.querySelectorAll('button');
             buttons.forEach(button => button.classList.remove('active'));
-            animeApi.options.tagIds = [];
-            apiCallback(animeApi.options).then(response => {
+            requestFilters.tagIds = [];
+            apiCallback(requestFilters).then(response => {
                 updatePaginationState(response);
                 createPageButtons();
                 enableDisableNextButton();
@@ -92,15 +92,15 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
             if (e.target.tagName === 'BUTTON') {
                 let brandId = e.target.getAttribute('data-id');
                 if (e.target.classList.contains('active')) {
-                    animeApi.options.brandIds.push(brandId);
+                    requestFilters.brandIds.push(brandId);
                 } else {
-                    let index = animeApi.options.brandIds.indexOf(brandId);
+                    let index = requestFilters.brandIds.indexOf(brandId);
                     if (index > -1) {
-                        animeApi.options.brandIds.splice(index, 1);
+                        requestFilters.brandIds.splice(index, 1);
                     }
                 }
 
-                apiCallback(animeApi.options).then(response => {
+                apiCallback(requestFilters).then(response => {
                     updatePaginationState(response);
                     createPageButtons();
                     enableDisableNextButton();
@@ -112,8 +112,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         document.getElementById('btn-brand-reset-filters').addEventListener('click', function () {
             let buttons = brandColumns.querySelectorAll('button');
             buttons.forEach(button => button.classList.remove('active'));
-            animeApi.options.brandIds = [];
-            apiCallback(animeApi.options).then(response => {
+            requestFilters.brandIds = [];
+            apiCallback(requestFilters).then(response => {
                 updatePaginationState(response);
                 createPageButtons();
                 enableDisableNextButton();
@@ -127,8 +127,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         if (searchInput == null) return;
         searchInput.addEventListener('input', function (e) {
             const query = e.target.value.trim();
-            animeApi.options.title = query;
-            apiCallback(animeApi.options).then(response => {
+            requestFilters.title = query;
+            apiCallback(requestFilters).then(response => {
                 updatePaginationState(response);
                 createPageButtons();
                 enableDisableNextButton();

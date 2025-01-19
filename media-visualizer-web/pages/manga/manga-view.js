@@ -5,17 +5,17 @@ initialize().then(r => {
 });
 
 async function initialize() {
-    await initializeModal(tagApi.getList, 'tagsModal', 'Tags', 'tag-columns', 'btn-tag-reset-filters');
-    await initializeModal(brandApi.getList, 'brandsModal', 'Brands', 'brand-columns', 'btn-brand-reset-filters');
-    // await initializePagination(animeApi.getList, updateCollectionContent);
+    await initializeModal(tagModalProperties);
+    await initializeModal(brandModalProperties);
+    await initializePagination(mangaApi.getList, updateCollectionContent);
 }
 
 function updateCollectionContent(items) {
-    document.getElementById('collection').innerHTML = items.map(anime =>
+    document.getElementById('collection').innerHTML = items.map(item =>
         `<div class="card p-0 hover-effect">
-            <img alt="..." class="card-img-top" src="${parseFilePath(anime.basePath, [anime.logo])}" onclick="openInNewTab('${parseFilePath(anime.basePath, [anime.video])}')">
+            <img alt="..." class="card-img-top" src="${parseFilePath(item.basePath, [item.logo])}" onclick="openInNewTab('${parseFilePath(item.basePath, [item.video])}')">
                 <div class="card-body">
-                    <p class="card-title text-center m-0 text-ellipsis">${anime.title} ${anime.chapterNumber}</p>
+                    <p class="card-title text-center m-0 text-ellipsis">${item.title} ${item.chapterNumber}</p>
                 </div>
             </div>`
     ).join('');

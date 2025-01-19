@@ -2,6 +2,17 @@
 
 const apiBaseUrl = 'http://localhost:5216';
 
+const requestFilters = {
+    size: 0,
+    page: 0,
+    sortOrder: '',
+    authorIds: [],
+    tagIds: [],
+    brandIds: [],
+    artistIds: [],
+    title: ''
+}
+
 function getRandomElement(arr) {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return arr[randomIndex];
@@ -28,4 +39,17 @@ function redirectToAnimeView() {
 
 function openInNewTab(url) {
     window.open(url, '_blank');
+}
+
+function buildRequestQueryParams(filters) {
+    const queryParams = new URLSearchParams();
+    if (filters.size) queryParams.append('Size', filters.size);
+    if (filters.page) queryParams.append('Page', filters.page);
+    if (filters.sortOrder) queryParams.append('SortOrder', filters.sortOrder);
+    if (filters.authorIds) filters.authorIds.forEach(id => queryParams.append('AuthorIds', id));
+    if (filters.tagIds) filters.tagIds.forEach(id => queryParams.append('TagIds', id));
+    if (filters.brandIds) filters.brandIds.forEach(id => queryParams.append('BrandIds', id));
+    if (filters.artistIds) filters.artistIds.forEach(id => queryParams.append('ArtistIds', id));
+    if (filters.title) queryParams.append('Title', filters.title);
+    return queryParams.toString();
 }
