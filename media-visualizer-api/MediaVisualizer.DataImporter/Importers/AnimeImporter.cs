@@ -1,5 +1,5 @@
 ﻿using MediaVisualizer.DataAccess;
-using MediaVisualizer.DataAccess.Entities.Anime;
+using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.ExtensionMethods;
 

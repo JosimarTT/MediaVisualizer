@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.DataAccess.Entities.Manga;
 using MediaVisualizer.DataAccess.Entities.Manwha;
 
@@ -12,7 +11,7 @@ public class Brand : AuditEntity
 
     public string Name { get; set; }
 
-    public ICollection<Anime.Anime> Animes { get; set; } = new List<Anime.Anime>();
+    public ICollection<Anime> Animes { get; set; } = new List<Anime>();
 
     public ICollection<Manga.Manga> Mangas { get; set; } = new List<Manga.Manga>();
 
