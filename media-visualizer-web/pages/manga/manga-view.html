@@ -8,6 +8,16 @@
     <title>Document</title>
     <link href="../../dist/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../../shared/shared.css" rel="stylesheet">
+    <style>
+        .card:hover .card-title {
+            text-overflow: clip;
+            white-space: normal;
+        }
+
+        .card:hover .card-body {
+            background-color: rgba(0, 0, 0, 0.7) !important; /* Change this to your desired color */
+        }
+    </style>
 </head>
 <body>
 <div class="container d-flex flex-column h-100">
@@ -44,7 +54,7 @@
         </div>
     </header>
 
-    <main class="m-auto">
+    <main style="margin-top: auto !important;margin-bottom: auto !important;">
         <div class="collection-grid" id="collection"></div>
     </main>
 

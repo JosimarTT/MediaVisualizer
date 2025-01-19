@@ -11,7 +11,7 @@ let paginationState = {
 async function initializePagination(apiCallback, updateCollectionContentCallback) {
     let paginationDiv = document.getElementById('pagination');
 
-    let apiResponse = await apiCallback();
+    let apiResponse = await apiCallback(requestFilters);
 
     updatePaginationState(apiResponse);
 
@@ -127,6 +127,7 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         if (searchInput == null) return;
         searchInput.addEventListener('input', function (e) {
             const query = e.target.value.trim();
+            requestFilters.page = 1;
             requestFilters.title = query;
             apiCallback(requestFilters).then(response => {
                 updatePaginationState(response);
@@ -146,7 +147,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
                 enableDisablePrevButton();
                 enableDisableNextButton();
                 updateActivePageButton();
-                apiCallback({page: paginationState.page}).then(response => {
+                requestFilters.page = paginationState.page;
+                apiCallback(requestFilters).then(response => {
                     updateCollectionContentCallback(response.items);
                 });
             }
@@ -166,7 +168,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
                 enableDisablePrevButton();
                 enableDisableNextButton();
                 updateActivePageButton();
-                apiCallback({page: paginationState.page}).then(response => {
+                requestFilters.page = paginationState.page;
+                apiCallback(requestFilters).then(response => {
                     updateCollectionContentCallback(response.items);
                 });
             }
@@ -190,7 +193,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
                 enableDisablePrevButton();
                 enableDisableNextButton();
                 updateActivePageButton();
-                apiCallback({page: paginationState.page}).then(response => {
+                requestFilters.page = paginationState.page;
+                apiCallback(requestFilters).then(response => {
                     updateCollectionContentCallback(response.items);
                 });
             });
@@ -211,7 +215,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
                 enableDisablePrevButton();
                 enableDisableNextButton();
                 updateActivePageButton();
-                apiCallback({page: paginationState.page}).then(response => {
+                requestFilters.page = paginationState.page
+                apiCallback(requestFilters).then(response => {
                     updateCollectionContentCallback(response.items);
                 });
             }

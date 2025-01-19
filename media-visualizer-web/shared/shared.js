@@ -3,8 +3,8 @@
 const apiBaseUrl = 'http://localhost:5216';
 
 const requestFilters = {
-    size: 0,
-    page: 0,
+    size: 24,
+    page: 1,
     sortOrder: '',
     authorIds: [],
     tagIds: [],
