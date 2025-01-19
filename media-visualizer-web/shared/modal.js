@@ -1,4 +1,5 @@
 'use strict'
+
 const tagModalProperties = {
     apiCallBack: tagApi.getList,
     modalId: 'tagsModal',

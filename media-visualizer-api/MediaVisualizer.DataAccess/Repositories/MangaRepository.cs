@@ -30,6 +30,9 @@ public class MangaRepository : IMangaRepository
         if (filters.AuthorIds != null && filters.AuthorIds.Count != 0)
             query = query.Where(x => x.Authors.Any(y => filters.AuthorIds.Contains(y.AuthorId)));
 
+        if (!string.IsNullOrWhiteSpace(filters.Title))
+            query = query.Where(x => x.Title.ToLower().Contains(filters.Title.ToLower()));
+
         var totalCount = await query.CountAsync();
 
         if (filters.Page != null && filters.Page > 0 && filters.Size != null && filters.Size > 0)
