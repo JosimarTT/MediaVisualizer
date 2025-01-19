@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using MediaVisualizer.DataAccess.Entities.Manwha;
+using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
 

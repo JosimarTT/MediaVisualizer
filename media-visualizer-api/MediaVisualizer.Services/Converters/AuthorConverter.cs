@@ -1,4 +1,4 @@
-﻿using MediaVisualizer.DataAccess.Entities.Shared;
+﻿using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services.Converters;

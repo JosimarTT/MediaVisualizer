@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using MediaVisualizer.DataAccess.Entities.Shared;
 
 namespace MediaVisualizer.DataAccess.Entities;
 
 public class Anime : AuditEntity
 {
-    [Key] public int AnimeId { get; set; }
+    public int AnimeId { get; set; }
 
     public string Folder { get; set; }
 

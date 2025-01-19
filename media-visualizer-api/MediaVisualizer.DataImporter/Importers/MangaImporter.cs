@@ -1,5 +1,5 @@
 ﻿using MediaVisualizer.DataAccess;
-using MediaVisualizer.DataAccess.Entities.Manga;
+using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.Shared;
 
 namespace MediaVisualizer.DataImporter.Importers;
@@ -39,18 +39,13 @@ public class MangaImporter
                 {
                     var manga = new Manga
                     {
+                        Folder = $"{folder}\\{mangaFolder}",
                         Title = mangaFolder,
-                        Folder = $"{folder}\\{mangaFolder}"
-                    };
-
-                    var mangaChapter = new MangaChapter
-                    {
                         ChapterNumber = 1,
                         PagesCount = pages.Count,
                         Logo = pages.First(),
                         PageExtension = Path.GetExtension(pages.First())
                     };
-                    manga.MangaChapters.Add(mangaChapter);
                     mangas.Add(manga);
                 }
             }

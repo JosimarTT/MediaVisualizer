@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Entities\Anime\" />
         <Folder Include="Migrations\"/>
     </ItemGroup>
 

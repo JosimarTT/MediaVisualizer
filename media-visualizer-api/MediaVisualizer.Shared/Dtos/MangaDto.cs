@@ -11,4 +11,8 @@ public class MangaDto
     public ICollection<AuthorDto> Authors { get; set; }
     public ICollection<BrandDto> Brands { get; set; }
     public string BasePath { get; set; }
+    public int ChapterNumber { get; set; }
+    public int PagesCount { get; set; }
+    public string Logo { get; set; }
+    public string PageExtension { get; set; }
 }

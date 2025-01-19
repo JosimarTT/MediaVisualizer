@@ -1,4 +1,4 @@
-﻿using MediaVisualizer.DataAccess.Entities.Manga;
+﻿using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
 
@@ -15,7 +15,10 @@ public static class MangaConverter
             MangaId = manga.MangaId,
             Folder = manga.Folder,
             Title = manga.Title,
-            Chapters = manga.MangaChapters.ToListDto(),
+            ChapterNumber = manga.ChapterNumber,
+            PagesCount = manga.PagesCount,
+            Logo = manga.Logo,
+            PageExtension = manga.PageExtension,
             Brands = manga.Brands.ToListDto(),
             Tags = manga.Tags.ToListDto(),
             Artists = manga.Artists.ToListDto(),
@@ -29,27 +32,5 @@ public static class MangaConverter
         if (mangas == null || mangas.Count == 0) return new List<MangaDto>();
 
         return mangas.Select(x => x.ToDto()).ToList();
-    }
-
-    public static MangaChapterDto ToDto(this MangaChapter chapter)
-    {
-        if (chapter == null) return null;
-
-        return new MangaChapterDto
-        {
-            MangaChapterId = chapter.MangaChapterId,
-            MangaId = chapter.MangaId,
-            ChapterNumber = chapter.ChapterNumber,
-            PagesCount = chapter.PagesCount,
-            Logo = chapter.Logo,
-            PageExtension = chapter.PageExtension,
-        };
-    }
-
-    public static ICollection<MangaChapterDto> ToListDto(this ICollection<MangaChapter> chapters)
-    {
-        if (chapters == null || chapters.Count == 0) return new List<MangaChapterDto>();
-
-        return chapters.Select(x => x.ToDto()).ToList();
     }
 }

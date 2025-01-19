@@ -1,5 +1,5 @@
 ﻿using MediaVisualizer.DataAccess;
-using MediaVisualizer.DataAccess.Entities.Shared;
+using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.DataImporter.Models;
 using MediaVisualizer.Shared;
 using YamlDotNet.Serialization;
