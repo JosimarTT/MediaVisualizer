@@ -3,7 +3,7 @@
 const apiBaseUrl = 'http://localhost:5216';
 
 const requestFilters = {
-    size: 24,
+    size: 18,
     page: 1,
     sortOrder: '',
     authorIds: [],
@@ -52,4 +52,19 @@ function buildRequestQueryParams(filters) {
     if (filters.artistIds) filters.artistIds.forEach(id => queryParams.append('ArtistIds', id));
     if (filters.title) queryParams.append('Title', filters.title);
     return queryParams.toString();
+}
+
+function updateCollectionContent(items) {
+    document.getElementById('collection').innerHTML = items.map(item =>
+        `<div class="card p-0 hover-effect" style="height: 356px">
+            <a href="${parseFilePath(item.basePath, [item.video])}" target="_blank" class="h-100">
+                <img alt="..." class="card-img object-fit-cover" style="max-height: 300px; border-bottom-left-radius: 0; border-bottom-right-radius: 0" src="${parseFilePath(item.basePath, [item.logo])}">
+                <div class="card-body position-absolute bottom-0 w-100 text-white" style="background: #212529; border-radius: var(--bs-card-border-radius); border-top-left-radius: 0;border-top-right-radius: 0">
+                    <div class="card-title-container">
+                        <p class="card-title text-center m-0 text-ellipsis">${item.title} ${item.chapterNumber}</p>
+                    </div>
+                </div>
+            </a>
+        </div>`
+    ).join('');
 }
