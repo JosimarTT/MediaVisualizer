@@ -1,4 +1,4 @@
-﻿using MediaVisualizer.DataAccess.Entities.Shared;
+﻿using MediaVisualizer.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Repositories;

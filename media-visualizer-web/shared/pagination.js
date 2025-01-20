@@ -5,14 +5,13 @@ let paginationState = {
     size: 0,
     totalCount: 0,
     totalPages: 0,
-    areEventListenersAdded: false,
-    searchQuery: animeApi.options
+    areEventListenersAdded: false
 }
 
 async function initializePagination(apiCallback, updateCollectionContentCallback) {
     let paginationDiv = document.getElementById('pagination');
 
-    let apiResponse = await apiCallback();
+    let apiResponse = await apiCallback(requestFilters);
 
     updatePaginationState(apiResponse);
 
@@ -54,17 +53,17 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         if (tagColumns == null) return;
         tagColumns.addEventListener('click', async (e) => {
             if (e.target.tagName === 'BUTTON') {
-                let tagId = e.target.getAttribute('data-tag-id');
+                let tagId = e.target.getAttribute('data-id');
                 if (e.target.classList.contains('active')) {
-                    animeApi.options.tagIds.push(tagId);
+                    requestFilters.tagIds.push(tagId);
                 } else {
-                    let index = animeApi.options.tagIds.indexOf(tagId);
+                    let index = requestFilters.tagIds.indexOf(tagId);
                     if (index > -1) {
-                        animeApi.options.tagIds.splice(index, 1);
+                        requestFilters.tagIds.splice(index, 1);
                     }
                 }
 
-                apiCallback(animeApi.options).then(response => {
+                apiCallback(requestFilters).then(response => {
                     updatePaginationState(response);
                     createPageButtons();
                     enableDisableNextButton();
@@ -76,8 +75,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         document.getElementById('btn-tag-reset-filters').addEventListener('click', function () {
             let buttons = tagColumns.querySelectorAll('button');
             buttons.forEach(button => button.classList.remove('active'));
-            animeApi.options.tagIds = [];
-            apiCallback(animeApi.options).then(response => {
+            requestFilters.tagIds = [];
+            apiCallback(requestFilters).then(response => {
                 updatePaginationState(response);
                 createPageButtons();
                 enableDisableNextButton();
@@ -91,17 +90,17 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         if (brandColumns == null) return;
         brandColumns.addEventListener('click', async (e) => {
             if (e.target.tagName === 'BUTTON') {
-                let brandId = e.target.getAttribute('data-brand-id');
+                let brandId = e.target.getAttribute('data-id');
                 if (e.target.classList.contains('active')) {
-                    animeApi.options.brandIds.push(brandId);
+                    requestFilters.brandIds.push(brandId);
                 } else {
-                    let index = animeApi.options.brandIds.indexOf(brandId);
+                    let index = requestFilters.brandIds.indexOf(brandId);
                     if (index > -1) {
-                        animeApi.options.brandIds.splice(index, 1);
+                        requestFilters.brandIds.splice(index, 1);
                     }
                 }
 
-                apiCallback(animeApi.options).then(response => {
+                apiCallback(requestFilters).then(response => {
                     updatePaginationState(response);
                     createPageButtons();
                     enableDisableNextButton();
@@ -113,8 +112,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         document.getElementById('btn-brand-reset-filters').addEventListener('click', function () {
             let buttons = brandColumns.querySelectorAll('button');
             buttons.forEach(button => button.classList.remove('active'));
-            animeApi.options.brandIds = [];
-            apiCallback(animeApi.options).then(response => {
+            requestFilters.brandIds = [];
+            apiCallback(requestFilters).then(response => {
                 updatePaginationState(response);
                 createPageButtons();
                 enableDisableNextButton();
@@ -128,8 +127,9 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
         if (searchInput == null) return;
         searchInput.addEventListener('input', function (e) {
             const query = e.target.value.trim();
-            animeApi.options.title = query;
-            apiCallback(animeApi.options).then(response => {
+            requestFilters.page = 1;
+            requestFilters.title = query;
+            apiCallback(requestFilters).then(response => {
                 updatePaginationState(response);
                 createPageButtons();
                 enableDisableNextButton();
@@ -147,7 +147,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
                 enableDisablePrevButton();
                 enableDisableNextButton();
                 updateActivePageButton();
-                apiCallback({page: paginationState.page}).then(response => {
+                requestFilters.page = paginationState.page;
+                apiCallback(requestFilters).then(response => {
                     updateCollectionContentCallback(response.items);
                 });
             }
@@ -167,7 +168,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
                 enableDisablePrevButton();
                 enableDisableNextButton();
                 updateActivePageButton();
-                apiCallback({page: paginationState.page}).then(response => {
+                requestFilters.page = paginationState.page;
+                apiCallback(requestFilters).then(response => {
                     updateCollectionContentCallback(response.items);
                 });
             }
@@ -191,7 +193,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
                 enableDisablePrevButton();
                 enableDisableNextButton();
                 updateActivePageButton();
-                apiCallback({page: paginationState.page}).then(response => {
+                requestFilters.page = paginationState.page;
+                apiCallback(requestFilters).then(response => {
                     updateCollectionContentCallback(response.items);
                 });
             });
@@ -212,7 +215,8 @@ async function initializePagination(apiCallback, updateCollectionContentCallback
                 enableDisablePrevButton();
                 enableDisableNextButton();
                 updateActivePageButton();
-                apiCallback({page: paginationState.page}).then(response => {
+                requestFilters.page = paginationState.page
+                apiCallback(requestFilters).then(response => {
                     updateCollectionContentCallback(response.items);
                 });
             }

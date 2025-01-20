@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using MediaVisualizer.DataAccess.Entities.Shared;
 
-namespace MediaVisualizer.DataAccess.Entities.Manwha;
+namespace MediaVisualizer.DataAccess.Entities;
 
 public class Manwha : AuditEntity
 {

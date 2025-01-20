@@ -1,5 +1,4 @@
-﻿using MediaVisualizer.DataAccess.Entities.Anime;
-using MediaVisualizer.DataAccess.Repositories;
+﻿using MediaVisualizer.DataAccess.Repositories;
 using MediaVisualizer.DataImporter;
 using MediaVisualizer.DataImporter.Importers;
 using MediaVisualizer.Services.Converters;

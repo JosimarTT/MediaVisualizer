@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace MediaVisualizer.DataAccess.Entities;
+﻿namespace MediaVisualizer.DataAccess;
 
 public class AuditEntity
 {

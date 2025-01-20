@@ -16,10 +16,11 @@
             <div class="d-flex align-items-center me-md-auto">
                 <ul class="nav d-flex align-items-center">
                     <li class="nav-item">
-                        <button class="btn btn-dark fs-4 disabled opacity-100">Animes</button>
+                        <button class="btn btn-dark" onclick="redirectToAnimeView()">Animes</button>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-dark" onclick="redirectToMangaView()">Mangas</button>
+                        <button class="btn btn-dark fs-4 disabled opacity-100" onclick="redirectToMangaView()">Mangas
+                        </button>
                     </li>
                     <li class="nav-item">
                         <button class="btn btn-dark" onclick="redirectToManwhaView()">Manwhas</button>
@@ -59,11 +60,11 @@
 
 <script src="../../dist/bootstrap/bootstrap.min.js"></script>
 <script src="../../shared/shared.js"></script>
-<script src="../../api/anime-api.js"></script>
+<script src="../../api/manga-api.js"></script>
 <script src="../../api/tag-api.js"></script>
 <script src="../../api/brand-api.js"></script>
 <script src="../../shared/modal.js"></script>
 <script src="../../shared/pagination.js"></script>
-<script src="anime-view.js"></script>
+<script src="manga-view.js"></script>
 </body>
 </html>

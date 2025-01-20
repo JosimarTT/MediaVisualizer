@@ -83,6 +83,10 @@ namespace MediaVisualizer.DataAccess.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Folder = table.Column<string>(type: "TEXT", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
+                    ChapterNumber = table.Column<int>(type: "INTEGER", nullable: false),
+                    Logo = table.Column<string>(type: "TEXT", nullable: false),
+                    PageExtension = table.Column<string>(type: "TEXT", nullable: false),
+                    PagesCount = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
@@ -214,31 +218,6 @@ namespace MediaVisualizer.DataAccess.Migrations
                     table.ForeignKey(
                         name: "FK_BrandManga_Mangas_MangasMangaId",
                         column: x => x.MangasMangaId,
-                        principalTable: "Mangas",
-                        principalColumn: "MangaId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MangaChapters",
-                columns: table => new
-                {
-                    MangaChapterId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    MangaId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ChapterNumber = table.Column<int>(type: "INTEGER", nullable: false),
-                    PagesCount = table.Column<int>(type: "INTEGER", nullable: false),
-                    Logo = table.Column<string>(type: "TEXT", nullable: false),
-                    PageExtension = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MangaChapters", x => x.MangaChapterId);
-                    table.ForeignKey(
-                        name: "FK_MangaChapters_Mangas_MangaId",
-                        column: x => x.MangaId,
                         principalTable: "Mangas",
                         principalColumn: "MangaId",
                         onDelete: ReferentialAction.Cascade);
@@ -454,11 +433,6 @@ namespace MediaVisualizer.DataAccess.Migrations
                 column: "ManwhasManwhaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MangaChapters_MangaId",
-                table: "MangaChapters",
-                column: "MangaId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_MangaTag_TagsTagId",
                 table: "MangaTag",
                 column: "TagsTagId");
@@ -500,9 +474,6 @@ namespace MediaVisualizer.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "BrandManwha");
-
-            migrationBuilder.DropTable(
-                name: "MangaChapters");
 
             migrationBuilder.DropTable(
                 name: "MangaTag");

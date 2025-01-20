@@ -1,4 +1,4 @@
-﻿using MediaVisualizer.DataAccess.Entities.Manwha;
+﻿using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.EntityFrameworkCore;
 

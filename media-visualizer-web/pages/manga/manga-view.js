@@ -7,5 +7,5 @@ initialize().then(r => {
 async function initialize() {
     await initializeModal(tagModalProperties);
     await initializeModal(brandModalProperties);
-    await initializePagination(animeApi.getList, updateCollectionContent);
+    await initializePagination(mangaApi.getList, updateCollectionContent);
 }

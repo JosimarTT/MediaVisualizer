@@ -1,5 +1,18 @@
 'use strict'
 
+const apiBaseUrl = 'http://localhost:5216';
+
+const requestFilters = {
+    size: 18,
+    page: 1,
+    sortOrder: '',
+    authorIds: [],
+    tagIds: [],
+    brandIds: [],
+    artistIds: [],
+    title: ''
+}
+
 function getRandomElement(arr) {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return arr[randomIndex];
@@ -26,4 +39,32 @@ function redirectToAnimeView() {
 
 function openInNewTab(url) {
     window.open(url, '_blank');
+}
+
+function buildRequestQueryParams(filters) {
+    const queryParams = new URLSearchParams();
+    if (filters.size) queryParams.append('Size', filters.size);
+    if (filters.page) queryParams.append('Page', filters.page);
+    if (filters.sortOrder) queryParams.append('SortOrder', filters.sortOrder);
+    if (filters.authorIds) filters.authorIds.forEach(id => queryParams.append('AuthorIds', id));
+    if (filters.tagIds) filters.tagIds.forEach(id => queryParams.append('TagIds', id));
+    if (filters.brandIds) filters.brandIds.forEach(id => queryParams.append('BrandIds', id));
+    if (filters.artistIds) filters.artistIds.forEach(id => queryParams.append('ArtistIds', id));
+    if (filters.title) queryParams.append('Title', filters.title);
+    return queryParams.toString();
+}
+
+function updateCollectionContent(items) {
+    document.getElementById('collection').innerHTML = items.map(item =>
+        `<div class="card p-0 hover-effect" style="height: 356px">
+            <a href="${parseFilePath(item.basePath, [item.video])}" target="_blank" class="h-100">
+                <img alt="..." class="card-img object-fit-cover" style="max-height: 300px; border-bottom-left-radius: 0; border-bottom-right-radius: 0" src="${parseFilePath(item.basePath, [item.logo])}">
+                <div class="card-body position-absolute bottom-0 w-100 text-white" style="background: #212529; border-radius: var(--bs-card-border-radius); border-top-left-radius: 0;border-top-right-radius: 0">
+                    <div class="card-title-container">
+                        <p class="card-title text-center m-0 text-ellipsis">${item.title} ${item.chapterNumber}</p>
+                    </div>
+                </div>
+            </a>
+        </div>`
+    ).join('');
 }

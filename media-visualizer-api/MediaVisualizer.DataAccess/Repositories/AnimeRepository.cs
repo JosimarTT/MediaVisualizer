@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using MediaVisualizer.DataAccess.Entities.Anime;
+using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.EntityFrameworkCore;
 
