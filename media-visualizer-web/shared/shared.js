@@ -60,10 +60,10 @@ function buildRequestQueryParams(filters) {
 
 function updateCollectionContent(items) {
     document.getElementById('collection').innerHTML = items.map(item => {
-        let url = './chapter-view.html?';
-        if (item.animeId) url = `${url}animeId=${item.animeId}`;
-        if (item.mangaId) url = `${url}mangaId=${item.mangaId}`;
-        if (item.manwhaId) url = `${url}manwhaId=${item.manwhaId}`;
+        let url = './chapter-view.html?id=';
+        if (item.animeId) url = `${url}${item.animeId}`;
+        if (item.mangaId) url = `${url}${item.mangaId}`;
+        if (item.manwhaId) url = `${url}${item.manwhaId}`;
         return `<div class="card p-0 hover-effect" style="height: 356px">
             <a href="${url}" target="_blank" class="h-100">
                 <img alt="..." class="card-img object-fit-cover" style="max-height: 300px; border-bottom-left-radius: 0; border-bottom-right-radius: 0" src="${parseFilePath(item.basePath, [item.logo])}">
@@ -75,4 +75,9 @@ function updateCollectionContent(items) {
             </a>
         </div>`;
     }).join('');
+}
+
+function getIdFromUrl() {
+    const url = new URL(window.location.href);
+    return parseInt(url.searchParams.get('id'));
 }
