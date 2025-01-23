@@ -79,23 +79,49 @@ for ($i = $startIndex; $i -lt $subfolders.Count; $i++) {
     # Get files in the current folder with the specified extensions, sorted by name
     $files = Get-ChildItem -LiteralPath $currentFolder -File | Where-Object { $fileExtensions -contains $_.Extension } | Sort-Object Name
 
-    # Skip folder if no files found or if the first file's name starts with a number
-    if ($files.Count -eq 0 -or ($files[0].Name -match '^\d'))
-    {
-        Write-Host "Skipping folder $( $subfolders[$i].Name ) as it contains files starting with a number." -ForegroundColor Yellow
-        continue
-    }
-
-    # Display files if any match the extensions
-    if ($files.Count -gt 0)
-    {
-        $files | ForEach-Object { Write-Output $_.Name }
-    }
-    else
+    $filesCount = $files.Count
+    # Display files
+    if ($filesCount -le 0)
     {
         Write-Host "No files with specified extensions found in $( $subfolders[$i].Name )." -ForegroundColor Red
         continue
     }
+
+    # Check if the current padding is correct
+    $correctPadding = $filesCount.ToString().Length
+    $hasCorrectPadding = $false
+    if ($files[0].Name -match '^\d+')
+    {
+        $currentPadding = $matches[0].Length
+        if ($currentPadding -eq $correctPadding)
+        {
+            $hasCorrectPadding = $true
+        }
+    }
+
+    # Determine the most common extension
+    $extensionCounts = @{ }
+    $hasOneExtension = $false
+    foreach ($file in $files)
+    {
+        if ( $extensionCounts.ContainsKey($file.Extension))
+        {
+            $extensionCounts[$file.Extension]++
+        }
+        else
+        {
+            $extensionCounts[$file.Extension] = 1
+        }
+    }
+    $mostCommonExtension = $extensionCounts.GetEnumerator() | Sort-Object Value -Descending | Select-Object -First 1 | ForEach-Object { $_.Key }
+    $hasOneExtension = $extensionCounts.Count -eq 1
+
+    if ($hasCorrectPadding -and $hasOneExtension)
+    {
+        continue
+    }
+
+    $files | ForEach-Object { Write-Output $_.Name }
 
     # Ask user if they want to rename files in this folder
     $renameChoice = Read-Host "Do you want to rename files in this folder? (Y to rename, N to skip)"
@@ -104,21 +130,16 @@ for ($i = $startIndex; $i -lt $subfolders.Count; $i++) {
         continue
     }
 
-    # Determine padding based on the number of files
-    $totalFiles = $files.Count
-    $padding = $totalFiles.ToString().Length
-    $count = 1
-
     # Rename each file
+    $count = 1
     foreach ($file in $files)
     {
-        $newName = "{0:D$padding}" -f $count + $file.Extension
+        $newName = "{0:D$correctPadding}" -f $count + $mostCommonExtension
         $newFilePath = Join-Path -Path $currentFolder -ChildPath $newName
         Rename-Item -LiteralPath $file.FullName -NewName $newFilePath
         Write-Host "$( $file.Name ) -> $( $newName )"
         $count++
     }
-
     Write-Host "Files have been renamed successfully in $( $subfolders[$i].Name )." -ForegroundColor Green
 }
 
