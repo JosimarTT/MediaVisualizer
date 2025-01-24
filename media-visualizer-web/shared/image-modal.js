@@ -29,6 +29,7 @@ function initializeImageModal(entity) {
         imageDivs.forEach(div => {
             div.addEventListener('click', () => {
                 let image = div.querySelector('img');
+                console.log(image);
                 let numberPadded = div.getAttribute('data-number-padded');
                 let numberFormatted = div.getAttribute('data-number-formatted');
                 let modalBody = document.querySelector('#images-modal .modal-body');
