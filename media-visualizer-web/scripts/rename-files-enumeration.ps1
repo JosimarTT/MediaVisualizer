@@ -88,7 +88,7 @@ for ($i = $startIndex; $i -lt $subfolders.Count; $i++) {
     }
 
     # Check if the current padding is correct
-    $correctPadding = $filesCount.ToString().Length
+    $correctPadding = 3
     $hasCorrectPadding = $false
     if ($files[0].Name -match '^\d+')
     {

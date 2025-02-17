@@ -35,9 +35,9 @@ function initializePagination(entity) {
 
     function getImagesData(entity) {
         let imagesData = [];
-        const maxLength = String(entity.pagesCount).length;
+        const fixedLength = 3;
         for (let i = 1; i <= entity.pagesCount; i++) {
-            const numberPadded = String(i).padStart(maxLength, '0');
+            const numberPadded = String(i).padStart(fixedLength, '0');
             const numberFormatted = numberPadded + entity.pageExtension;
             const imageUrl = `${parseFilePath(entity.basePath, [numberFormatted])}`;
             imagesData.push({imageUrl: imageUrl, numberPadded: numberPadded, numberFormatted: numberFormatted});
@@ -69,7 +69,6 @@ function initializePagination(entity) {
 
     function addEventListenerToArrowKeys() {
         window.addEventListener('keydown', function (e) {
-            console.log(e.key);
             if ((['ArrowUp', 'ArrowRight'].includes(e.key) && paginationState.page < paginationState.totalPages) ||
                 (['ArrowDown', 'ArrowLeft'].includes(e.key) && paginationState.page > 1)) {
                 paginationState.page += ['ArrowUp', 'ArrowRight'].includes(e.key) ? 1 : -1;
@@ -78,6 +77,7 @@ function initializePagination(entity) {
                 updateActivePageButton();
                 requestFilters.page = paginationState.page;
                 updateCollectionContent();
+                addEventListenerToImageClicks();
             }
         });
     }
@@ -97,6 +97,7 @@ function initializePagination(entity) {
                 updateActivePageButton();
                 requestFilters.page = paginationState.page;
                 updateCollectionContent();
+                addEventListenerToImageClicks();
             }
         });
     }
@@ -120,6 +121,7 @@ function initializePagination(entity) {
                 updateActivePageButton();
                 requestFilters.page = paginationState.page;
                 updateCollectionContent();
+                addEventListenerToImageClicks();
             });
             paginationDiv.insertBefore(button, nextButton);
         }
@@ -140,7 +142,24 @@ function initializePagination(entity) {
                 updateActivePageButton();
                 requestFilters.page = paginationState.page
                 updateCollectionContent();
+                addEventListenerToImageClicks();
             }
+        });
+    }
+
+    function addEventListenerToImageClicks() {
+        let imageDivs = document.querySelectorAll('#chapter-collection div');
+        imageDivs.forEach(div => {
+            div.addEventListener('click', () => {
+                let image = div.querySelector('img');
+                console.log(image);
+                let numberPadded = div.getAttribute('data-number-padded');
+                let numberFormatted = div.getAttribute('data-number-formatted');
+                let modalBody = document.querySelector('#images-modal .modal-body');
+                modalBody.innerHTML = `<img data-number-formatted="${numberFormatted}" src="${image.src}" alt="Page" class="img-fluid h-100">`;
+                let modalFooter = document.querySelector('#images-modal .modal-footer p');
+                modalFooter.innerHTML = `${numberPadded}`;
+            });
         });
     }
 }
