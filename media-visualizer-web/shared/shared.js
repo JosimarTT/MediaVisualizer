@@ -1,5 +1,9 @@
 'use strict'
 
+let isAnime = false;
+let isManga = false;
+let isManwha = false
+
 const apiBaseUrl = 'http://localhost:5216';
 
 const requestFilters = {
@@ -55,9 +59,13 @@ function buildRequestQueryParams(filters) {
 }
 
 function updateCollectionContent(items) {
-    document.getElementById('collection').innerHTML = items.map(item =>
-        `<div class="card p-0 hover-effect" style="height: 356px">
-            <a href="${parseFilePath(item.basePath, [item.video])}" target="_blank" class="h-100">
+    document.getElementById('collection').innerHTML = items.map(item => {
+        let url = './chapter-view.html?id=';
+        if (item.animeId) url = `${url}${item.animeId}`;
+        if (item.mangaId) url = `${url}${item.mangaId}`;
+        if (item.manwhaId) url = `${url}${item.manwhaId}`;
+        return `<div class="card p-0 hover-effect" style="height: 356px">
+            <a href="${url}" target="_blank" class="h-100">
                 <img alt="..." class="card-img object-fit-cover" style="max-height: 300px; border-bottom-left-radius: 0; border-bottom-right-radius: 0" src="${parseFilePath(item.basePath, [item.logo])}">
                 <div class="card-body position-absolute bottom-0 w-100 text-white" style="background: #212529; border-radius: var(--bs-card-border-radius); border-top-left-radius: 0;border-top-right-radius: 0">
                     <div class="card-title-container">
@@ -65,6 +73,11 @@ function updateCollectionContent(items) {
                     </div>
                 </div>
             </a>
-        </div>`
-    ).join('');
+        </div>`;
+    }).join('');
+}
+
+function getIdFromUrl() {
+    const url = new URL(window.location.href);
+    return parseInt(url.searchParams.get('id'));
 }

@@ -1,5 +1,7 @@
 'use strict'
 
+isManga = true;
+
 initialize().then(r => {
     console.log('Initialized');
 });
