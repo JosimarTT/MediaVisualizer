@@ -1,5 +1,6 @@
 ﻿using MediaVisualizer.DataAccess.Repositories;
 using MediaVisualizer.Services.Converters;
+using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services;

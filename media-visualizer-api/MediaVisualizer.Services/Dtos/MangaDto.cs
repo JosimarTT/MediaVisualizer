@@ -1,11 +1,10 @@
-﻿namespace MediaVisualizer.Shared.Dtos;
+﻿namespace MediaVisualizer.Services.Dtos;
 
 public class MangaDto
 {
     public int MangaId { get; set; }
     public string Folder { get; set; } = null!;
     public string Title { get; set; } = null!;
-    public ICollection<MangaChapterDto> Chapters { get; set; } = [];
     public ICollection<TagDto> Tags { get; set; } = [];
     public ICollection<ArtistDto> Artists { get; set; } = [];
     public ICollection<AuthorDto> Authors { get; set; } = [];

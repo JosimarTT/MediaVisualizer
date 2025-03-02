@@ -2,6 +2,7 @@
 using MediaVisualizer.DataImporter;
 using MediaVisualizer.DataImporter.Importers;
 using MediaVisualizer.Services.Converters;
+using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services;
