@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const mangaApi = {
     url: `${apiBaseUrl}/Manga`,
@@ -17,4 +17,4 @@ const mangaApi = {
         const response = await fetch(`${mangaApi.url}/GetRandom`);
         return response.json();
     }
-};
+}

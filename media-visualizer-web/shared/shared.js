@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 
 let isAnime = false;
 let isManga = false;
-let isManwha = false
+let isManwha = false;
 
 const apiBaseUrl = 'http://localhost:5216';
 
