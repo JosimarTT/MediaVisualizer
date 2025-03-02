@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const artistApi = {
     url: `${apiBaseUrl}/Artist`,

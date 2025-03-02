@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const manwhaApi = {
     url: `${apiBaseUrl}/Manwha`,
@@ -17,4 +17,4 @@ const manwhaApi = {
         const response = await fetch(`${manwhaApi.url}/GetRandom`);
         return response.json();
     }
-};
+}

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const tagModalProperties = {
     apiCallBack: tagApi.getList,
@@ -7,7 +7,7 @@ const tagModalProperties = {
     modalColumns: 'tag-columns',
     modalButtonReset: 'btn-tag-reset-filters',
     dataIdProperty: 'tagId'
-};
+}
 
 const brandModalProperties = {
     apiCallBack: brandApi.getList,

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const tagApi = {
     url: `${apiBaseUrl}/Tag`,

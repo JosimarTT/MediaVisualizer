@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const animeApi = {
     url: `${apiBaseUrl}/Anime`,

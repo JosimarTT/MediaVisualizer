@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 initialize().then(r => {
     console.log('Initialized');
