@@ -28,7 +28,7 @@ namespace MediaVisualizer.DataImporter
 
 
             Console.WriteLine("Starting Anime import...");
-            var animeImporter = serviceProvider.GetRequiredService<AnimeImporter>();
+            var animeImporter = serviceProvider.GetRequiredService<IAnimeImporterService>();
             await animeImporter.ImportData();
             Console.WriteLine("Anime data import completed.");
 
@@ -47,12 +47,10 @@ namespace MediaVisualizer.DataImporter
         {
             services.AddDbContext<MediaVisualizerDbContext>(options =>
             {
-                options.UseSqlite(
-                    "Data Source=E:\\media-visualizer\\media-visualizer-api\\MediaVisualizer.DataAccess\\media-visualizer.db");
+                options.UseSqlite($"Data Source={Shared.Constants.DbPath}");
             });
 
-            // Register your TagImporter
-            services.AddTransient<AnimeImporter>();
+            services.AddTransient<IAnimeImporterService,AnimeImporterService>();
             services.AddTransient<MangaImporter>();
             services.AddTransient<ManwhaImporter>();
             services.AddTransient<TagImporter>();

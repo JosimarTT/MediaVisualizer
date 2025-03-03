@@ -12,10 +12,12 @@ namespace MediaVisualizer.Services;
 public class AnimeService : IAnimeService
 {
     private readonly IAnimeRepository _animeRepository;
+    private readonly IAnimeImporterService _animeImporterService;
 
-    public AnimeService(IAnimeRepository animeRepository)
+    public AnimeService(IAnimeRepository animeRepository, IAnimeImporterService animeImporterService)
     {
         _animeRepository = animeRepository;
+        _animeImporterService = animeImporterService;
     }
 
     public async Task<AnimeDto> Get(int key)
@@ -36,6 +38,11 @@ public class AnimeService : IAnimeService
         var anime = await _animeRepository.GetRandom();
         return anime.ToDto();
     }
+
+    public async Task<List<NewAnime>> SearchNew()
+    {
+        return await _animeImporterService.SearchNew();
+    }
 }
 
 public interface IAnimeService
@@ -43,4 +50,5 @@ public interface IAnimeService
     public Task<AnimeDto> Get(int key);
     public Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters);
     Task<AnimeDto> GetRandom();
+    Task<List<NewAnime>> SearchNew();
 }

@@ -34,4 +34,10 @@ public class AnimeController : ControllerBase
     {
         return Ok(await _animeService.GetRandom());
     }
+
+    [HttpGet]
+    public async Task<IActionResult> SearchNew()
+    {
+        return Ok(await _animeService.SearchNew());
+    }
 }

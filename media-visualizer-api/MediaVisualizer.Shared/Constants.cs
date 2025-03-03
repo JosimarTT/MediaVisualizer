@@ -2,6 +2,10 @@
 
 public static class Constants
 {
+    public const string DbPath = @"E:\media-visualizer\media-visualizer-api\MediaVisualizer.DataAccess\media-visualizer.db";
+
+    public const string BaseDownloadPath = @"F:\Downloads";
+
     public const string BaseCollectionFolderPath = @"F:\Documents\Collection";
     public const string AnimeFolderPath = "Animes";
     public const string MangaFolderPath = "Mangas";

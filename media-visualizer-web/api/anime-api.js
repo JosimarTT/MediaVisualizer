@@ -16,5 +16,10 @@ const animeApi = {
     getRandom: async () => {
         const response = await fetch(`${animeApi.url}/GetRandom`);
         return response.json();
+    },
+
+    searchNew: async () => {
+        const response = await fetch(`${animeApi.url}/SearchNew`);
+        return response.json();
     }
 };
