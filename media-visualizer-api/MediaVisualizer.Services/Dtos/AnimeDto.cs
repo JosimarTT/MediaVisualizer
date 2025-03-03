@@ -1,4 +1,6 @@
-﻿namespace MediaVisualizer.Shared.Dtos;
+﻿using MediaVisualizer.Shared.Dtos;
+
+namespace MediaVisualizer.Services.Dtos;
 
 public class AnimeDto
 {

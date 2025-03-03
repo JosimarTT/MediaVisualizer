@@ -1,4 +1,4 @@
-﻿namespace MediaVisualizer.Shared.Dtos;
+﻿namespace MediaVisualizer.Services.Dtos;
 
 public class TagDto
 {

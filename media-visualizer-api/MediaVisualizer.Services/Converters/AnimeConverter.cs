@@ -1,5 +1,6 @@
 ﻿using MediaVisualizer.DataAccess;
 using MediaVisualizer.DataAccess.Entities;
+using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
 

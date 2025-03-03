@@ -1,4 +1,6 @@
-﻿namespace MediaVisualizer.Shared.Dtos;
+﻿using MediaVisualizer.Services.Dtos;
+
+namespace MediaVisualizer.Shared.Dtos;
 
 public class ManwhaDto
 {

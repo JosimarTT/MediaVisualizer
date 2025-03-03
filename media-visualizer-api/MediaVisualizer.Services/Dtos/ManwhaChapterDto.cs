@@ -1,9 +1,9 @@
-﻿namespace MediaVisualizer.Shared.Dtos;
+﻿namespace MediaVisualizer.Services.Dtos;
 
-public class MangaChapterDto
+public class ManwhaChapterDto
 {
-    public int MangaChapterId { get; set; }
-    public int MangaId { get; set; }
+    public int ManwhaChapterId { get; set; }
+    public int ManwhaId { get; set; }
     public int ChapterNumber { get; set; }
     public int PagesCount { get; set; }
     public string Logo { get; set; }

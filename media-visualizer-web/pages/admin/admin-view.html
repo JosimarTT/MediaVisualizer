@@ -1,0 +1,224 @@
+<!doctype html>
+<html data-bs-theme="dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+    <link href="../../dist/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../../shared/shared.css" rel="stylesheet">
+</head>
+<body>
+<div class="container d-flex flex-column h-100">
+    <header class="border-bottom py-3">
+        <div class="col-12 d-flex flex-wrap justify-content-center">
+            <div class="d-flex align-items-center me-md-auto">
+                <ul class="nav d-flex align-items-center">
+                    <li class="nav-item">
+                        <button class="btn btn-dark" onclick="redirectToAnimeView()">Animes</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-dark" onclick="redirectToMangaView()">Mangas</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-dark" onclick="redirectToManwhaView()">Manwhas</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main style="margin-top: 1rem !important;margin-bottom: auto !important;">
+        <div class="row mx-auto">
+            <div class="col-3">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button aria-controls="flush-collapseVideo" aria-expanded="false"
+                                    class="accordion-button collapsed"
+                                    data-bs-target="#flush-collapseVideo" data-bs-toggle="collapse"
+                                    type="button">
+                                Video
+                            </button>
+                        </h2>
+                        <div class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample"
+                             id="flush-collapse-video">
+                            <div class="accordion-body">
+                                <div class="list-group list-group-flush">
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createAddNewManhwaIFrame()">
+                                        Add
+                                    </button>
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createUpdateManhwaIFrame()">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button aria-controls="flush-collapseManga" aria-expanded="false"
+                                    class="accordion-button collapsed"
+                                    data-bs-target="#flush-collapseManga" data-bs-toggle="collapse"
+                                    type="button">
+                                Manga
+                            </button>
+                        </h2>
+                        <div class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample"
+                             id="flush-collapse-manga">
+                            <div class="accordion-body">
+                                <div class="list-group list-group-flush">
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createAddNewManhwaIFrame()">
+                                        Add
+                                    </button>
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createUpdateManhwaIFrame()">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button aria-controls="flush-collapseManhwa" aria-expanded="false"
+                                    class="accordion-button collapsed"
+                                    data-bs-target="#flush-collapseManhwa" data-bs-toggle="collapse"
+                                    type="button">
+                                Manhwa
+                            </button>
+                        </h2>
+                        <div class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample"
+                             id="flush-collapseManhwa">
+                            <div class="accordion-body">
+                                <div class="list-group list-group-flush">
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createAddNewManhwaIFrame()">
+                                        Add new manhwas
+                                    </button>
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createAddNewManhwaChapterIFrame()">
+                                        Add new manhwa chapters
+                                    </button>
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createUpdateManhwaIFrame()">
+                                        Update manhwa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button aria-controls="flush-collapseTag" aria-expanded="false"
+                                    class="accordion-button collapsed"
+                                    data-bs-target="#flush-collapseTag" data-bs-toggle="collapse"
+                                    type="button">
+                                Tag
+                            </button>
+                        </h2>
+                        <div class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample"
+                             id="flush-collapseTag">
+                            <div class="accordion-body">
+                                <div class="list-group list-group-flush">
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createAddNewManhwaIFrame()">
+                                        Add new manhwas
+                                    </button>
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createAddNewManhwaChapterIFrame()">
+                                        Add new manhwa chapters
+                                    </button>
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createUpdateManhwaIFrame()">
+                                        Update manhwa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button aria-controls="flush-collapseArtist" aria-expanded="false"
+                                    class="accordion-button collapsed"
+                                    data-bs-target="#flush-collapseArtist" data-bs-toggle="collapse"
+                                    type="button">
+                                Artist
+                            </button>
+                        </h2>
+                        <div class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample"
+                             id="flush-collapseArtist">
+                            <div class="accordion-body">
+                                <div class="list-group list-group-flush">
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createAddNewManhwaIFrame()">
+                                        Add new manhwas
+                                    </button>
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createAddNewManhwaChapterIFrame()">
+                                        Add new manhwa chapters
+                                    </button>
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createUpdateManhwaIFrame()">
+                                        Update manhwa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button aria-controls="flush-collapseBrand" aria-expanded="false"
+                                    class="accordion-button collapsed"
+                                    data-bs-target="#flush-collapseBrand" data-bs-toggle="collapse"
+                                    type="button">
+                                Brand
+                            </button>
+                        </h2>
+                        <div class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample"
+                             id="flush-collapseBrand">
+                            <div class="accordion-body">
+                                <div class="list-group list-group-flush">
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createAddNewManhwaIFrame()">
+                                        Add new manhwas
+                                    </button>
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createAddNewManhwaChapterIFrame()">
+                                        Add new manhwa chapters
+                                    </button>
+                                    <button class="list-group-item list-group-item-action" type="button"
+                                            onclick="createUpdateManhwaIFrame()">
+                                        Update manhwa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col" id="content-iframe"
+                 style="border-left: 1px solid rgb(73, 80, 87);padding-left: 0; padding-right: 0">
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer py-3 border-top">
+        <div class="container">
+            <nav aria-label="Page navigation">
+                <ul class="pagination m-0 justify-content-center" id="pagination">
+                </ul>
+            </nav>
+        </div>
+    </footer>
+</div>
+
+<script src="../../dist/bootstrap/bootstrap.min.js"></script>
+<script src="../../shared/shared.js"></script>
+<script src="admin-view.js"></script>
+</body>
+</html>
