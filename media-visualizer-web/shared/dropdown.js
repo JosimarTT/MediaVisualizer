@@ -44,6 +44,7 @@ function initializeDropdown(dropdownId, items, isMultipleSelection = false) {
 
     function filterItemsEventListener() {
         input.addEventListener('input', function () {
+            ul.hidden = false;
             const filter = input.value.toLowerCase();
             ul.querySelectorAll('li').forEach(li => {
                 const text = li.textContent.toLowerCase();
@@ -96,8 +97,7 @@ function initializeDropdown(dropdownId, items, isMultipleSelection = false) {
 
         const button = selectedItemsContainer.lastElementChild;
         const closeButton = button.querySelector('.btn-close');
-        closeButton.addEventListener('click', function (event) {
-            event.stopPropagation();
+        closeButton.addEventListener('click', function () {
             removeSelectedItem(value);
             const li = Array.from(ul.querySelectorAll('li')).find(li => li.textContent.includes(value));
             if (li) {
