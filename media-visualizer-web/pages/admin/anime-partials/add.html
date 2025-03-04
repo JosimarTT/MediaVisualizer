@@ -11,10 +11,13 @@
 </head>
 <body>
 <div class="container-fluid d-flex flex-column h-100">
-
     <main style=" margin-bottom: auto !important;">
-        <button class="btn btn-primary" onclick="searchNew()">Search new animes</button>
-
+        <div class="row d-none" id="message-not-found">
+            <div>No new animes found</div>
+        </div>
+        <div class="row">
+            <div id="new-animes"></div>
+        </div>
     </main>
 </div>
 
@@ -22,5 +25,6 @@
 <script src="../../../shared/shared.js"></script>
 <script src="../../../api/anime-api.js"></script>
 <script src="add.js"></script>
+<script src="../../../shared/dropdown.js"></script>
 </body>
 </html>
