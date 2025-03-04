@@ -11,13 +11,11 @@ function initializeDropdown(dropdownId, items, isMultipleSelection = false) {
 
     toggleItemsEventListener();
     filterItemsEventListener();
-
     if (isMultipleSelection) {
-        addActiveClassOnInputCLickEventListener();
+        addActiveClassOnInputClickEventListener();
     } else {
         assignSelectedItemEventListener();
     }
-
 
     function createDropdown() {
         const dropdownHTML = `
@@ -57,13 +55,23 @@ function initializeDropdown(dropdownId, items, isMultipleSelection = false) {
     function assignSelectedItemEventListener() {
         ul.querySelectorAll('li').forEach(li => {
             li.addEventListener('click', function () {
+                // Remove active class from all items
+                ul.querySelectorAll('li div').forEach(div => {
+                    div.classList.remove('active');
+                });
+
+                // Add active class to the clicked item
+                const div = li.querySelector('div');
+                div.classList.add('active');
+
+                // Set the input value and hide the dropdown
                 input.value = li.textContent.trim();
                 ul.hidden = true;
             });
         });
     }
 
-    function addActiveClassOnInputCLickEventListener() {
+    function addActiveClassOnInputClickEventListener() {
         ul.querySelectorAll('li').forEach(li => {
             li.addEventListener('click', function () {
                 const div = li.querySelector('div');
