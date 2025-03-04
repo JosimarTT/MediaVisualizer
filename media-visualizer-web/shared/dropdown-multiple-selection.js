@@ -49,6 +49,7 @@ function initializeDropdownMultipleSelection(dropdownId, items) {
             }
         });
     });
+
     dropdown.addEventListener('click', function (e) {
         e.stopPropagation();
     });
@@ -60,7 +61,7 @@ function initializeDropdownMultipleSelection(dropdownId, items) {
     function addSelectedItem(value) {
         const buttonHTML = `
         <button type="button" class="btn btn-secondary btn-sm">
-            ${value} <span class="btn-close" aria-hidden="true" style="padding-left: 0.25rem;padding-right: 0.25rem;margin-left: 0.25rem"></span>
+            ${value} <span class="btn-close" aria-hidden="true" style="padding-left: 1rem;padding-right: 0.25rem;margin-left: 0.25rem;font-size: 10px"></span>
         </button>
     `;
         selectedItemsContainer.insertAdjacentHTML('beforeend', buttonHTML);
@@ -72,9 +73,9 @@ function initializeDropdownMultipleSelection(dropdownId, items) {
             removeSelectedItem(value);
             const li = Array.from(ul.querySelectorAll('li')).find(li => li.textContent.includes(value));
             if (li) {
-                const label = li.querySelector('label');
-                if (label) {
-                    label.classList.remove('active');
+                const div = li.querySelector('div');
+                if (div) {
+                    div.classList.remove('active');
                 }
             }
         });
