@@ -74,6 +74,6 @@ function appendCards(newAnimes) {
 
         // Initialize the dropdown
         const dropdownElements = ['Action', 'Another action', 'Something else here', 'Separated link', 'One more separated link', 'test', 'more tests'];
-        initializeDropdown(`brand-dropdown-${i}`, dropdownElements);
+        initializeDropdownMultipleSelection(`brand-dropdown-${i}`, dropdownElements);
     }
 }
