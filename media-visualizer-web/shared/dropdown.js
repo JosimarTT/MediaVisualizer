@@ -20,10 +20,8 @@ function initializeDropdown(dropdownId, items, isMultipleSelection = false) {
     function createDropdown() {
         const dropdownHTML = `
         <div class="dropdown-menu d-block position-static pt-0 mx-0 overflow-hidden w-280px border-0" data-bs-theme="dark">
-            <form class="p-2 mb-2 bg-dark border-bottom border-dark">
-                <div class="selected-items d-flex flex-wrap gap-1 mb-2"></div>
-                <input type="search" class="form-control bg-dark" autocomplete="false" placeholder="Type to filter..." id="anime-brand-input">
-            </form>
+            <div class="selected-items d-flex flex-wrap gap-1 mb-2"></div>
+            <input type="search" class="form-control bg-dark" autocomplete="false" placeholder="Type to filter..." id="anime-brand-input">
             <ul class="list-unstyled mb-0 border rounded-2" style="z-index: 9999; position: absolute; width: 756.8333px; background: var(--bs-dark); max-height: 160px; overflow-y: auto;" hidden>
                 ${items.map(item => `
                     <li><div class="dropdown-item d-flex align-items-center gap-2 py-2">

@@ -21,5 +21,17 @@ const animeApi = {
     searchNew: async () => {
         const response = await fetch(`${animeApi.url}/SearchNew`);
         return response.json();
+    },
+
+    add: async (data) => {
+        return {title: "test", aiuda: "aiuda"};
+        const response = await fetch(animeApi.url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        return response.json();
     }
 };
