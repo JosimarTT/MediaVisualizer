@@ -1,8 +1,6 @@
-﻿using MediaVisualizer.DataAccess;
-using MediaVisualizer.DataAccess.Entities;
+﻿using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared;
-using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services.Converters;
 
@@ -22,7 +20,7 @@ public static class AnimeConverter
             Video = anime.Video,
             Brands = anime.Brands.ToListDto(),
             Tags = anime.Tags.ToListDto(),
-            BasePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.AnimeFolderPath, anime.Folder)
+            BasePath = Path.Combine(Constants.BaseCollectionPath, Constants.AnimeFolderPath, anime.Folder)
         };
     }
 
@@ -31,5 +29,22 @@ public static class AnimeConverter
         if (animes == null || animes.Count == 0) return [];
 
         return animes.Select(x => x.ToDto()).ToList();
+    }
+
+    public static Anime ToEntity(this AnimeDto animeDto)
+    {
+        if (animeDto == null) return null;
+
+        return new Anime
+        {
+            AnimeId = animeDto.AnimeId,
+            Folder = animeDto.Folder,
+            Title = animeDto.Title,
+            ChapterNumber = animeDto.ChapterNumber,
+            Logo = animeDto.Logo,
+            Video = animeDto.Video,
+            Brands = animeDto.Brands.ToListEntity(),
+            Tags = animeDto.Tags.ToListEntity()
+        };
     }
 }

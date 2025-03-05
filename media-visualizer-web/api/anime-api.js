@@ -13,6 +13,11 @@ const animeApi = {
         return response.json();
     },
 
+    getTitles: async () => {
+        const response = await fetch(`${animeApi.url}/GetTitles`);
+        return response.json();
+    },
+
     getRandom: async () => {
         const response = await fetch(`${animeApi.url}/GetRandom`);
         return response.json();
@@ -23,9 +28,8 @@ const animeApi = {
         return response.json();
     },
 
-    add: async (data) => {
-        return {title: "test", aiuda: "aiuda"};
-        const response = await fetch(animeApi.url, {
+    addOrUpdate: async (data) => {
+        const response = await fetch(`${animeApi.url}/AddOrUpdate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

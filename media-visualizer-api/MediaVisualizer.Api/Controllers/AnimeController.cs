@@ -1,4 +1,5 @@
 ﻿using MediaVisualizer.Services;
+using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -39,5 +40,17 @@ public class AnimeController : ControllerBase
     public async Task<IActionResult> SearchNew()
     {
         return Ok(await _animeService.SearchNew());
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetTitles()
+    {
+        return Ok(await _animeService.GetTitles());
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddOrUpdate([FromBody] AnimeDto anime)
+    {
+        return Ok(await _animeService.AddOrUpdate(anime));
     }
 }

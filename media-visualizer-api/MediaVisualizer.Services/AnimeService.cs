@@ -1,9 +1,10 @@
 ﻿using MediaVisualizer.DataAccess.Repositories;
-using MediaVisualizer.DataImporter;
 using MediaVisualizer.DataImporter.Importers;
 using MediaVisualizer.Services.Converters;
 using MediaVisualizer.Services.Dtos;
+using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
+using MediaVisualizer.Shared.ExtensionMethods;
 using MediaVisualizer.Shared.Requests;
 using MediaVisualizer.Shared.Responses;
 
@@ -11,8 +12,8 @@ namespace MediaVisualizer.Services;
 
 public class AnimeService : IAnimeService
 {
-    private readonly IAnimeRepository _animeRepository;
     private readonly IAnimeImporterService _animeImporterService;
+    private readonly IAnimeRepository _animeRepository;
 
     public AnimeService(IAnimeRepository animeRepository, IAnimeImporterService animeImporterService)
     {
@@ -43,6 +44,43 @@ public class AnimeService : IAnimeService
     {
         return await _animeImporterService.SearchNew();
     }
+
+    public async Task<IEnumerable<string>> GetTitles()
+    {
+        return await _animeRepository.GetTitles();
+    }
+
+    public async Task<AnimeDto> AddOrUpdate(AnimeDto animeDto)
+    {
+        if (animeDto.AnimeId <= 0)
+        {
+            // Store original file paths
+            var originalLogoPath = Path.Combine(Constants.AnimeDownloadPath, animeDto.Logo);
+            var originalVideoPath = Path.Combine(Constants.AnimeDownloadPath, animeDto.Video);
+
+            // Step 1: Rename the files
+            animeDto.Title = animeDto.Title.Trim().RemoveDoubleSpaces();
+            var baseName = $"{animeDto.Title.ToLower().Replace(" ", "-")}-{animeDto.ChapterNumber}";
+            var logoExtension = Path.GetExtension(animeDto.Logo);
+            var videoExtension = Path.GetExtension(animeDto.Video);
+            animeDto.Folder =
+                new string(animeDto.Title.Where(c => char.IsLetterOrDigit(c) || char.IsWhiteSpace(c)).ToArray());
+            animeDto.Logo = $"{baseName}{logoExtension}";
+            animeDto.Video = $"{baseName}{videoExtension}";
+
+            // Step 2: Move the files to another folder
+            var newPath = Path.Combine(Constants.AnimeCollectionPath, animeDto.Folder);
+            Directory.CreateDirectory(newPath);
+            var newLogoPath = Path.Combine(newPath, animeDto.Logo);
+            var newVideoPath = Path.Combine(newPath, animeDto.Video);
+            File.Move(originalLogoPath, newLogoPath);
+            File.Move(originalVideoPath, newVideoPath);
+        }
+
+        var anime = await _animeRepository.AddOrUpdate(animeDto.ToEntity());
+
+        return anime.ToDto();
+    }
 }
 
 public interface IAnimeService
@@ -51,4 +89,6 @@ public interface IAnimeService
     public Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters);
     Task<AnimeDto> GetRandom();
     Task<List<NewAnime>> SearchNew();
+    Task<IEnumerable<string>> GetTitles();
+    Task<AnimeDto> AddOrUpdate(AnimeDto animeDto);
 }

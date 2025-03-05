@@ -1,20 +1,22 @@
 'use strict';
 
+let titles = [];
 let tags = [];
 let brands = [];
-let cardBaseName = 'new-anime-card-';
-let logoInputBaseName = 'anime-logo-input-';
-let videoInputBaseName = 'anime-video-input-';
-let titleInputBaseName = 'video-title-input-';
-let chapterInputBaseName = 'anime-chapter-input-';
-let brandDropdownBaseName = 'brand-dropdown-';
+const cardBaseName = 'anime-card-';
+const logoInputBaseName = 'logo-input-';
+const videoInputBaseName = 'video-input-';
+const titleDropdownBaseName = 'title-input-';
+const chapterInputBaseName = 'chapter-input-';
+const brandDropdownBaseName = 'brand-dropdown-';
+const tagDropdownBaseName = 'tag-dropdown-';
 
 initialize().then(r => {
     console.log('add Initialized');
 });
 
 async function initialize() {
-    [tags, brands] = await Promise.all([tagApi.getList(), brandApi.getList()]);
+    [titles, tags, brands] = await Promise.all([animeApi.getTitles(), tagApi.getList(), brandApi.getList()]);
     let newAnimes = await animeApi.searchNew();
     showMessage(newAnimes.length);
     appendCards(newAnimes);
@@ -38,37 +40,36 @@ function appendCards(newAnimes) {
             <div class="card hover-effect card-not-last-child" id="${cardBaseName}${i}">
                 <div class="card-body">
                     <div class="mb-3 row">
-                        <label for="anime-logo-input-${i}" class="col-sm-2 col-form-label">Logo</label>
+                        <label for="${logoInputBaseName}${i}" class="col-sm-2 col-form-label">Logo</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="anime-logo-input-${i}" value="${anime.logo}" disabled>
+                            <input type="text" class="form-control" id="${logoInputBaseName}${i}" value="${anime.logo}" disabled>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="anime-video-input-${i}" class="col-sm-2 col-form-label">Video</label>
+                        <label for="${videoInputBaseName}${i}" class="col-sm-2 col-form-label">Video</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="anime-video-input-${i}" value="${anime.video}" disabled>
+                            <input type="text" class="form-control" id="${videoInputBaseName}${i}" value="${anime.video}" disabled>
+                        </div>
+                    </div>
+                    <div class="mb-3 row" style="position: relative;">
+                        <label class="col-sm-2 col-form-label">Title</label>
+                        <div class="col-sm-10" id="${titleDropdownBaseName}${i}">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="video-title-input-${i}" class="col-sm-2 col-form-label">Title</label>
+                        <label for="${chapterInputBaseName}${i}" class="col-sm-2 col-form-label">Chapter</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="video-title-input-${i}">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="anime-chapter-input-${i}" class="col-sm-2 col-form-label">Chapter</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="anime-chapter-input-${i}">
+                            <input type="text" class="form-control" id="${chapterInputBaseName}${i}">
                         </div>
                     </div>
                     <div class="mb-3 row" style="position: relative;">
                         <label class="col-sm-2 col-form-label">Brand</label>
-                        <div class="col-sm-10" id="brand-dropdown-${i}">
+                        <div class="col-sm-10" id="${brandDropdownBaseName}${i}">
                         </div>
                     </div>
                     <div class="mb-3 row" style="position: relative;">
                         <label class="col-sm-2 col-form-label">Tags</label>
-                        <div class="col-sm-10" id="tag-dropdown-${i}">
+                        <div class="col-sm-10" id="${tagDropdownBaseName}${i}">
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
@@ -79,8 +80,9 @@ function appendCards(newAnimes) {
         `;
         container.insertAdjacentHTML('beforeend', cardHTML);
 
-        initializeDropdown(`brand-dropdown-${i}`, brands.map(x => x.name));
-        initializeDropdown(`tag-dropdown-${i}`, tags.map(x => x.name), true);
+        initializeDropdown(`${titleDropdownBaseName}${i}`, titles);
+        initializeDropdown(`${brandDropdownBaseName}${i}`, brands.map(x => x.name));
+        initializeDropdown(`${tagDropdownBaseName}${i}`, tags.map(x => x.name), true);
     }
 }
 
@@ -89,24 +91,27 @@ async function addMAnime(cardId) {
     const card = document.getElementById(cardName);
     const logoInput = document.getElementById(`${logoInputBaseName}${cardId}`);
     const videoInput = document.getElementById(`${videoInputBaseName}${cardId}`);
-    const titleInput = document.getElementById(`${titleInputBaseName}${cardId}`);
+    const titleDropdown = document.getElementById(`${titleDropdownBaseName}${cardId}`);
     const chapterInput = document.getElementById(`${chapterInputBaseName}${cardId}`);
     const brandDropdown = document.getElementById(`${brandDropdownBaseName}${cardId}`);
-    const tagDropdown = document.getElementById(`tag-dropdown-${cardId}`);
+    const tagDropdown = document.getElementById(`${tagDropdownBaseName}${cardId}`);
 
     const brandId = brands.find(x => x.name === brandDropdown.querySelector('input').value).brandId;
     const tagIds = Array.from(tagDropdown.querySelectorAll('li div.active')).map(x => tags.find(t => t.name === x.textContent.trim()).tagId);
 
     const data = {
+        animeId: 0,
         logo: logoInput.value,
         video: videoInput.value,
-        title: titleInput.value,
-        chapter: chapterInput.value,
-        brand: brandId,
-        tags: tagIds
+        title: titleDropdown.querySelector('input').value,
+        chapterNumber: chapterInput.value,
+        brands: [{brandId: brandId}],
+        tags: tagIds.map(x => {
+            return {tagId: x}
+        })
     }
 
-    const response = await animeApi.add(data);
+    const response = await animeApi.addOrUpdate(data);
     console.log('response', response);
     if (response?.title) {
         card.outerHTML = `

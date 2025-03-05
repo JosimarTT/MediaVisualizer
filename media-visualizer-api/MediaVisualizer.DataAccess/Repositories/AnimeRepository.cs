@@ -51,6 +51,56 @@ public class AnimeRepository : IAnimeRepository
         return await query.Skip(randomIndex).FirstAsync();
     }
 
+    public async Task<IEnumerable<string>> GetTitles()
+    {
+        return await _context.Animes
+            .Select(x => x.Title)
+            .Distinct()
+            .ToListAsync();
+    }
+
+    public async Task<Anime> AddOrUpdate(Anime anime)
+    {
+        if (anime.AnimeId == 0)
+        {
+            foreach (var brand in anime.Brands)
+            {
+                _context.Entry(brand).State = EntityState.Unchanged;
+            }
+
+            foreach (var tag in anime.Tags)
+            {
+                _context.Entry(tag).State = EntityState.Unchanged;
+            }
+
+            _context.Animes.Add(anime);
+        }
+        else
+        {
+            var existingAnime = await _context.Animes
+                .Include(x => x.Brands)
+                .Include(x => x.Tags)
+                .FirstAsync(x => x.AnimeId == anime.AnimeId);
+
+            _context.Entry(existingAnime).CurrentValues.SetValues(anime);
+
+            existingAnime.Brands.Clear();
+            foreach (var brand in anime.Brands)
+            {
+                existingAnime.Brands.Add(brand);
+            }
+
+            existingAnime.Tags.Clear();
+            foreach (var tag in anime.Tags)
+            {
+                existingAnime.Tags.Add(tag);
+            }
+        }
+
+        await _context.SaveChangesAsync();
+        return anime;
+    }
+
     private IQueryable<Anime> GetBaseQuery()
     {
         return _context.Animes
@@ -66,4 +116,6 @@ public interface IAnimeRepository
     public Task<(int totalCount, IEnumerable<Anime>)> GetList(FiltersRequest filters);
     public Task<Anime> Get(int animeKey);
     Task<Anime> GetRandom();
+    Task<IEnumerable<string>> GetTitles();
+    Task<Anime> AddOrUpdate(Anime anime);
 }

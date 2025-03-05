@@ -21,4 +21,20 @@ public static class TagConverter
         if (tags == null || tags.Count == 0) return [];
         return tags.Select(x => x.ToDto()).ToList();
     }
+
+    public static Tag ToEntity(this TagDto tagDto)
+    {
+        if (tagDto == null) return null;
+        return new Tag()
+        {
+            TagId = tagDto.TagId,
+            Name = tagDto.Name,
+        };
+    }
+
+    public static ICollection<Tag> ToListEntity(this ICollection<TagDto> tagDtos)
+    {
+        if (tagDtos == null || tagDtos.Count == 0) return [];
+        return tagDtos.Select(x => x.ToEntity()).ToList();
+    }
 }
