@@ -1,4 +1,5 @@
-﻿using MediaVisualizer.DataAccess;
+﻿using System.Text.Json;
+using MediaVisualizer.DataAccess;
 using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.Shared;
 
@@ -7,7 +8,7 @@ namespace MediaVisualizer.DataImporter.Importers;
 public class ManwhaImporter
 {
     private readonly MediaVisualizerDbContext _context;
-    private readonly string basePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.ManwhaFolderPath);
+    private readonly string basePath = Path.Combine(Constants.BaseCollectionPath, Constants.ManwhaFolderPath);
 
     public ManwhaImporter(MediaVisualizerDbContext context)
     {
@@ -16,10 +17,7 @@ public class ManwhaImporter
 
     public async Task ImportData()
     {
-        if (_context.Manwhas.Any())
-        {
-            return;
-        }
+        if (_context.Manwhas.Any()) return;
 
         var newManwhas = new List<Manwha>();
         var files = Directory.GetFiles(basePath, "*.*", SearchOption.AllDirectories).ToList();
@@ -39,20 +37,16 @@ public class ManwhaImporter
                 .GroupBy(file =>
                 {
                     var fileName = Path.GetFileNameWithoutExtension(file);
-                    if (fileName.StartsWith("logo"))
-                    {
-                        return "logo";
-                    }
+                    if (fileName.StartsWith("logo")) return "logo";
 
                     return fileName.Split('-')[0];
                 })
                 .ToDictionary(group => group.Key, group => group.ToList());
 
             foreach (var (chapterNumber, chapterGroup) in groupedChapters)
-            {
                 if (chapterNumber == "logo")
                 {
-                    manwha.Logos = System.Text.Json.JsonSerializer.Serialize(chapterGroup);
+                    manwha.Logos = JsonSerializer.Serialize(chapterGroup);
                 }
                 else
                 {
@@ -68,7 +62,6 @@ public class ManwhaImporter
 
                     manwha.ManwhaChapters.Add(chapter);
                 }
-            }
 
             newManwhas.Add(manwha);
         }

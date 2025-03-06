@@ -7,10 +7,13 @@ using MediaVisualizer.Shared.ExtensionMethods;
 
 namespace MediaVisualizer.DataImporter.Importers;
 
-public class AnimeImporterService: IAnimeImporterService
+public class AnimeImporterService : IAnimeImporterService
 {
+    private readonly string _collectionPath =
+        Path.Combine(Constants.BaseCollectionPath, Constants.AnimeFolderPath);
+
     private readonly MediaVisualizerDbContext _context;
-    private readonly string _collectionPath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.AnimeFolderPath);
+
     private readonly string _downloadPath = Path.Combine(Constants.BaseDownloadPath, Constants.AnimeFolderPath);
 
     public AnimeImporterService(MediaVisualizerDbContext context)
@@ -20,10 +23,7 @@ public class AnimeImporterService: IAnimeImporterService
 
     public async Task ImportData()
     {
-        if (_context.Animes.Any())
-        {
-            return;
-        }
+        if (_context.Animes.Any()) return;
 
         var newAnimes = new List<Anime>();
         var dirFiles = Directory.GetFiles(_collectionPath, "*.*", SearchOption.AllDirectories).ToList();
@@ -79,7 +79,8 @@ public class AnimeImporterService: IAnimeImporterService
             for (var threshold = 80; threshold >= 0; threshold -= 10)
             {
                 var match = newAnimes.Skip(1)
-                    .FirstOrDefault(y => Fuzz.Ratio(currentFileNameWithoutExtension, Path.GetFileNameWithoutExtension(y)) > threshold);
+                    .FirstOrDefault(y =>
+                        Fuzz.Ratio(currentFileNameWithoutExtension, Path.GetFileNameWithoutExtension(y)) > threshold);
                 if (match == null) continue;
 
                 result.Add(new NewAnime
@@ -94,10 +95,7 @@ public class AnimeImporterService: IAnimeImporterService
                 break;
             }
 
-            if (!matchFound)
-            {
-                newAnimes.Remove(currentFile);
-            }
+            if (!matchFound) newAnimes.Remove(currentFile);
         }
 
         return Task.FromResult(result);

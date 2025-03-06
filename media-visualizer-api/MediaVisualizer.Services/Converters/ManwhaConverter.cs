@@ -23,7 +23,7 @@ public static class ManwhaConverter
             Tags = manwha.Tags.ToListDto(),
             Artists = manwha.Artists.ToListDto(),
             Authors = manwha.Authors.ToListDto(),
-            BasePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.ManwhaFolderPath, manwha.Folder)
+            BasePath = Path.Combine(Constants.BaseCollectionPath, Constants.ManwhaFolderPath, manwha.Folder)
         };
     }
 

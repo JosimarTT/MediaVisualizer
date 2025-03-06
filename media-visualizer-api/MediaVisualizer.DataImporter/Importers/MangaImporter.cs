@@ -7,7 +7,7 @@ namespace MediaVisualizer.DataImporter.Importers;
 public class MangaImporter
 {
     private readonly MediaVisualizerDbContext _context;
-    private readonly string basePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.MangaFolderPath);
+    private readonly string basePath = Path.Combine(Constants.BaseCollectionPath, Constants.MangaFolderPath);
 
     public MangaImporter(MediaVisualizerDbContext context)
     {
@@ -16,10 +16,7 @@ public class MangaImporter
 
     public async Task ImportData()
     {
-        if (_context.Mangas.Any())
-        {
-            return;
-        }
+        if (_context.Mangas.Any()) return;
 
         var mangas = new List<Manga>();
 

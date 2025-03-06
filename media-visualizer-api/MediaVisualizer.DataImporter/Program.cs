@@ -50,7 +50,7 @@ namespace MediaVisualizer.DataImporter
                 options.UseSqlite($"Data Source={Shared.Constants.DbPath}");
             });
 
-            services.AddTransient<IAnimeImporterService,AnimeImporterService>();
+            services.AddTransient<IAnimeImporterService, AnimeImporterService>();
             services.AddTransient<MangaImporter>();
             services.AddTransient<ManwhaImporter>();
             services.AddTransient<TagImporter>();
