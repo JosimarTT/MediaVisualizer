@@ -59,12 +59,11 @@ public class AnimeService : IAnimeService
             var originalVideoPath = Path.Combine(Constants.AnimeDownloadPath, animeDto.Video);
 
             // Step 1: Rename the files
-            animeDto.Title = animeDto.Title.Trim().RemoveDoubleSpaces();
+            animeDto.Title = animeDto.Title.Trim().RemoveExtraSpaces();
             var baseName = $"{animeDto.Title.ToLower().Replace(" ", "-")}-{animeDto.ChapterNumber}";
             var logoExtension = Path.GetExtension(animeDto.Logo);
             var videoExtension = Path.GetExtension(animeDto.Video);
-            animeDto.Folder =
-                new string(animeDto.Title.Where(c => char.IsLetterOrDigit(c) || char.IsWhiteSpace(c)).ToArray());
+            animeDto.Folder = animeDto.Title.RemoveInvalidFolderNameChars();
             animeDto.Logo = $"{baseName}{logoExtension}";
             animeDto.Video = $"{baseName}{videoExtension}";
 
