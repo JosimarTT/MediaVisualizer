@@ -1,6 +1,6 @@
 'use strict';
 
-function initializeDropdown(dropdownId, items, isMultipleSelection = false) {
+function initializeDropdown(dropdownId, items, isMultipleSelection = false, width = '756.8333px') {
     const dropdown = document.getElementById(dropdownId);
 
     createDropdown();
@@ -21,8 +21,8 @@ function initializeDropdown(dropdownId, items, isMultipleSelection = false) {
         const dropdownHTML = `
         <div class="dropdown-menu d-block position-static pt-0 mx-0 overflow-hidden w-280px border-0" data-bs-theme="dark">
             <div class="selected-items d-flex flex-wrap gap-1 mb-2"></div>
-            <input type="search" class="form-control bg-dark" autocomplete="false" placeholder="Type to filter..." id="anime-brand-input">
-            <ul class="list-unstyled mb-0 border rounded-2" style="z-index: 9999; position: absolute; width: 756.8333px; background: var(--bs-dark); max-height: 160px; overflow-y: auto;" hidden>
+            <input type="search" class="form-control bg-dark" autocomplete="false" placeholder="Type to filter...">
+            <ul class="list-unstyled mb-0 border rounded-2" style="z-index: 9999; position: absolute; width: ${width}; background: var(--bs-dark); max-height: 160px; overflow-y: auto;" hidden>
                 ${items.map(item => `
                     <li><div class="dropdown-item d-flex align-items-center gap-2 py-2">
                         <label class="form-check-label">${item}</label>
@@ -65,6 +65,10 @@ function initializeDropdown(dropdownId, items, isMultipleSelection = false) {
 
                 // Set the input value and hide the dropdown
                 input.value = li.textContent.trim();
+
+                // Manually dispatch an input event
+                input.dispatchEvent(new Event('input', {bubbles: true}));
+
                 ul.hidden = true;
             });
         });
