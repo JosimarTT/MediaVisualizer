@@ -1,6 +1,6 @@
 'use strict';
 
-function initializeDropdown(dropdownId, items, isMultipleSelection = false, width = '756.8333px') {
+function initializeDropdown(dropdownId, items, isMultipleSelection = false, width = '756.8333px', selectedValues = []) {
     const dropdown = document.getElementById(dropdownId);
 
     createDropdown();
@@ -13,14 +13,16 @@ function initializeDropdown(dropdownId, items, isMultipleSelection = false, widt
     filterItemsEventListener();
     if (isMultipleSelection) {
         addActiveClassOnInputClickEventListener();
+        preselectMultipleItems();
     } else {
         assignSelectedItemEventListener();
+        preselectSingleItem();
     }
 
     function createDropdown() {
         const dropdownHTML = `
-        <div class="dropdown-menu d-block position-static pt-0 mx-0 overflow-hidden w-280px border-0" data-bs-theme="dark">
-            <div class="selected-items d-flex flex-wrap gap-1 mb-2"></div>
+        <div class="dropdown-menu d-block position-static pt-0 mx-0 overflow-hidden w-280px border-0" data-bs-theme="dark" style="padding-bottom: 0">
+            <div class="selected-items d-flex flex-wrap gap-1"></div>
             <input type="search" class="form-control bg-dark" autocomplete="false" placeholder="Type to filter...">
             <ul class="list-unstyled mb-0 border rounded-2" style="z-index: 9999; position: absolute; width: ${width}; background: var(--bs-dark); max-height: 160px; overflow-y: auto;" hidden>
                 ${items.map(item => `
@@ -117,5 +119,28 @@ function initializeDropdown(dropdownId, items, isMultipleSelection = false, widt
         if (button) {
             button.remove();
         }
+    }
+
+    function preselectSingleItem() {
+        if (selectedValues.length > 0) {
+            const selectedValue = selectedValues[0];
+            const li = Array.from(ul.querySelectorAll('li')).find(li => li.textContent.trim() === selectedValue);
+            if (li) {
+                const div = li.querySelector('div');
+                div.classList.add('active');
+                input.value = selectedValue;
+            }
+        }
+    }
+
+    function preselectMultipleItems() {
+        selectedValues.forEach(value => {
+            const li = Array.from(ul.querySelectorAll('li')).find(li => li.textContent.trim() === value);
+            if (li) {
+                const div = li.querySelector('div');
+                div.classList.add('active');
+                addSelectedItem(value);
+            }
+        });
     }
 }

@@ -32,21 +32,4 @@ public class MediaVisualizerDbContext : DbContext
 
         optionsBuilder.UseSqlite(connection);
     }
-
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        var addedEntities = ChangeTracker.Entries()
-            .Where(x => x.State == EntityState.Added && x.Entity is AuditEntity)
-            .ToList();
-
-        addedEntities.ForEach(x => { ((AuditEntity)x.Entity).CreatedDate = DateTime.Now; });
-
-        var editedEntities = ChangeTracker.Entries()
-            .Where(x => x.State == EntityState.Modified && x.Entity is AuditEntity)
-            .ToList();
-
-        editedEntities.ForEach(x => { ((AuditEntity)x.Entity).UpdatedDate = DateTime.Now; });
-
-        return base.SaveChangesAsync(cancellationToken);
-    }
 }

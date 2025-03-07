@@ -1,6 +1,5 @@
 ﻿using MediaVisualizer.Services;
 using MediaVisualizer.Services.Dtos;
-using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,8 +48,16 @@ public class AnimeController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddOrUpdate([FromBody] AnimeDto anime)
+    [Route("~/[controller]")]
+    public async Task<IActionResult> Add([FromBody] AnimeDto anime)
     {
-        return Ok(await _animeService.AddOrUpdate(anime));
+        return Ok(await _animeService.Add(anime));
+    }
+
+    [HttpPut]
+    [Route("~/[controller]")]
+    public async Task<IActionResult> Update([FromQuery] int animeId, [FromBody] AnimeDto anime)
+    {
+        return Ok(await _animeService.Update(animeId, anime));
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using MediaVisualizer.DataAccess.Entities;
+﻿using MediaVisualizer.DataAccess.Entities;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.EntityFrameworkCore;
 
@@ -59,43 +58,39 @@ public class AnimeRepository : IAnimeRepository
             .ToListAsync();
     }
 
-    public async Task<Anime> AddOrUpdate(Anime anime)
+    public async Task<Anime> Add(Anime anime)
     {
-        if (anime.AnimeId == 0)
-        {
-            foreach (var brand in anime.Brands)
-            {
-                _context.Entry(brand).State = EntityState.Unchanged;
-            }
+        foreach (var brand in anime.Brands)
+            _context.Entry(brand).State = EntityState.Unchanged;
 
-            foreach (var tag in anime.Tags)
-            {
-                _context.Entry(tag).State = EntityState.Unchanged;
-            }
+        foreach (var tag in anime.Tags)
+            _context.Entry(tag).State = EntityState.Unchanged;
 
-            _context.Animes.Add(anime);
-        }
-        else
-        {
-            var existingAnime = await _context.Animes
-                .Include(x => x.Brands)
-                .Include(x => x.Tags)
-                .FirstAsync(x => x.AnimeId == anime.AnimeId);
+        anime.CreatedDate = DateTime.Now;
+        _context.Animes.Add(anime);
 
-            _context.Entry(existingAnime).CurrentValues.SetValues(anime);
+        await _context.SaveChangesAsync();
+        return anime;
+    }
 
-            existingAnime.Brands.Clear();
-            foreach (var brand in anime.Brands)
-            {
-                existingAnime.Brands.Add(brand);
-            }
+    public async Task<Anime> Update(int animeId, Anime anime)
+    {
+        var existingAnime = await _context.Animes
+            .Include(x => x.Brands)
+            .Include(x => x.Tags)
+            .FirstAsync(x => x.AnimeId == animeId);
 
-            existingAnime.Tags.Clear();
-            foreach (var tag in anime.Tags)
-            {
-                existingAnime.Tags.Add(tag);
-            }
-        }
+        anime.AnimeId = animeId;
+        anime.UpdatedDate = DateTime.Now;
+        _context.Entry(existingAnime).CurrentValues.SetValues(anime);
+
+        existingAnime.Brands.Clear();
+        foreach (var brand in anime.Brands)
+            existingAnime.Brands.Add(brand);
+
+        existingAnime.Tags.Clear();
+        foreach (var tag in anime.Tags)
+            existingAnime.Tags.Add(tag);
 
         await _context.SaveChangesAsync();
         return anime;
@@ -117,5 +112,6 @@ public interface IAnimeRepository
     public Task<Anime> Get(int animeKey);
     Task<Anime> GetRandom();
     Task<IEnumerable<string>> GetTitles();
-    Task<Anime> AddOrUpdate(Anime anime);
+    Task<Anime> Add(Anime anime);
+    Task<Anime> Update(int animeId, Anime anime);
 }

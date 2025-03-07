@@ -73,9 +73,9 @@ const animeApi = {
         }
     },
 
-    addOrUpdate: async (data) => {
+    add: async (data) => {
         try {
-            const response = await fetch(`${animeApi.url}/AddOrUpdate`, {
+            const response = await fetch(`${animeApi.url}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -88,7 +88,27 @@ const animeApi = {
             return response.json();
         } catch (error) {
             console.error('Failed to add or update anime\n', error);
-            showAlert('Failed to add or update anime: ' + error.message, 'danger');
+            showAlert('Failed to add anime: ' + error.message, 'danger');
+            throw error;
+        }
+    },
+
+    update: async (id, data) => {
+        try {
+            const response = await fetch(`${animeApi.url}/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) {
+                throw new Error(`${response.statusText}`);
+            }
+            return response.json();
+        } catch (error) {
+            console.error('Failed to update anime\n', error);
+            showAlert('Failed to update anime: ' + error.message, 'danger');
             throw error;
         }
     }

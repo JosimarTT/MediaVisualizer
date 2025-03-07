@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html data-bs-theme="dark" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+    <link href="../../../dist/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../shared/shared.css" rel="stylesheet">
 </head>
 <body>
-update
+<div class="container-fluid d-flex flex-column h-100">
+    <main style="margin-bottom: auto !important;">
+        <div class="card">
+            <div class="card-body" id="card-body">
+                <div class="mb-3 row" style="position: relative;">
+                    <label class="col-sm-2 col-form-label" for="title-dropdown">Title</label>
+                    <div class="col-sm-10" id="title-dropdown">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../../../dist/bootstrap/bootstrap.min.js"></script>
+<script src="../../../shared/shared.js"></script>
+<script src="../../../shared/alert.js"></script>
+<script src="../../../api/anime-api.js"></script>
+<script src="../../../api/tag-api.js"></script>
+<script src="../../../api/brand-api.js"></script>
+<script src="update.js"></script>
+<script src="../../../shared/dropdown.js"></script>
 </body>
 </html>

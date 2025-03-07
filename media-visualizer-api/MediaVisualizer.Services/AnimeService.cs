@@ -50,34 +50,37 @@ public class AnimeService : IAnimeService
         return await _animeRepository.GetTitles();
     }
 
-    public async Task<AnimeDto> AddOrUpdate(AnimeDto animeDto)
+    public async Task<AnimeDto> Add(AnimeDto animeDto)
     {
-        if (animeDto.AnimeId <= 0)
-        {
-            // Store original file paths
-            var originalLogoPath = Path.Combine(Constants.AnimeDownloadPath, animeDto.Logo);
-            var originalVideoPath = Path.Combine(Constants.AnimeDownloadPath, animeDto.Video);
+        // Store original file paths
+        var originalLogoPath = Path.Combine(Constants.AnimeDownloadPath, animeDto.Logo);
+        var originalVideoPath = Path.Combine(Constants.AnimeDownloadPath, animeDto.Video);
 
-            // Step 1: Rename the files
-            animeDto.Title = animeDto.Title.Trim().RemoveExtraSpaces();
-            var baseName = $"{animeDto.Title.ToLower().Replace(" ", "-")}-{animeDto.ChapterNumber}";
-            var logoExtension = Path.GetExtension(animeDto.Logo);
-            var videoExtension = Path.GetExtension(animeDto.Video);
-            animeDto.Folder = animeDto.Title.RemoveInvalidFolderNameChars();
-            animeDto.Logo = $"{baseName}{logoExtension}";
-            animeDto.Video = $"{baseName}{videoExtension}";
+        // Step 1: Rename the files
+        animeDto.Title = animeDto.Title.Trim().RemoveExtraSpaces();
+        var baseName = $"{animeDto.Title.ToLower().Replace(" ", "-")}-{animeDto.ChapterNumber}";
+        var logoExtension = Path.GetExtension(animeDto.Logo);
+        var videoExtension = Path.GetExtension(animeDto.Video);
+        animeDto.Folder = animeDto.Title.RemoveInvalidFolderNameChars();
+        animeDto.Logo = $"{baseName}{logoExtension}";
+        animeDto.Video = $"{baseName}{videoExtension}";
 
-            // Step 2: Move the files to another folder
-            var newPath = Path.Combine(Constants.AnimeCollectionPath, animeDto.Folder);
-            Directory.CreateDirectory(newPath);
-            var newLogoPath = Path.Combine(newPath, animeDto.Logo);
-            var newVideoPath = Path.Combine(newPath, animeDto.Video);
-            File.Move(originalLogoPath, newLogoPath);
-            File.Move(originalVideoPath, newVideoPath);
-        }
+        // Step 2: Move the files to another folder
+        var newPath = Path.Combine(Constants.AnimeCollectionPath, animeDto.Folder);
+        Directory.CreateDirectory(newPath);
+        var newLogoPath = Path.Combine(newPath, animeDto.Logo);
+        var newVideoPath = Path.Combine(newPath, animeDto.Video);
+        File.Move(originalLogoPath, newLogoPath);
+        File.Move(originalVideoPath, newVideoPath);
 
-        var anime = await _animeRepository.AddOrUpdate(animeDto.ToEntity());
+        var anime = await _animeRepository.Add(animeDto.ToEntity());
 
+        return anime.ToDto();
+    }
+
+    public async Task<AnimeDto> Update(int animeId, AnimeDto animeDto)
+    {
+        var anime = await _animeRepository.Update(animeId, animeDto.ToEntity());
         return anime.ToDto();
     }
 }
@@ -89,5 +92,6 @@ public interface IAnimeService
     Task<AnimeDto> GetRandom();
     Task<List<NewAnime>> SearchNew();
     Task<IEnumerable<string>> GetTitles();
-    Task<AnimeDto> AddOrUpdate(AnimeDto animeDto);
+    Task<AnimeDto> Add(AnimeDto animeDto);
+    Task<AnimeDto> Update(int animeId, AnimeDto animeDto);
 }

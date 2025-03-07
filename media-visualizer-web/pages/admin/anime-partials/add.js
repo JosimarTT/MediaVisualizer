@@ -111,7 +111,7 @@ async function addMAnime(cardId) {
         })
     }
 
-    const response = await animeApi.addOrUpdate(data);
+    const response = await animeApi.add(data);
     if (response?.title) {
         card.outerHTML = `
             <div class="alert alert-success" role="alert">
