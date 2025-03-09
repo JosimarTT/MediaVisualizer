@@ -39,4 +39,33 @@ public class MediaVisualizerDbContext : DbContext
 
         optionsBuilder.UseSqlite(connection);
     }
+
+    public override int SaveChanges()
+    {
+        UpdateAuditEntities();
+        return base.SaveChanges();
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        UpdateAuditEntities();
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    private void UpdateAuditEntities()
+    {
+        var entities = ChangeTracker.Entries().ToList();
+
+        var addedEntities = ChangeTracker.Entries()
+            .Where(x => x is { State: EntityState.Added, Entity: AuditEntity })
+            .ToList();
+        foreach (var entry in addedEntities)
+            ((AuditEntity)entry.Entity).UpdatedDate = DateTime.Now;
+
+        var editedEntities = ChangeTracker.Entries()
+            .Where(x => x is { State: EntityState.Modified, Entity: AuditEntity })
+            .ToList();
+        foreach (var entry in editedEntities)
+            ((AuditEntity)entry.Entity).UpdatedDate = DateTime.Now;
+    }
 }

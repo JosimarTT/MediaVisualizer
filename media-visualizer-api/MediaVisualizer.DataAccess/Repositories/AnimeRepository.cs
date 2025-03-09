@@ -71,37 +71,30 @@ public class AnimeRepository : IAnimeRepository
         return anime;
     }
 
-    public async Task<Anime> Update(int animeId, Anime anime)
+    public async Task<Anime> Update(int animeId, Anime anime, CancellationToken cancellationToken = default)
     {
         var existingAnime = await _context.Animes
             .Include(x => x.AnimeBrands)
-            .ThenInclude(ab => ab.Brand)
             .Include(x => x.AnimeTags)
-            .ThenInclude(at => at.Tag)
-            .FirstAsync(x => x.AnimeId == animeId);
+            .FirstOrDefaultAsync(x => x.AnimeId == animeId, cancellationToken);
 
-        anime.AnimeId = animeId;
+        if (existingAnime == null)
+            throw new KeyNotFoundException("Anime not found");
+
+        // Update properties
         anime.UpdatedDate = DateTime.Now;
         _context.Entry(existingAnime).CurrentValues.SetValues(anime);
 
         // Update AnimeBrands
-        existingAnime.AnimeBrands.Clear();
-        foreach (var animeBrand in anime.AnimeBrands)
-        {
-            _context.Entry(animeBrand.Brand).State = EntityState.Unchanged;
-            existingAnime.AnimeBrands.Add(animeBrand);
-        }
+        _context.AnimeBrands.RemoveRange(existingAnime.AnimeBrands);
+        existingAnime.AnimeBrands = anime.AnimeBrands;
 
         // Update AnimeTags
-        existingAnime.AnimeTags.Clear();
-        foreach (var animeTag in anime.AnimeTags)
-        {
-            _context.Entry(animeTag.Tag).State = EntityState.Unchanged;
-            existingAnime.AnimeTags.Add(animeTag);
-        }
+        _context.AnimeTags.RemoveRange(existingAnime.AnimeTags);
+        existingAnime.AnimeTags = anime.AnimeTags;
 
-        await _context.SaveChangesAsync();
-        return anime;
+        await _context.SaveChangesAsync(cancellationToken);
+        return existingAnime;
     }
 
     private IQueryable<Anime> GetBaseQuery()
@@ -123,5 +116,5 @@ public interface IAnimeRepository
     Task<Anime> GetRandom();
     Task<IEnumerable<string>> GetTitles();
     Task<Anime> Add(Anime anime);
-    Task<Anime> Update(int animeId, Anime anime);
+    Task<Anime> Update(int animeId, Anime anime, CancellationToken cancellationToken);
 }

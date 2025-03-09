@@ -1,6 +1,5 @@
 ﻿using MediaVisualizer.DataAccess.Repositories;
 using MediaVisualizer.DataImporter.Importers;
-using MediaVisualizer.Services.Converters;
 using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
@@ -78,9 +77,9 @@ public class AnimeService : IAnimeService
         return anime.ToDto();
     }
 
-    public async Task<AnimeDto> Update(int animeId, AnimeDto animeDto)
+    public async Task<AnimeDto> Update(int animeId, AnimeDto animeDto, CancellationToken cancellationToken = default)
     {
-        var anime = await _animeRepository.Update(animeId, animeDto.ToEntity());
+        var anime = await _animeRepository.Update(animeId, animeDto.ToEntity(), cancellationToken);
         return anime.ToDto();
     }
 }
@@ -93,5 +92,5 @@ public interface IAnimeService
     Task<List<NewAnime>> SearchNew();
     Task<IEnumerable<string>> GetTitles();
     Task<AnimeDto> Add(AnimeDto animeDto);
-    Task<AnimeDto> Update(int animeId, AnimeDto animeDto);
+    Task<AnimeDto> Update(int animeId, AnimeDto animeDto, CancellationToken cancellationToken);
 }
