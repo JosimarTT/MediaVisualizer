@@ -1,6 +1,5 @@
-﻿using MediaVisualizer.DataAccess.Entities;
+﻿using MediaVisualizer.DataAccess.Entities.Shared;
 using MediaVisualizer.Services.Dtos;
-using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services.Converters;
 
@@ -12,7 +11,7 @@ public static class BrandConverter
         return new BrandDto
         {
             BrandId = brand.BrandId,
-            Name = brand.Name,
+            Name = brand.Name
         };
     }
 
@@ -28,7 +27,7 @@ public static class BrandConverter
         return new Brand
         {
             BrandId = brandDto.BrandId,
-            Name = brandDto.Name,
+            Name = brandDto.Name
         };
     }
 

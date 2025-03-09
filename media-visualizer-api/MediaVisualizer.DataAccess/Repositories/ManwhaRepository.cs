@@ -1,4 +1,4 @@
-﻿using MediaVisualizer.DataAccess.Entities;
+﻿using MediaVisualizer.DataAccess.Entities.Manwha;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,26 +20,19 @@ public class ManwhaRepository : IManwhaRepository
         var totalCount = await query.CountAsync();
 
         if (filters.SortOrder != null)
-        {
             query = filters.SortOrder switch
             {
                 "asc" => query.OrderBy(x => x.Title),
                 "desc" => query.OrderByDescending(x => x.Title),
                 _ => query
             };
-        }
 
-        if (filters.BrandIds != null && filters.BrandIds.Count != 0)
-            query = query.Where(x => x.Brands.Any(y => filters.BrandIds.Contains(y.BrandId)));
 
         if (filters.TagIds != null && filters.TagIds.Count != 0)
-            query = query.Where(x => x.Tags.Any(y => filters.TagIds.Contains(y.TagId)));
+            query = query.Where(x => x.ManwhaTags.Any(y => filters.TagIds.Contains(y.TagId)));
 
         if (filters.ArtistIds != null && filters.ArtistIds.Count != 0)
-            query = query.Where(x => x.Artists.Any(y => filters.ArtistIds.Contains(y.ArtistId)));
-
-        if (filters.AuthorIds != null && filters.AuthorIds.Count != 0)
-            query = query.Where(x => x.Authors.Any(y => filters.AuthorIds.Contains(y.AuthorId)));
+            query = query.Where(x => x.ManwhaArtists.Any(y => filters.ArtistIds.Contains(y.ArtistId)));
 
         if (filters.Page != null && filters.Page > 0 && filters.Size != null && filters.Size > 0)
             query = query.Skip(filters.Size.Value * (filters.Page.Value - 1)).Take(filters.Size.Value);
@@ -66,11 +59,8 @@ public class ManwhaRepository : IManwhaRepository
     private IQueryable<Manwha> GetBaseQuery()
     {
         return _context.Manwhas
-            .Include(x => x.ManwhaChapters)
-            .Include(x => x.Brands)
-            .Include(x => x.Tags)
-            .Include(x => x.Artists)
-            .Include(x => x.Authors);
+            .Include(x => x.ManwhaTags).ThenInclude(y => y.Tag)
+            .Include(x => x.ManwhaArtists).ThenInclude(y => y.Artist);
     }
 }
 

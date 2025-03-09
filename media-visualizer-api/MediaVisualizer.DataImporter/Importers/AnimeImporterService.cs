@@ -1,6 +1,6 @@
 ﻿using FuzzySharp;
 using MediaVisualizer.DataAccess;
-using MediaVisualizer.DataAccess.Entities;
+using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.ExtensionMethods;

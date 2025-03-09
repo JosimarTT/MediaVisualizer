@@ -1,6 +1,5 @@
-﻿using MediaVisualizer.DataAccess.Entities;
+﻿using MediaVisualizer.DataAccess.Entities.Shared;
 using MediaVisualizer.Services.Dtos;
-using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services.Converters;
 
@@ -13,7 +12,7 @@ public static class ArtistConverter
         return new ArtistDto
         {
             ArtistId = artist.ArtistId,
-            Name = artist.Name,
+            Name = artist.Name
         };
     }
 

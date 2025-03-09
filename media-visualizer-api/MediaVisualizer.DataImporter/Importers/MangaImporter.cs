@@ -1,5 +1,5 @@
 ﻿using MediaVisualizer.DataAccess;
-using MediaVisualizer.DataAccess.Entities;
+using MediaVisualizer.DataAccess.Entities.Manga;
 using MediaVisualizer.Shared;
 
 namespace MediaVisualizer.DataImporter.Importers;

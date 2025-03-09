@@ -1,4 +1,4 @@
-﻿using MediaVisualizer.DataAccess.Entities;
+﻿using MediaVisualizer.DataAccess.Entities.Anime;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,10 +18,10 @@ public class AnimeRepository : IAnimeRepository
         var query = GetBaseQuery();
 
         if (filters.BrandIds != null && filters.BrandIds.Count != 0)
-            query = query.Where(x => x.Brands.Any(y => filters.BrandIds.Contains(y.BrandId)));
+            query = query.Where(x => x.AnimeBrands.Any(y => filters.BrandIds.Contains(y.BrandId)));
 
         if (filters.TagIds != null && filters.TagIds.Count != 0)
-            query = query.Where(x => x.Tags.Any(y => filters.TagIds.Contains(y.TagId)));
+            query = query.Where(x => x.AnimeTags.Any(y => filters.TagIds.Contains(y.TagId)));
 
         if (!string.IsNullOrWhiteSpace(filters.Title))
             query = query.Where(x => x.Title.ToLower().Contains(filters.Title.ToLower()));
@@ -60,11 +60,9 @@ public class AnimeRepository : IAnimeRepository
 
     public async Task<Anime> Add(Anime anime)
     {
-        foreach (var brand in anime.Brands)
-            _context.Entry(brand).State = EntityState.Unchanged;
+        foreach (var animeBrand in anime.AnimeBrands) _context.Entry(animeBrand.Brand).State = EntityState.Unchanged;
 
-        foreach (var tag in anime.Tags)
-            _context.Entry(tag).State = EntityState.Unchanged;
+        foreach (var animeTag in anime.AnimeTags) _context.Entry(animeTag.Tag).State = EntityState.Unchanged;
 
         anime.CreatedDate = DateTime.Now;
         _context.Animes.Add(anime);
@@ -76,21 +74,31 @@ public class AnimeRepository : IAnimeRepository
     public async Task<Anime> Update(int animeId, Anime anime)
     {
         var existingAnime = await _context.Animes
-            .Include(x => x.Brands)
-            .Include(x => x.Tags)
+            .Include(x => x.AnimeBrands)
+            .ThenInclude(ab => ab.Brand)
+            .Include(x => x.AnimeTags)
+            .ThenInclude(at => at.Tag)
             .FirstAsync(x => x.AnimeId == animeId);
 
         anime.AnimeId = animeId;
         anime.UpdatedDate = DateTime.Now;
         _context.Entry(existingAnime).CurrentValues.SetValues(anime);
 
-        existingAnime.Brands.Clear();
-        foreach (var brand in anime.Brands)
-            existingAnime.Brands.Add(brand);
+        // Update AnimeBrands
+        existingAnime.AnimeBrands.Clear();
+        foreach (var animeBrand in anime.AnimeBrands)
+        {
+            _context.Entry(animeBrand.Brand).State = EntityState.Unchanged;
+            existingAnime.AnimeBrands.Add(animeBrand);
+        }
 
-        existingAnime.Tags.Clear();
-        foreach (var tag in anime.Tags)
-            existingAnime.Tags.Add(tag);
+        // Update AnimeTags
+        existingAnime.AnimeTags.Clear();
+        foreach (var animeTag in anime.AnimeTags)
+        {
+            _context.Entry(animeTag.Tag).State = EntityState.Unchanged;
+            existingAnime.AnimeTags.Add(animeTag);
+        }
 
         await _context.SaveChangesAsync();
         return anime;
@@ -99,8 +107,10 @@ public class AnimeRepository : IAnimeRepository
     private IQueryable<Anime> GetBaseQuery()
     {
         return _context.Animes
-            .Include(x => x.Brands)
-            .Include(x => x.Tags)
+            .Include(x => x.AnimeBrands)
+            .ThenInclude(ab => ab.Brand)
+            .Include(x => x.AnimeTags)
+            .ThenInclude(at => at.Tag)
             .OrderBy(x => x.Folder)
             .ThenBy(x => x.ChapterNumber);
     }

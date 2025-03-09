@@ -1,6 +1,5 @@
-﻿using System.Text.Json;
-using MediaVisualizer.DataAccess;
-using MediaVisualizer.DataAccess.Entities;
+﻿using MediaVisualizer.DataAccess;
+using MediaVisualizer.DataAccess.Entities.Manwha;
 using MediaVisualizer.Shared;
 
 namespace MediaVisualizer.DataImporter.Importers;
@@ -46,21 +45,14 @@ public class ManwhaImporter
             foreach (var (chapterNumber, chapterGroup) in groupedChapters)
                 if (chapterNumber == "logo")
                 {
-                    manwha.Logos = JsonSerializer.Serialize(chapterGroup);
+                    manwha.Logo = chapterGroup.First();
                 }
                 else
                 {
-                    var chapter = new ManwhaChapter
-                    {
-                        ChapterNumber = int.Parse(chapterNumber),
-                        PagesCount = chapterGroup.Count - 1,
-                        Logo = chapterGroup.First(file =>
-                            Path.GetFileNameWithoutExtension(file).Split('-')[1] == "0"),
-                        PageExtension = Path.GetExtension(chapterGroup.First(file =>
-                            Path.GetFileNameWithoutExtension(file).Split('-')[1] != "0"))
-                    };
-
-                    manwha.ManwhaChapters.Add(chapter);
+                    manwha.ChapterNumber = int.Parse(chapterNumber);
+                    manwha.PagesCount = chapterGroup.Count - 1;
+                    manwha.PageExtension = Path.GetExtension(chapterGroup.First(file =>
+                        Path.GetFileNameWithoutExtension(file).Split('-')[1] != "0"));
                 }
 
             newManwhas.Add(manwha);
@@ -73,7 +65,7 @@ public class ManwhaImporter
             await _context.SaveChangesAsync();
             await _context.Database.CommitTransactionAsync();
         }
-        catch (Exception e)
+        catch (Exception)
         {
             await _context.Database.RollbackTransactionAsync();
             throw;
