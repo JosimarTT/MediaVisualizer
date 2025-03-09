@@ -1,9 +1,6 @@
 ﻿using MediaVisualizer.DataAccess.Repositories;
-using MediaVisualizer.DataImporter;
-using MediaVisualizer.DataImporter.Importers;
 using MediaVisualizer.Services.Converters;
 using MediaVisualizer.Services.Dtos;
-using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.Requests;
 using MediaVisualizer.Shared.Responses;
 

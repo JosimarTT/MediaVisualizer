@@ -55,10 +55,9 @@ public class AnimeController : ControllerBase
     }
 
     [HttpPut]
-    [Route("~/[controller]")]
-    public async Task<IActionResult> Update([FromQuery] int animeId, [FromBody] AnimeDto anime,
-        CancellationToken cancellationToken)
+    [Route("~/[controller]/{animeId:int}")]
+    public async Task<IActionResult> Update(int animeId, [FromBody] AnimeDto animeDto)
     {
-        return Ok(await _animeService.Update(animeId, anime, cancellationToken));
+        return Ok(await _animeService.Update(animeId, animeDto));
     }
 }

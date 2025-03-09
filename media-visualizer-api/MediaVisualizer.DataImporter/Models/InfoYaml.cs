@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace MediaVisualizer.DataImporter.Models;
+﻿namespace MediaVisualizer.DataImporter.Models;
 
 public class InfoYaml
 {

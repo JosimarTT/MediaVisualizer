@@ -71,12 +71,12 @@ public class AnimeRepository : IAnimeRepository
         return anime;
     }
 
-    public async Task<Anime> Update(int animeId, Anime anime, CancellationToken cancellationToken = default)
+    public async Task<Anime> Update(int animeId, Anime anime)
     {
         var existingAnime = await _context.Animes
             .Include(x => x.AnimeBrands)
             .Include(x => x.AnimeTags)
-            .FirstOrDefaultAsync(x => x.AnimeId == animeId, cancellationToken);
+            .FirstOrDefaultAsync(x => x.AnimeId == animeId);
 
         if (existingAnime == null)
             throw new KeyNotFoundException("Anime not found");
@@ -93,7 +93,7 @@ public class AnimeRepository : IAnimeRepository
         _context.AnimeTags.RemoveRange(existingAnime.AnimeTags);
         existingAnime.AnimeTags = anime.AnimeTags;
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync();
         return existingAnime;
     }
 
@@ -116,5 +116,5 @@ public interface IAnimeRepository
     Task<Anime> GetRandom();
     Task<IEnumerable<string>> GetTitles();
     Task<Anime> Add(Anime anime);
-    Task<Anime> Update(int animeId, Anime anime, CancellationToken cancellationToken);
+    Task<Anime> Update(int animeId, Anime anime);
 }

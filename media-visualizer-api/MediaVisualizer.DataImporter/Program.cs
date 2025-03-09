@@ -1,60 +1,58 @@
-﻿using System;
-using System.Threading.Tasks;
-using MediaVisualizer.DataAccess;
+﻿using MediaVisualizer.DataAccess;
 using MediaVisualizer.DataImporter.Importers;
+using MediaVisualizer.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MediaVisualizer.DataImporter
+namespace MediaVisualizer.DataImporter;
+
+public static class Program
 {
-    public static class Program
+    public static async Task Main(string[] args)
     {
-        public static async Task Main(string[] args)
+        var serviceCollection = new ServiceCollection();
+        ConfigureServices(serviceCollection);
+
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+
+        Console.WriteLine("Starting Tags import...");
+        var tagImporter = serviceProvider.GetRequiredService<TagImporter>();
+        await tagImporter.ImportData();
+        Console.WriteLine("Tags data import completed.");
+
+        Console.WriteLine("Starting Brands import...");
+        var brandImporter = serviceProvider.GetRequiredService<BrandImporter>();
+        await brandImporter.ImportData();
+        Console.WriteLine("Brands data import completed.");
+
+
+        Console.WriteLine("Starting Anime import...");
+        var animeImporter = serviceProvider.GetRequiredService<IAnimeImporterService>();
+        await animeImporter.ImportData();
+        Console.WriteLine("Anime data import completed.");
+
+        Console.WriteLine("Starting Manga import...");
+        var mangaImporter = serviceProvider.GetRequiredService<MangaImporter>();
+        await mangaImporter.ImportData();
+        Console.WriteLine("Manga data import completed.");
+
+        Console.WriteLine("Starting Manwha import...");
+        var manwhaImporter = serviceProvider.GetRequiredService<ManwhaImporter>();
+        await manwhaImporter.ImportData();
+        Console.WriteLine("Manwha data import completed.");
+    }
+
+    private static void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContext<MediaVisualizerDbContext>(options =>
         {
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
+            options.UseSqlite($"Data Source={Constants.DbPath}");
+        });
 
-            var serviceProvider = serviceCollection.BuildServiceProvider();
-
-            Console.WriteLine("Starting Tags import...");
-            var tagImporter = serviceProvider.GetRequiredService<TagImporter>();
-            await tagImporter.ImportData();
-            Console.WriteLine("Tags data import completed.");
-
-            Console.WriteLine("Starting Brands import...");
-            var brandImporter = serviceProvider.GetRequiredService<BrandImporter>();
-            await brandImporter.ImportData();
-            Console.WriteLine("Brands data import completed.");
-
-
-            Console.WriteLine("Starting Anime import...");
-            var animeImporter = serviceProvider.GetRequiredService<IAnimeImporterService>();
-            await animeImporter.ImportData();
-            Console.WriteLine("Anime data import completed.");
-
-            Console.WriteLine("Starting Manga import...");
-            var mangaImporter = serviceProvider.GetRequiredService<MangaImporter>();
-            await mangaImporter.ImportData();
-            Console.WriteLine("Manga data import completed.");
-
-            Console.WriteLine("Starting Manwha import...");
-            var manwhaImporter = serviceProvider.GetRequiredService<ManwhaImporter>();
-            await manwhaImporter.ImportData();
-            Console.WriteLine("Manwha data import completed.");
-        }
-
-        private static void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContext<MediaVisualizerDbContext>(options =>
-            {
-                options.UseSqlite($"Data Source={Shared.Constants.DbPath}");
-            });
-
-            services.AddTransient<IAnimeImporterService, AnimeImporterService>();
-            services.AddTransient<MangaImporter>();
-            services.AddTransient<ManwhaImporter>();
-            services.AddTransient<TagImporter>();
-            services.AddTransient<BrandImporter>();
-        }
+        services.AddTransient<IAnimeImporterService, AnimeImporterService>();
+        services.AddTransient<MangaImporter>();
+        services.AddTransient<ManwhaImporter>();
+        services.AddTransient<TagImporter>();
+        services.AddTransient<BrandImporter>();
     }
 }

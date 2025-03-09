@@ -20,9 +20,9 @@ public class AnimeService : IAnimeService
         _animeImporterService = animeImporterService;
     }
 
-    public async Task<AnimeDto> Get(int key)
+    public async Task<AnimeDto> Get(int animeId)
     {
-        var anime = await _animeRepository.Get(key);
+        var anime = await _animeRepository.Get(animeId);
         return anime.ToDto();
     }
 
@@ -77,20 +77,20 @@ public class AnimeService : IAnimeService
         return anime.ToDto();
     }
 
-    public async Task<AnimeDto> Update(int animeId, AnimeDto animeDto, CancellationToken cancellationToken = default)
+    public async Task<AnimeDto> Update(int animeId, AnimeDto animeDto)
     {
-        var anime = await _animeRepository.Update(animeId, animeDto.ToEntity(), cancellationToken);
+        var anime = await _animeRepository.Update(animeId, animeDto.ToEntity());
         return anime.ToDto();
     }
 }
 
 public interface IAnimeService
 {
-    public Task<AnimeDto> Get(int key);
+    public Task<AnimeDto> Get(int animeId);
     public Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters);
     Task<AnimeDto> GetRandom();
     Task<List<NewAnime>> SearchNew();
     Task<IEnumerable<string>> GetTitles();
     Task<AnimeDto> Add(AnimeDto animeDto);
-    Task<AnimeDto> Update(int animeId, AnimeDto animeDto, CancellationToken cancellationToken);
+    Task<AnimeDto> Update(int animeId, AnimeDto animeDto);
 }

@@ -1,5 +1,4 @@
 ﻿using MediaVisualizer.Services;
-using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.AspNetCore.Mvc;
 
