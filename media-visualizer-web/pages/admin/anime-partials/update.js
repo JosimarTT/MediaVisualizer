@@ -19,11 +19,12 @@ async function initialize() {
     [titles, brands, tags] = await Promise.all([animeApi.getTitles(), brandApi.getList(), tagApi.getList()]);
     initializeDropdown('title-dropdown', titles);
     loadForm();
+    document.getElementsByClassName('card')[0].removeAttribute('hidden');
     await filterByTitleEventListener();
 }
 
 function loadForm() {
-    let form = document.getElementById('card-body');
+    let form = document.getElementsByClassName('card-body')[0];
     form.insertAdjacentHTML('beforeend', `
                 <div class="mb-3 row" style="position: relative;">
                     <label class="col-sm-2 col-form-label" for="chapter-dropdown">Chapter</label>
