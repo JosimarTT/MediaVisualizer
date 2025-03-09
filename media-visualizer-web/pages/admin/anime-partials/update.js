@@ -18,33 +18,8 @@ initialize().then(r => {
 async function initialize() {
     [titles, brands, tags] = await Promise.all([animeApi.getTitles(), brandApi.getList(), tagApi.getList()]);
     initializeDropdown('title-dropdown', titles);
-    loadForm();
     document.getElementsByClassName('card')[0].removeAttribute('hidden');
     await filterByTitleEventListener();
-}
-
-function loadForm() {
-    let form = document.getElementsByClassName('card-body')[0];
-    form.insertAdjacentHTML('beforeend', `
-                <div class="mb-3 row" style="position: relative;">
-                    <label class="col-sm-2 col-form-label" for="chapter-dropdown">Chapter</label>
-                    <div class="col-sm-10" id="chapter-dropdown">
-                        <input class="form-control" type="text" disabled>
-                    </div>
-                </div>
-                <div class="mb-3 row" style="position: relative;">
-                    <label class="col-sm-2 col-form-label" for="brand-dropdown">Brand</label>
-                    <div class="col-sm-10" id="brand-dropdown">
-                        <input class="form-control" type="text" disabled>
-                    </div>
-                </div>
-                <div class="mb-3 row" style="position: relative;">
-                    <label class="col-sm-2 col-form-label" for="tag-dropdown">Tags</label>
-                    <div class="col-sm-10" id="tag-dropdown">
-                        <input class="form-control" type="text" disabled>
-                    </div>
-                </div>
-            `);
 }
 
 async function filterByTitleEventListener() {
@@ -107,4 +82,35 @@ function showTagAndBrandInputs() {
 
     tagDropdown.parentElement.removeAttribute('hidden');
     brandDropdown.parentElement.removeAttribute('hidden');
+}
+
+async function update() {
+    const titleDropdown = document.getElementById(titleDropdownId);
+    const chapterDropdown = document.getElementById(chapterDropdownId);
+    const brandDropdown = document.getElementById(brandDropdownId);
+    const tagDropdown = document.getElementById(tagDropdownId);
+
+    const selectedBrand = brands.find(x => x.name === brandDropdown.querySelector('input').value);
+    const selectedTags = Array.from(tagDropdown.querySelectorAll('li div.active')).map(x => tags.find(t => t.name === x.textContent.trim()));
+
+    const data = {
+        animeId: anime.animeId,
+        logo: anime.logo,
+        video: anime.video,
+        title: titleDropdown.querySelector('input').value,
+        chapterNumber: chapterDropdown.querySelector('input').value,
+        brands: [selectedBrand],
+        tags: selectedTags
+    }
+
+    const response = await animeApi.update(data.animeId, data);
+    if (response?.title) {
+        animes = [];
+        anime = undefined;
+        document.getElementsByClassName('card')[0].outerHTML = `
+            <div class="alert alert-success" role="alert">
+                ${response.title} ${response.chapterNumber} updated successfully!
+            </div>
+        `;
+    }
 }
