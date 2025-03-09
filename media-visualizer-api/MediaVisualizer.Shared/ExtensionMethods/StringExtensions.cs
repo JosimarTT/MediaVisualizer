@@ -1,6 +1,8 @@
-﻿namespace MediaVisualizer.Shared.ExtensionMethods;
+﻿using System.Text.RegularExpressions;
 
-public static class StringExtensions
+namespace MediaVisualizer.Shared.ExtensionMethods;
+
+public static partial class StringExtensions
 {
     public static bool IsImage(this string path)
     {
@@ -13,4 +15,19 @@ public static class StringExtensions
         var extension = Path.GetExtension(path);
         return Constants.VideoExtensions.Contains(extension);
     }
+
+    public static string RemoveExtraSpaces(this string text)
+    {
+        return RemoveExtraSpacesRegex().Replace(text, " ");
+    }
+
+    public static string RemoveInvalidFolderNameChars(this string text)
+    {
+        var invalidChars =
+            new HashSet<char>(Path.GetInvalidPathChars().Concat(['\\', '/', ':', '*', '?', '"', '<', '>', '|']));
+        return new string(text.Where(c => !invalidChars.Contains(c)).ToArray());
+    }
+
+    [GeneratedRegex(@"\s+")]
+    private static partial Regex RemoveExtraSpacesRegex();
 }

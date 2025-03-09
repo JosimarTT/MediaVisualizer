@@ -3,16 +3,14 @@
 const contentIFrame = document.getElementById('content-iframe');
 setActiveListGroup();
 
-function createAddNewManhwaIFrame() {
-    contentIFrame.innerHTML = `<iframe src="manhwa-partials/add-manhwas.html" style="width: 100%; height: 100%;"></iframe>`;
+function add(folder) {
+    const path = `${folder}/add.html`;
+    contentIFrame.innerHTML = `<iframe src=${path} style="width: 100%; height: 100%;"></iframe>`;
 }
 
-function createAddNewManhwaChapterIFrame() {
-    contentIFrame.innerHTML = `<iframe src="manhwa-partials/add-chapters.html" style="width: 100%; height: 100%;"></iframe>`;
-}
-
-function createUpdateManhwaIFrame() {
-    contentIFrame.innerHTML = `<iframe src="manhwa-partials/update-manhwa.html" style="width: 100%; height: 100%;"></iframe>`;
+function update(folder) {
+    const path = `${folder}/update.html`;
+    contentIFrame.innerHTML = `<iframe src=${path} style="width: 100%; height: 100%;"></iframe>`;
 }
 
 function setActiveListGroup() {

@@ -1,9 +1,7 @@
 using MediaVisualizer.DataAccess;
 using MediaVisualizer.DataAccess.Repositories;
-using MediaVisualizer.DataImporter;
 using MediaVisualizer.DataImporter.Importers;
 using MediaVisualizer.Services;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,7 +36,6 @@ builder.Services.AddScoped<IManwhaRepository, ManwhaRepository>();
 builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
-builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 
 // Register the services
 builder.Services.AddScoped<IAnimeService, AnimeService>();
@@ -47,7 +44,7 @@ builder.Services.AddScoped<IManwhaService, ManwhaService>();
 builder.Services.AddScoped<IArtistService, ArtistService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<ITagService, TagService>();
-builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<IAnimeImporterService, AnimeImporterService>();
 
 var app = builder.Build();
 

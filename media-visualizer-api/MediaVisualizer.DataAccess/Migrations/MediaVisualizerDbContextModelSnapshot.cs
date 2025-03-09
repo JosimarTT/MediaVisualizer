@@ -17,157 +17,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
 
-            modelBuilder.Entity("AnimeBrand", b =>
-                {
-                    b.Property<int>("AnimesAnimeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BrandsBrandId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("AnimesAnimeId", "BrandsBrandId");
-
-                    b.HasIndex("BrandsBrandId");
-
-                    b.ToTable("AnimeBrand");
-                });
-
-            modelBuilder.Entity("AnimeTag", b =>
-                {
-                    b.Property<int>("AnimesAnimeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TagsTagId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("AnimesAnimeId", "TagsTagId");
-
-                    b.HasIndex("TagsTagId");
-
-                    b.ToTable("AnimeTag");
-                });
-
-            modelBuilder.Entity("ArtistManga", b =>
-                {
-                    b.Property<int>("ArtistsArtistId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("MangasMangaId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ArtistsArtistId", "MangasMangaId");
-
-                    b.HasIndex("MangasMangaId");
-
-                    b.ToTable("ArtistManga");
-                });
-
-            modelBuilder.Entity("ArtistManwha", b =>
-                {
-                    b.Property<int>("ArtistsArtistId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ManwhasManwhaId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ArtistsArtistId", "ManwhasManwhaId");
-
-                    b.HasIndex("ManwhasManwhaId");
-
-                    b.ToTable("ArtistManwha");
-                });
-
-            modelBuilder.Entity("AuthorManga", b =>
-                {
-                    b.Property<int>("AuthorsAuthorId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("MangasMangaId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("AuthorsAuthorId", "MangasMangaId");
-
-                    b.HasIndex("MangasMangaId");
-
-                    b.ToTable("AuthorManga");
-                });
-
-            modelBuilder.Entity("AuthorManwha", b =>
-                {
-                    b.Property<int>("AuthorsAuthorId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ManwhasManwhaId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("AuthorsAuthorId", "ManwhasManwhaId");
-
-                    b.HasIndex("ManwhasManwhaId");
-
-                    b.ToTable("AuthorManwha");
-                });
-
-            modelBuilder.Entity("BrandManga", b =>
-                {
-                    b.Property<int>("BrandsBrandId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("MangasMangaId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("BrandsBrandId", "MangasMangaId");
-
-                    b.HasIndex("MangasMangaId");
-
-                    b.ToTable("BrandManga");
-                });
-
-            modelBuilder.Entity("BrandManwha", b =>
-                {
-                    b.Property<int>("BrandsBrandId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ManwhasManwhaId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("BrandsBrandId", "ManwhasManwhaId");
-
-                    b.HasIndex("ManwhasManwhaId");
-
-                    b.ToTable("BrandManwha");
-                });
-
-            modelBuilder.Entity("MangaTag", b =>
-                {
-                    b.Property<int>("MangasMangaId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TagsTagId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("MangasMangaId", "TagsTagId");
-
-                    b.HasIndex("TagsTagId");
-
-                    b.ToTable("MangaTag");
-                });
-
-            modelBuilder.Entity("ManwhaTag", b =>
-                {
-                    b.Property<int>("ManwhasManwhaId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TagsTagId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ManwhasManwhaId", "TagsTagId");
-
-                    b.HasIndex("TagsTagId");
-
-                    b.ToTable("ManwhaTag");
-                });
-
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime", b =>
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.Anime", b =>
                 {
                     b.Property<int>("AnimeId")
                         .ValueGeneratedOnAdd()
@@ -200,73 +50,52 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasKey("AnimeId");
 
-                    b.ToTable("Animes");
+                    b.ToTable("Anime.Anime");
                 });
 
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Artist", b =>
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.AnimeBrand", b =>
                 {
-                    b.Property<int>("ArtistId")
+                    b.Property<int>("AnimeBrandId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ArtistId");
-
-                    b.ToTable("Artists");
-                });
-
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Author", b =>
-                {
-                    b.Property<int>("AuthorId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("AnimeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("AuthorId");
-
-                    b.ToTable("Authors");
-                });
-
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Brand", b =>
-                {
                     b.Property<int>("BrandId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("AnimeBrandId");
+
+                    b.HasIndex("AnimeId");
+
+                    b.HasIndex("BrandId");
+
+                    b.ToTable("Anime.AnimeBrand");
+                });
+
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.AnimeTag", b =>
+                {
+                    b.Property<int>("AnimeTagId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("AnimeId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("TagId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("TEXT");
+                    b.HasKey("AnimeTagId");
 
-                    b.HasKey("BrandId");
+                    b.HasIndex("AnimeId");
 
-                    b.ToTable("Brands");
+                    b.HasIndex("TagId");
+
+                    b.ToTable("Anime.AnimeTag");
                 });
 
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga", b =>
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.Manga", b =>
                 {
                     b.Property<int>("MangaId")
                         .ValueGeneratedOnAdd()
@@ -302,13 +131,58 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasKey("MangaId");
 
-                    b.ToTable("Mangas");
+                    b.ToTable("Manga.Manga");
                 });
 
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha", b =>
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.MangaArtist", b =>
+                {
+                    b.Property<int>("MangaArtistId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MangaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("MangaArtistId");
+
+                    b.HasIndex("ArtistId");
+
+                    b.HasIndex("MangaId");
+
+                    b.ToTable("Manga.MangaArtist");
+                });
+
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.MangaTag", b =>
+                {
+                    b.Property<int>("MangaTagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MangaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("MangaTagId");
+
+                    b.HasIndex("MangaId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("Manga.MangaTag");
+                });
+
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha.Manwha", b =>
                 {
                     b.Property<int>("ManwhaId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ChapterNumber")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedDate")
@@ -318,9 +192,16 @@ namespace MediaVisualizer.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Logos")
+                    b.Property<string>("Logo")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("PageExtension")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PagesCount")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -331,46 +212,94 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasKey("ManwhaId");
 
-                    b.ToTable("Manwhas");
+                    b.ToTable("Manwha.Manwha");
                 });
 
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.ManwhaChapter", b =>
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha.ManwhaArtist", b =>
                 {
-                    b.Property<int>("ManwhaChapterId")
+                    b.Property<int>("ManwhaArtistId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ChapterNumber")
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ManwhaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ManwhaArtistId");
+
+                    b.HasIndex("ArtistId");
+
+                    b.HasIndex("ManwhaId");
+
+                    b.ToTable("Manwha.ManwhaArtist");
+                });
+
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha.ManwhaTag", b =>
+                {
+                    b.Property<int>("ManwhaTagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ManwhaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ManwhaTagId");
+
+                    b.HasIndex("ManwhaId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("Manwha.ManwhaTag");
+                });
+
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Shared.Artist", b =>
+                {
+                    b.Property<int>("ArtistId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Logo")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("ManwhaId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("PageExtension")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("PagesCount")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ManwhaChapterId");
+                    b.HasKey("ArtistId");
 
-                    b.HasIndex("ManwhaId");
-
-                    b.ToTable("ManwhaChapters");
+                    b.ToTable("Shared.Artist");
                 });
 
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Tag", b =>
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Shared.Brand", b =>
+                {
+                    b.Property<int>("BrandId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("BrandId");
+
+                    b.ToTable("Shared.Brand");
+                });
+
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Shared.Tag", b =>
                 {
                     b.Property<int>("TagId")
                         .ValueGeneratedOnAdd()
@@ -388,173 +317,163 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasKey("TagId");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Shared.Tag");
                 });
 
-            modelBuilder.Entity("AnimeBrand", b =>
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.AnimeBrand", b =>
                 {
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Anime", null)
-                        .WithMany()
-                        .HasForeignKey("AnimesAnimeId")
+                    b.HasOne("MediaVisualizer.DataAccess.Entities.Anime.Anime", "Anime")
+                        .WithMany("AnimeBrands")
+                        .HasForeignKey("AnimeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Brand", null)
-                        .WithMany()
-                        .HasForeignKey("BrandsBrandId")
+                    b.HasOne("MediaVisualizer.DataAccess.Entities.Shared.Brand", "Brand")
+                        .WithMany("AnimeBrands")
+                        .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Anime");
+
+                    b.Navigation("Brand");
                 });
 
-            modelBuilder.Entity("AnimeTag", b =>
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.AnimeTag", b =>
                 {
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Anime", null)
-                        .WithMany()
-                        .HasForeignKey("AnimesAnimeId")
+                    b.HasOne("MediaVisualizer.DataAccess.Entities.Anime.Anime", "Anime")
+                        .WithMany("AnimeTags")
+                        .HasForeignKey("AnimeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsTagId")
+                    b.HasOne("MediaVisualizer.DataAccess.Entities.Shared.Tag", "Tag")
+                        .WithMany("AnimeTags")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Anime");
+
+                    b.Navigation("Tag");
                 });
 
-            modelBuilder.Entity("ArtistManga", b =>
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.MangaArtist", b =>
                 {
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Artist", null)
-                        .WithMany()
-                        .HasForeignKey("ArtistsArtistId")
+                    b.HasOne("MediaVisualizer.DataAccess.Entities.Shared.Artist", "Artist")
+                        .WithMany("MangasArtists")
+                        .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manga", null)
-                        .WithMany()
-                        .HasForeignKey("MangasMangaId")
+                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manga.Manga", "Manga")
+                        .WithMany("MangaArtists")
+                        .HasForeignKey("MangaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Artist");
+
+                    b.Navigation("Manga");
                 });
 
-            modelBuilder.Entity("ArtistManwha", b =>
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.MangaTag", b =>
                 {
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Artist", null)
-                        .WithMany()
-                        .HasForeignKey("ArtistsArtistId")
+                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manga.Manga", "Manga")
+                        .WithMany("MangaTags")
+                        .HasForeignKey("MangaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manwha", null)
-                        .WithMany()
-                        .HasForeignKey("ManwhasManwhaId")
+                    b.HasOne("MediaVisualizer.DataAccess.Entities.Shared.Tag", "Tag")
+                        .WithMany("MangaTags")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Manga");
+
+                    b.Navigation("Tag");
                 });
 
-            modelBuilder.Entity("AuthorManga", b =>
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha.ManwhaArtist", b =>
                 {
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Author", null)
-                        .WithMany()
-                        .HasForeignKey("AuthorsAuthorId")
+                    b.HasOne("MediaVisualizer.DataAccess.Entities.Shared.Artist", "Artist")
+                        .WithMany("ManwhasArtists")
+                        .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manga", null)
-                        .WithMany()
-                        .HasForeignKey("MangasMangaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AuthorManwha", b =>
-                {
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Author", null)
-                        .WithMany()
-                        .HasForeignKey("AuthorsAuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manwha", null)
-                        .WithMany()
-                        .HasForeignKey("ManwhasManwhaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BrandManga", b =>
-                {
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Brand", null)
-                        .WithMany()
-                        .HasForeignKey("BrandsBrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manga", null)
-                        .WithMany()
-                        .HasForeignKey("MangasMangaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BrandManwha", b =>
-                {
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Brand", null)
-                        .WithMany()
-                        .HasForeignKey("BrandsBrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manwha", null)
-                        .WithMany()
-                        .HasForeignKey("ManwhasManwhaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MangaTag", b =>
-                {
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manga", null)
-                        .WithMany()
-                        .HasForeignKey("MangasMangaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsTagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ManwhaTag", b =>
-                {
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manwha", null)
-                        .WithMany()
-                        .HasForeignKey("ManwhasManwhaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsTagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.ManwhaChapter", b =>
-                {
-                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manwha", "Manwha")
-                        .WithMany("ManwhaChapters")
+                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manwha.Manwha", "Manwha")
+                        .WithMany("ManwhaArtists")
                         .HasForeignKey("ManwhaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Artist");
+
                     b.Navigation("Manwha");
                 });
 
-            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha", b =>
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha.ManwhaTag", b =>
                 {
-                    b.Navigation("ManwhaChapters");
+                    b.HasOne("MediaVisualizer.DataAccess.Entities.Manwha.Manwha", "Manwha")
+                        .WithMany("ManwhaTags")
+                        .HasForeignKey("ManwhaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MediaVisualizer.DataAccess.Entities.Shared.Tag", "Tag")
+                        .WithMany("ManwhaTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Manwha");
+
+                    b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.Anime", b =>
+                {
+                    b.Navigation("AnimeBrands");
+
+                    b.Navigation("AnimeTags");
+                });
+
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.Manga", b =>
+                {
+                    b.Navigation("MangaArtists");
+
+                    b.Navigation("MangaTags");
+                });
+
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha.Manwha", b =>
+                {
+                    b.Navigation("ManwhaArtists");
+
+                    b.Navigation("ManwhaTags");
+                });
+
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Shared.Artist", b =>
+                {
+                    b.Navigation("MangasArtists");
+
+                    b.Navigation("ManwhasArtists");
+                });
+
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Shared.Brand", b =>
+                {
+                    b.Navigation("AnimeBrands");
+                });
+
+            modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Shared.Tag", b =>
+                {
+                    b.Navigation("AnimeTags");
+
+                    b.Navigation("MangaTags");
+
+                    b.Navigation("ManwhaTags");
                 });
 #pragma warning restore 612, 618
         }

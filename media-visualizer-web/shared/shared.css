@@ -44,3 +44,6 @@ html, body {
     gap: 0.5em;
 }
 
+.card-not-last-child {
+    margin-bottom: 1rem;
+}

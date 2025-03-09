@@ -1,6 +1,5 @@
-﻿using MediaVisualizer.DataAccess.Entities;
+﻿using MediaVisualizer.DataAccess.Entities.Manga;
 using MediaVisualizer.Shared.Requests;
-using MediaVisualizer.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaVisualizer.DataAccess.Repositories;
@@ -18,17 +17,11 @@ public class MangaRepository : IMangaRepository
     {
         var query = GetBaseQuery();
 
-        if (filters.BrandIds != null && filters.BrandIds.Count != 0)
-            query = query.Where(x => x.Brands.Any(y => filters.BrandIds.Contains(y.BrandId)));
-
         if (filters.TagIds != null && filters.TagIds.Count != 0)
-            query = query.Where(x => x.Tags.Any(y => filters.TagIds.Contains(y.TagId)));
+            query = query.Where(x => x.MangaTags.Any(y => filters.TagIds.Contains(y.TagId)));
 
         if (filters.ArtistIds != null && filters.ArtistIds.Count != 0)
-            query = query.Where(x => x.Artists.Any(y => filters.ArtistIds.Contains(y.ArtistId)));
-
-        if (filters.AuthorIds != null && filters.AuthorIds.Count != 0)
-            query = query.Where(x => x.Authors.Any(y => filters.AuthorIds.Contains(y.AuthorId)));
+            query = query.Where(x => x.MangaArtists.Any(y => filters.ArtistIds.Contains(y.ArtistId)));
 
         if (!string.IsNullOrWhiteSpace(filters.Title))
             query = query.Where(x => x.Title.ToLower().Contains(filters.Title.ToLower()));
@@ -60,10 +53,8 @@ public class MangaRepository : IMangaRepository
     private IQueryable<Manga> GetBaseQuery()
     {
         return _context.Mangas
-            .Include(x => x.Brands)
-            .Include(x => x.Tags)
-            .Include(x => x.Artists)
-            .Include(x => x.Authors)
+            .Include(x => x.MangaTags).ThenInclude(y => y.Tag)
+            .Include(x => x.MangaArtists).ThenInclude(y => y.Artist)
             .OrderBy(x => x.Title)
             .ThenBy(x => x.ChapterNumber);
     }

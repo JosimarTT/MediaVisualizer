@@ -1,0 +1,33 @@
+<!doctype html>
+<html data-bs-theme="dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+    <link href="../../../dist/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../shared/shared.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid d-flex flex-column h-100">
+    <main style="margin-bottom: auto !important;">
+        <div class="row d-none" id="message-not-found">
+            <div>No new animes found</div>
+        </div>
+        <div class="row">
+            <div id="new-animes"></div>
+        </div>
+    </main>
+</div>
+
+<script src="../../../dist/bootstrap/bootstrap.min.js"></script>
+<script src="../../../shared/shared.js"></script>
+<script src="../../../shared/alert.js"></script>
+<script src="../../../api/anime-api.js"></script>
+<script src="../../../api/tag-api.js"></script>
+<script src="../../../api/brand-api.js"></script>
+<script src="add.js"></script>
+<script src="../../../shared/dropdown.js"></script>
+</body>
+</html>

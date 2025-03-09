@@ -1,7 +1,6 @@
-﻿using MediaVisualizer.DataAccess.Entities;
+﻿using MediaVisualizer.DataAccess.Entities.Manga;
 using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared;
-using MediaVisualizer.Shared.Dtos;
 
 namespace MediaVisualizer.Services.Converters;
 
@@ -20,11 +19,9 @@ public static class MangaConverter
             PagesCount = manga.PagesCount,
             Logo = manga.Logo,
             PageExtension = manga.PageExtension,
-            Brands = manga.Brands.ToListDto(),
-            Tags = manga.Tags.ToListDto(),
-            Artists = manga.Artists.ToListDto(),
-            Authors = manga.Authors.ToListDto(),
-            BasePath = Path.Combine(Constants.BaseCollectionFolderPath, Constants.MangaFolderPath, manga.Folder)
+            Tags = manga.MangaTags.Select(x => x.Tag).ToList().ToListDto(),
+            Artists = manga.MangaArtists.Select(x => x.Artist).ToList().ToListDto(),
+            BasePath = Path.Combine(Constants.BaseCollectionPath, Constants.MangaFolderPath, manga.Folder)
         };
     }
 

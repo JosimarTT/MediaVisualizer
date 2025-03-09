@@ -1,5 +1,5 @@
 ﻿using MediaVisualizer.Services;
-using MediaVisualizer.Shared.Dtos;
+using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,5 +33,31 @@ public class AnimeController : ControllerBase
     public async Task<IActionResult> GetRandom()
     {
         return Ok(await _animeService.GetRandom());
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> SearchNew()
+    {
+        return Ok(await _animeService.SearchNew());
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetTitles()
+    {
+        return Ok(await _animeService.GetTitles());
+    }
+
+    [HttpPost]
+    [Route("~/[controller]")]
+    public async Task<IActionResult> Add([FromBody] AnimeDto anime)
+    {
+        return Ok(await _animeService.Add(anime));
+    }
+
+    [HttpPut]
+    [Route("~/[controller]/{animeId:int}")]
+    public async Task<IActionResult> Update(int animeId, [FromBody] AnimeDto animeDto)
+    {
+        return Ok(await _animeService.Update(animeId, animeDto));
     }
 }
