@@ -10,6 +10,5 @@ public class MangaDto
     public string BasePath { get; set; } = null!;
     public int ChapterNumber { get; set; }
     public int PagesCount { get; set; }
-    public string Logo { get; set; } = null!;
     public string PageExtension { get; set; } = null!;
 }

@@ -40,7 +40,6 @@ public class MangaImporter
                         Title = mangaFolder,
                         ChapterNumber = 1,
                         PagesCount = pages.Count,
-                        Logo = pages.First(),
                         PageExtension = Path.GetExtension(pages.First())
                     };
                     mangas.Add(manga);

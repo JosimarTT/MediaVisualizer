@@ -17,7 +17,6 @@ public static class MangaConverter
             Title = manga.Title,
             ChapterNumber = manga.ChapterNumber,
             PagesCount = manga.PagesCount,
-            Logo = manga.Logo,
             PageExtension = manga.PageExtension,
             Tags = manga.MangaTags.Select(x => x.Tag).ToList().ToListDto(),
             Artists = manga.MangaArtists.Select(x => x.Artist).ToList().ToListDto(),
