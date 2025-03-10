@@ -25,8 +25,8 @@ public static class Constants
 
     public static readonly List<string> MangaFolders =
     [
-        "[#]", "[A]", "[B]", "[C]", "[D]", "[E]", "[F]", "[G]", "[H]", "[I]", "[J]", "[K]", "[L]", "[M]", "[N]", "[O]",
-        "[P]", "[Q]", "[R]", "[S]", "[T]", "[U]", "[V]", "[W]", "[X]", "[Y]", "[Z]"
+        "#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
+        "V", "W", "X", "Y", "Z"
     ];
 
     public static readonly List<string> ImageExtensions = [".jpg", ".jpeg", ".png", ".gif"];
