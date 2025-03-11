@@ -93,17 +93,10 @@ async function update() {
     const selectedBrand = brands.find(x => x.name === brandDropdown.querySelector('input').value);
     const selectedTags = Array.from(tagDropdown.querySelectorAll('li div.active')).map(x => tags.find(t => t.name === x.textContent.trim()));
 
-    const data = {
-        animeId: anime.animeId,
-        logo: anime.logo,
-        video: anime.video,
-        title: titleDropdown.querySelector('input').value,
-        chapterNumber: chapterDropdown.querySelector('input').value,
-        brands: [selectedBrand],
-        tags: selectedTags
-    }
+    anime.brands = [selectedBrand];
+    anime.tags = selectedTags;
 
-    const response = await animeApi.update(data.animeId, data);
+    const response = await animeApi.update(anime.animeId, anime);
     if (response?.title) {
         animes = [];
         anime = undefined;

@@ -12,7 +12,7 @@ public class Artist : AuditEntity
 
     public string Name { get; set; }
 
-    public ICollection<MangaArtist> MangasArtists { get; set; } = new List<MangaArtist>();
+    public ICollection<MangaArtist> MangaArtists { get; set; } = new List<MangaArtist>();
 
-    public ICollection<ManwhaArtist> ManwhasArtists { get; set; } = new List<ManwhaArtist>();
+    public ICollection<ManwhaArtist> ManwhaArtists { get; set; } = new List<ManwhaArtist>();
 }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using MediaVisualizer.DataAccess.Entities.Shared;
 
 namespace MediaVisualizer.DataAccess.Entities.Anime;
@@ -7,8 +6,6 @@ namespace MediaVisualizer.DataAccess.Entities.Anime;
 [Table("Anime.AnimeTag")]
 public class AnimeTag
 {
-    [Key] public int AnimeTagId { get; set; }
-
     public int AnimeId { get; set; }
 
     [ForeignKey(nameof(AnimeId))] public Anime Anime { get; set; }

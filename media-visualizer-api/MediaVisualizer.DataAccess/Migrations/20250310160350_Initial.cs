@@ -39,7 +39,6 @@ namespace MediaVisualizer.DataAccess.Migrations
                     Folder = table.Column<string>(type: "TEXT", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     ChapterNumber = table.Column<int>(type: "INTEGER", nullable: false),
-                    Logo = table.Column<string>(type: "TEXT", nullable: false),
                     PageExtension = table.Column<string>(type: "TEXT", nullable: false),
                     PagesCount = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -119,14 +118,12 @@ namespace MediaVisualizer.DataAccess.Migrations
                 name: "Manga.MangaArtist",
                 columns: table => new
                 {
-                    MangaArtistId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
                     MangaId = table.Column<int>(type: "INTEGER", nullable: false),
                     ArtistId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Manga.MangaArtist", x => x.MangaArtistId);
+                    table.PrimaryKey("PK_Manga.MangaArtist", x => new { x.MangaId, x.ArtistId });
                     table.ForeignKey(
                         name: "FK_Manga.MangaArtist_Manga.Manga_MangaId",
                         column: x => x.MangaId,
@@ -145,14 +142,12 @@ namespace MediaVisualizer.DataAccess.Migrations
                 name: "Manwha.ManwhaArtist",
                 columns: table => new
                 {
-                    ManwhaArtistId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
                     ManwhaId = table.Column<int>(type: "INTEGER", nullable: false),
                     ArtistId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Manwha.ManwhaArtist", x => x.ManwhaArtistId);
+                    table.PrimaryKey("PK_Manwha.ManwhaArtist", x => new { x.ManwhaId, x.ArtistId });
                     table.ForeignKey(
                         name: "FK_Manwha.ManwhaArtist_Manwha.Manwha_ManwhaId",
                         column: x => x.ManwhaId,
@@ -171,14 +166,12 @@ namespace MediaVisualizer.DataAccess.Migrations
                 name: "Anime.AnimeBrand",
                 columns: table => new
                 {
-                    AnimeBrandId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
                     AnimeId = table.Column<int>(type: "INTEGER", nullable: false),
                     BrandId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Anime.AnimeBrand", x => x.AnimeBrandId);
+                    table.PrimaryKey("PK_Anime.AnimeBrand", x => new { x.AnimeId, x.BrandId });
                     table.ForeignKey(
                         name: "FK_Anime.AnimeBrand_Anime.Anime_AnimeId",
                         column: x => x.AnimeId,
@@ -197,14 +190,12 @@ namespace MediaVisualizer.DataAccess.Migrations
                 name: "Anime.AnimeTag",
                 columns: table => new
                 {
-                    AnimeTagId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
                     AnimeId = table.Column<int>(type: "INTEGER", nullable: false),
                     TagId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Anime.AnimeTag", x => x.AnimeTagId);
+                    table.PrimaryKey("PK_Anime.AnimeTag", x => new { x.AnimeId, x.TagId });
                     table.ForeignKey(
                         name: "FK_Anime.AnimeTag_Anime.Anime_AnimeId",
                         column: x => x.AnimeId,
@@ -223,14 +214,12 @@ namespace MediaVisualizer.DataAccess.Migrations
                 name: "Manga.MangaTag",
                 columns: table => new
                 {
-                    MangaTagId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
                     MangaId = table.Column<int>(type: "INTEGER", nullable: false),
                     TagId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Manga.MangaTag", x => x.MangaTagId);
+                    table.PrimaryKey("PK_Manga.MangaTag", x => new { x.MangaId, x.TagId });
                     table.ForeignKey(
                         name: "FK_Manga.MangaTag_Manga.Manga_MangaId",
                         column: x => x.MangaId,
@@ -249,14 +238,12 @@ namespace MediaVisualizer.DataAccess.Migrations
                 name: "Manwha.ManwhaTag",
                 columns: table => new
                 {
-                    ManwhaTagId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
                     ManwhaId = table.Column<int>(type: "INTEGER", nullable: false),
                     TagId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Manwha.ManwhaTag", x => x.ManwhaTagId);
+                    table.PrimaryKey("PK_Manwha.ManwhaTag", x => new { x.ManwhaId, x.TagId });
                     table.ForeignKey(
                         name: "FK_Manwha.ManwhaTag_Manwha.Manwha_ManwhaId",
                         column: x => x.ManwhaId,
@@ -272,19 +259,9 @@ namespace MediaVisualizer.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Anime.AnimeBrand_AnimeId",
-                table: "Anime.AnimeBrand",
-                column: "AnimeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Anime.AnimeBrand_BrandId",
                 table: "Anime.AnimeBrand",
                 column: "BrandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Anime.AnimeTag_AnimeId",
-                table: "Anime.AnimeTag",
-                column: "AnimeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Anime.AnimeTag_TagId",
@@ -297,16 +274,6 @@ namespace MediaVisualizer.DataAccess.Migrations
                 column: "ArtistId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Manga.MangaArtist_MangaId",
-                table: "Manga.MangaArtist",
-                column: "MangaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Manga.MangaTag_MangaId",
-                table: "Manga.MangaTag",
-                column: "MangaId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Manga.MangaTag_TagId",
                 table: "Manga.MangaTag",
                 column: "TagId");
@@ -315,16 +282,6 @@ namespace MediaVisualizer.DataAccess.Migrations
                 name: "IX_Manwha.ManwhaArtist_ArtistId",
                 table: "Manwha.ManwhaArtist",
                 column: "ArtistId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Manwha.ManwhaArtist_ManwhaId",
-                table: "Manwha.ManwhaArtist",
-                column: "ManwhaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Manwha.ManwhaTag_ManwhaId",
-                table: "Manwha.ManwhaTag",
-                column: "ManwhaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Manwha.ManwhaTag_TagId",
