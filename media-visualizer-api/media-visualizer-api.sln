@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.DataAccess"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.Shared", "MediaVisualizer.Shared\MediaVisualizer.Shared.csproj", "{67E08597-A6AA-4860-8065-7ECC580D2672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.DataImporter", "MediaVisualizer.DataImporter\MediaVisualizer.DataImporter.csproj", "{A98FC51E-BD89-4F58-A1FA-24A81014552B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.FileManager", "MediaVisualizer.FileManager\MediaVisualizer.FileManager.csproj", "{A98FC51E-BD89-4F58-A1FA-24A81014552B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B9861F62-2A59-4B35-A5A0-6A39AD4538F3}"
 EndProject

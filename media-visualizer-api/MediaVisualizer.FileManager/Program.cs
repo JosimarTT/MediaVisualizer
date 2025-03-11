@@ -1,10 +1,10 @@
 ﻿using MediaVisualizer.DataAccess;
-using MediaVisualizer.DataImporter.Importers;
+using MediaVisualizer.FileManager.Importers;
 using MediaVisualizer.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MediaVisualizer.DataImporter;
+namespace MediaVisualizer.FileManager;
 
 public static class Program
 {

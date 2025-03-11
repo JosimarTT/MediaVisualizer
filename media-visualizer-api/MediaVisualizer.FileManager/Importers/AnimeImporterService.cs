@@ -5,7 +5,7 @@ using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.ExtensionMethods;
 
-namespace MediaVisualizer.DataImporter.Importers;
+namespace MediaVisualizer.FileManager.Importers;
 
 public class AnimeImporterService : IAnimeImporterService
 {

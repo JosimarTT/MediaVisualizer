@@ -1,10 +1,10 @@
 ﻿using MediaVisualizer.DataAccess;
 using MediaVisualizer.DataAccess.Entities.Shared;
-using MediaVisualizer.DataImporter.Models;
+using MediaVisualizer.FileManager.Models;
 using MediaVisualizer.Shared;
 using YamlDotNet.Serialization;
 
-namespace MediaVisualizer.DataImporter.Importers;
+namespace MediaVisualizer.FileManager.Importers;
 
 public class TagImporter
 {

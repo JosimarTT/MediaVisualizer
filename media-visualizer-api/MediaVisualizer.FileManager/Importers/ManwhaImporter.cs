@@ -2,7 +2,7 @@
 using MediaVisualizer.DataAccess.Entities.Manwha;
 using MediaVisualizer.Shared;
 
-namespace MediaVisualizer.DataImporter.Importers;
+namespace MediaVisualizer.FileManager.Importers;
 
 public class ManwhaImporter
 {

@@ -1,4 +1,4 @@
-﻿namespace MediaVisualizer.DataImporter.Models;
+﻿namespace MediaVisualizer.FileManager.Models;
 
 public class InfoYaml
 {

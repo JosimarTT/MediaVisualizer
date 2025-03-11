@@ -1,6 +1,6 @@
 using MediaVisualizer.DataAccess;
 using MediaVisualizer.DataAccess.Repositories;
-using MediaVisualizer.DataImporter.Importers;
+using MediaVisualizer.FileManager.Importers;
 using MediaVisualizer.Services;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,5 +1,5 @@
 ﻿using MediaVisualizer.DataAccess.Repositories;
-using MediaVisualizer.DataImporter.Importers;
+using MediaVisualizer.FileManager.Importers;
 using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
