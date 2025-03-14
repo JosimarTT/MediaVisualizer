@@ -18,7 +18,7 @@ public static partial class StringExtensions
 
     public static string RemoveExtraSpaces(this string text)
     {
-        return RemoveExtraSpacesRegex().Replace(text, " ");
+        return RemoveExtraSpacesRegex().Replace(text, " ").Trim();
     }
 
     public static string RemoveInvalidFolderNameChars(this string text)
@@ -28,6 +28,21 @@ public static partial class StringExtensions
         return new string(text.Where(c => !invalidChars.Contains(c)).ToArray());
     }
 
+    public static string RemoveTextInFirstSquareBrackets(this string text)
+    {
+        return RemoveTextInFirstSquareBracketsRegex().Replace(text, "", 1);
+    }
+
+    public static string FormatTitle(this string title)
+    {
+        return title
+            .RemoveTextInFirstSquareBrackets()
+            .RemoveExtraSpaces();
+    }
+
     [GeneratedRegex(@"\s+")]
     private static partial Regex RemoveExtraSpacesRegex();
+
+    [GeneratedRegex(@"\[(.*?)\]")]
+    private static partial Regex RemoveTextInFirstSquareBracketsRegex();
 }

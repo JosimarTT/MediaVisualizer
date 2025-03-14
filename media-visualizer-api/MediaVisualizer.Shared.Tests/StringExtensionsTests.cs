@@ -64,7 +64,7 @@ public class StringExtensionsTests
     public void RemoveExtraSpaces_ShouldRemoveExtraSpaces()
     {
         // Arrange
-        var text = "This  is   a    test";
+        const string text = "   This  is   a    test        ";
 
         // Act
         var result = text.RemoveExtraSpaces();
@@ -84,5 +84,28 @@ public class StringExtensionsTests
 
         // Assert
         Assert.AreEqual("Invalid. Folder. Name.", result);
+    }
+
+    [TestMethod]
+    [DataRow("[text to remove] This is [a] test  ", " This is [a] test  ")]
+    public void RemoveTextBetweenFirstSquareBrackets_ShouldRemoveTextBetweenFirstSquareBrackets(string text,
+        string expected)
+    {
+        // Act
+        var result = text.RemoveTextInFirstSquareBrackets();
+
+        // Assert
+        Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    [DataRow("[text to remove] This is [a] test  ", "This is [a] test")]
+    public void FormatTitle_ShouldRemoveTextBetweenFirstSquareBracketsAndExtraSpaces(string text, string expected)
+    {
+        // Act
+        var result = text.FormatTitle();
+
+        // Assert
+        Assert.AreEqual(expected, result);
     }
 }
