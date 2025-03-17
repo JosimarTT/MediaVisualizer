@@ -3,7 +3,7 @@
 public static class Constants
 {
     public const string DbPath =
-        @"E:\media-visualizer\media-visualizer-api\MediaVisualizer.DataAccess\media-visualizer.db";
+        @"E:\MediaVisualizer\media-visualizer-api\MediaVisualizer.DataAccess\media-visualizer.db";
 
     public const string BaseDownloadPath = @"F:\Downloads";
     public const string AnimeDownloadPath = BaseDownloadPath + @"\Animes";
@@ -25,8 +25,7 @@ public static class Constants
 
     public static readonly List<string> MangaFolders =
     [
-        "[#]", "[A]", "[B]", "[C]", "[D]", "[E]", "[F]", "[G]", "[H]", "[I]", "[J]", "[K]", "[L]", "[M]", "[N]", "[O]",
-        "[P]", "[Q]", "[R]", "[S]", "[T]", "[U]", "[V]", "[W]", "[X]", "[Y]", "[Z]"
+        "#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
     ];
 
     public static readonly List<string> ImageExtensions = [".jpg", ".jpeg", ".png", ".gif"];
