@@ -33,4 +33,16 @@ public class MangaController : ControllerBase
     {
         return Ok(await _mangaService.GetRandom());
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetTitles()
+    {
+        return Ok(await _mangaService.GetTitles());
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetTitlesToAdd()
+    {
+        return Ok(await _mangaService.GetTitlesToAdd());
+    }
 }

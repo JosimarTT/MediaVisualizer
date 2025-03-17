@@ -1,6 +1,7 @@
 ﻿using MediaVisualizer.DataAccess.Repositories;
 using MediaVisualizer.Services.Converters;
 using MediaVisualizer.Services.Dtos;
+using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Requests;
 using MediaVisualizer.Shared.Responses;
 
@@ -33,6 +34,18 @@ public class MangaService : IMangaService
         var manga = await _mangaRepository.GetRandom();
         return manga.ToDto();
     }
+
+    public Task<string[]> GetTitlesToAdd()
+    {
+        var files = Directory.GetFiles(Constants.MangaDownloadPath, "*.cbz");
+        return Task.FromResult(files);
+
+    }
+
+    public Task<List<string>> GetTitles()
+    {
+        return _mangaRepository.GetTitles();
+    }
 }
 
 public interface IMangaService
@@ -40,4 +53,6 @@ public interface IMangaService
     public Task<MangaDto> Get(int key);
     public Task<ListResponse<MangaDto>> GetList(FiltersRequest filters);
     public Task<MangaDto> GetRandom();
+    Task<string[]> GetTitlesToAdd();
+    Task<List<string>> GetTitles();
 }
