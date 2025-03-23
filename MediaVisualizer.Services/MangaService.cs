@@ -50,6 +50,24 @@ public class MangaService : IMangaService
     {
         throw new NotImplementedException();
     }
+
+    public async Task<string> GetMangaPage(MangaDto mangaDto, int pageNumber)
+    {
+        var mangaPath = Path.Combine(Constants.MangaCollectionPath, mangaDto.Folder);
+
+        if (!Directory.Exists(mangaPath))
+            throw new DirectoryNotFoundException($"Manga with title '{mangaDto.Title}' not found.");
+
+        var fileName = Path.Combine(mangaPath, $"{pageNumber:D3}{mangaDto.PageExtension}");
+        if (File.Exists(fileName))
+        {
+            var fileBytes = await File.ReadAllBytesAsync(fileName);
+            var base64String = Convert.ToBase64String(fileBytes);
+            return $"data:image/jpeg;base64,{base64String}";
+        }
+
+        throw new FileNotFoundException($"Page {pageNumber} not found.");
+    }
 }
 
 public interface IMangaService
@@ -60,4 +78,5 @@ public interface IMangaService
     Task<string[]> GetTitlesToAdd();
     Task<List<string>> GetTitles();
     Task<MangaDto> Add(MangaDto manga);
+    Task<string> GetMangaPage(MangaDto mangaDto, int pageNumber);
 }

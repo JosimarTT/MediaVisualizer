@@ -1,0 +1,52 @@
+﻿@page "/MangaDetail"
+@rendermode InteractiveServer
+@using MediaVisualizer.Services
+@using MediaVisualizer.Services.Dtos
+@inject IMangaService MangaService
+
+<h3>MangaDetail</h3>
+
+@if (mangaPages != null)
+{
+    <div>
+        @foreach (var mangaPage in mangaPages)
+        {
+            <img src="@mangaPage" alt="Manga Page"/>
+        }
+    </div>
+    @if (mangaPages.Count < mangaDto.PagesCount)
+    {
+        <button @onclick="LoadMoreImages">Load More</button>
+    }
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private List<string> mangaPages = new();
+    private int currentPage = 1;
+    private const int pageSize = 5;
+
+    readonly MangaDto mangaDto = new()
+    {
+        Folder = @"O\One Piece",
+        PagesCount = 43,
+        PageExtension = ".jpg"
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadMoreImages();
+    }
+
+    private async Task LoadMoreImages()
+    {
+        for (var i = 0; i < pageSize && currentPage <= mangaDto.PagesCount; i++, currentPage++)
+        {
+            var mangaPage = await MangaService.GetMangaPage(mangaDto, currentPage);
+            mangaPages.Add(mangaPage);
+        }
+    }
+}
