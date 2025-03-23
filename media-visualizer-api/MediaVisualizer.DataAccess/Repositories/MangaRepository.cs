@@ -50,6 +50,14 @@ public class MangaRepository : IMangaRepository
         return await query.Skip(randomIndex).FirstAsync();
     }
 
+    public Task<List<string>> GetTitles()
+    {
+        return _context.Mangas
+            .Select(x => x.Title)
+            .OrderBy(x => x)
+            .ToListAsync();
+    }
+
     private IQueryable<Manga> GetBaseQuery()
     {
         return _context.Mangas
@@ -65,4 +73,5 @@ public interface IMangaRepository
     public Task<(int totalCount, IEnumerable<Manga>)> GetList(FiltersRequest filters);
     public Task<Manga> Get(int mangaId);
     public Task<Manga> GetRandom();
+    Task<List<string>> GetTitles();
 }

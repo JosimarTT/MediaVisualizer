@@ -3,6 +3,7 @@ using System;
 using MediaVisualizer.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaVisualizer.DataAccess.Migrations
 {
     [DbContext(typeof(MediaVisualizerDbContext))]
-    partial class MediaVisualizerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250323013748_DecimalToDouble")]
+    partial class DecimalToDouble
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -55,13 +58,19 @@ namespace MediaVisualizer.DataAccess.Migrations
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.AnimeBrand", b =>
                 {
+                    b.Property<int>("AnimeBrandId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("AnimeId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("BrandId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("AnimeId", "BrandId");
+                    b.HasKey("AnimeBrandId");
+
+                    b.HasIndex("AnimeId");
 
                     b.HasIndex("BrandId");
 
@@ -70,13 +79,19 @@ namespace MediaVisualizer.DataAccess.Migrations
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.AnimeTag", b =>
                 {
+                    b.Property<int>("AnimeTagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("AnimeId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("TagId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("AnimeId", "TagId");
+                    b.HasKey("AnimeTagId");
+
+                    b.HasIndex("AnimeId");
 
                     b.HasIndex("TagId");
 
@@ -96,6 +111,10 @@ namespace MediaVisualizer.DataAccess.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Folder")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Logo")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -120,28 +139,40 @@ namespace MediaVisualizer.DataAccess.Migrations
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.MangaArtist", b =>
                 {
-                    b.Property<int>("MangaId")
+                    b.Property<int>("MangaArtistId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ArtistId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("MangaId", "ArtistId");
+                    b.Property<int>("MangaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("MangaArtistId");
 
                     b.HasIndex("ArtistId");
+
+                    b.HasIndex("MangaId");
 
                     b.ToTable("Manga.MangaArtist");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.MangaTag", b =>
                 {
+                    b.Property<int>("MangaTagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("MangaId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("TagId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("MangaId", "TagId");
+                    b.HasKey("MangaTagId");
+
+                    b.HasIndex("MangaId");
 
                     b.HasIndex("TagId");
 
@@ -189,28 +220,40 @@ namespace MediaVisualizer.DataAccess.Migrations
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha.ManwhaArtist", b =>
                 {
-                    b.Property<int>("ManwhaId")
+                    b.Property<int>("ManwhaArtistId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ArtistId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ManwhaId", "ArtistId");
+                    b.Property<int>("ManwhaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ManwhaArtistId");
 
                     b.HasIndex("ArtistId");
+
+                    b.HasIndex("ManwhaId");
 
                     b.ToTable("Manwha.ManwhaArtist");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha.ManwhaTag", b =>
                 {
+                    b.Property<int>("ManwhaTagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("ManwhaId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("TagId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ManwhaId", "TagId");
+                    b.HasKey("ManwhaTagId");
+
+                    b.HasIndex("ManwhaId");
 
                     b.HasIndex("TagId");
 
@@ -321,7 +364,7 @@ namespace MediaVisualizer.DataAccess.Migrations
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.MangaArtist", b =>
                 {
                     b.HasOne("MediaVisualizer.DataAccess.Entities.Shared.Artist", "Artist")
-                        .WithMany("MangaArtists")
+                        .WithMany("MangasArtists")
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -359,7 +402,7 @@ namespace MediaVisualizer.DataAccess.Migrations
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha.ManwhaArtist", b =>
                 {
                     b.HasOne("MediaVisualizer.DataAccess.Entities.Shared.Artist", "Artist")
-                        .WithMany("ManwhaArtists")
+                        .WithMany("ManwhasArtists")
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -417,9 +460,9 @@ namespace MediaVisualizer.DataAccess.Migrations
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Shared.Artist", b =>
                 {
-                    b.Navigation("MangaArtists");
+                    b.Navigation("MangasArtists");
 
-                    b.Navigation("ManwhaArtists");
+                    b.Navigation("ManwhasArtists");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Shared.Brand", b =>
