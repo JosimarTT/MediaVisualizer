@@ -16,9 +16,9 @@ public class MangaService : IMangaService
         _mangaRepository = mangaRepository;
     }
 
-    public async Task<MangaDto> Get(int key)
+    public async Task<MangaDto> Get(int mangaId)
     {
-        var manga = await _mangaRepository.Get(key);
+        var manga = await _mangaRepository.Get(mangaId);
         return manga.ToDto();
     }
 
@@ -39,20 +39,25 @@ public class MangaService : IMangaService
     {
         var files = Directory.GetFiles(Constants.MangaDownloadPath, "*.cbz");
         return Task.FromResult(files);
-
     }
 
     public Task<List<string>> GetTitles()
     {
         return _mangaRepository.GetTitles();
     }
+
+    public Task<MangaDto> Add(MangaDto manga)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public interface IMangaService
 {
-    public Task<MangaDto> Get(int key);
+    public Task<MangaDto> Get(int mangaId);
     public Task<ListResponse<MangaDto>> GetList(FiltersRequest filters);
     public Task<MangaDto> GetRandom();
     Task<string[]> GetTitlesToAdd();
     Task<List<string>> GetTitles();
+    Task<MangaDto> Add(MangaDto manga);
 }

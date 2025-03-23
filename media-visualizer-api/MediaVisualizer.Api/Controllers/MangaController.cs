@@ -1,4 +1,5 @@
 ﻿using MediaVisualizer.Services;
+using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,5 +45,12 @@ public class MangaController : ControllerBase
     public async Task<IActionResult> GetTitlesToAdd()
     {
         return Ok(await _mangaService.GetTitlesToAdd());
+    }
+
+    [HttpPost]
+    [Route("~/[controller]")]
+    public async Task<IActionResult> Add([FromBody] MangaDto manga)
+    {
+        return Ok(await _mangaService.Add(manga));
     }
 }

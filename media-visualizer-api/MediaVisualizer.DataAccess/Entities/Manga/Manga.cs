@@ -11,7 +11,8 @@ public class Manga : AuditEntity
 
     public string Title { get; set; }
 
-    public int ChapterNumber { get; set; }
+    [Column(TypeName = "REAL")]
+    public double ChapterNumber { get; set; }
 
     public string Logo { get; set; }
 
