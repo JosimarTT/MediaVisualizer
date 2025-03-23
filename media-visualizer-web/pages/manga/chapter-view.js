@@ -9,6 +9,6 @@ initialize().then(r => {
 
 async function initialize() {
     manga = await mangaApi.get(mangaId);
-    initializePagination(manga);
+    initializeImagePagination(manga);
     initializeImageModal(manga);
 }

@@ -7,7 +7,7 @@ let paginationState = {
     totalPages: 0
 }
 
-function initializePagination(entity) {
+function initializeImagePagination(entity) {
     let paginationDiv = document.getElementById('pagination');
     let chapterCollectionDiv = document.getElementById('chapter-collection');
     let imagesData = getImagesData(entity);

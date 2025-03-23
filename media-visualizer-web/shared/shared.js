@@ -62,7 +62,10 @@ function updateCollectionContent(items) {
     document.getElementById('collection').innerHTML = items.map(item => {
         let url = './chapter-view.html?id=';
         if (item.animeId) url = `${url}${item.animeId}`;
-        if (item.mangaId) url = `${url}${item.mangaId}`;
+        if (item.mangaId){
+            url = `${url}${item.mangaId}`;
+           item.logo = `001${item.pageExtension}`;
+        };
         if (item.manwhaId) url = `${url}${item.manwhaId}`;
         return `<div class="card p-0 hover-effect" style="height: 356px">
             <a href="${url}" target="_blank" class="h-100">
