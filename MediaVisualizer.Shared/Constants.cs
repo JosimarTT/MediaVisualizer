@@ -3,7 +3,7 @@
 public static class Constants
 {
     public const string DbPath =
-        @"E:\MediaVisualizer\media-visualizer-api\MediaVisualizer.DataAccess\media-visualizer.db";
+        @"E:\MediaVisualizer\MediaVisualizer.DataAccess\media-visualizer.db";
 
     public const string BaseDownloadPath = @"F:\Downloads";
     public const string AnimeDownloadPath = BaseDownloadPath + @"\Animes";
