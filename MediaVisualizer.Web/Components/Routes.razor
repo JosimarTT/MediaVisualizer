@@ -1,6 +1,22 @@
-﻿<Router AppAssembly="typeof(Program).Assembly">
+﻿@using MediaVisualizer.Web.Components.Layout
+@using Index = MediaVisualizer.Web.Components.Pages.Index
+<Router AppAssembly="typeof(Program).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)"/>
+        <RouteView RouteData="routeData" DefaultLayout="GetLayout(routeData)"/>
         <FocusOnNavigate RouteData="routeData" Selector="h1"/>
     </Found>
 </Router>
+
+@code {
+
+    private Type GetLayout(RouteData routeData)
+    {
+        if (routeData.PageType == typeof(Index))
+        {
+            return typeof(IndexLayout);
+        }
+
+        return typeof(MainLayout);
+    }
+
+}

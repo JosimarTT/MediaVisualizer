@@ -31,10 +31,24 @@ public class AnimeService : IAnimeService
         return new ListResponse<AnimeDto>(animeListDto, totalCount, filters.Size!.Value, filters.Page!.Value);
     }
 
-    public async Task<AnimeDto> GetRandom()
+    public async Task<string> GetRandom()
     {
         var anime = await _animeRepository.GetRandom();
-        return anime.ToDto();
+
+        var animePath = Path.Combine(Constants.AnimeCollectionPath, anime.Folder);
+
+        if (!Directory.Exists(animePath))
+            throw new DirectoryNotFoundException($"Anime folder '{anime.Folder}' not found.");
+
+        var fileName = Path.Combine(animePath, $"{anime.Logo}");
+        if (File.Exists(fileName))
+        {
+            var fileBytes = await File.ReadAllBytesAsync(fileName);
+            var base64String = Convert.ToBase64String(fileBytes);
+            return $"data:image/jpeg;base64,{base64String}";
+        }
+
+        throw new FileNotFoundException("File not found.");
     }
 
     public Task<List<NewAnime>> SearchNew()
@@ -176,7 +190,7 @@ public interface IAnimeService
 {
     public Task<AnimeDto> Get(int animeId);
     public Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters);
-    Task<AnimeDto> GetRandom();
+    Task<string> GetRandom();
     Task<List<NewAnime>> SearchNew();
     Task<IEnumerable<string>> GetTitles();
     Task<AnimeDto> Add(AnimeDto animeDto);
