@@ -2,10 +2,11 @@
 using MediaVisualizer.Services.Converters;
 using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared;
+using MediaVisualizer.Shared.ExtensionMethods;
 
 public static class AnimeConverter
 {
-    public static AnimeDto ToDto(this Anime anime)
+    public static async Task<AnimeDto> ToDto(this Anime anime)
     {
         if (anime == null) return null;
         return new AnimeDto
@@ -14,7 +15,7 @@ public static class AnimeConverter
             Folder = anime.Folder,
             Title = anime.Title,
             ChapterNumber = anime.ChapterNumber,
-            Logo = anime.Logo,
+            Logo = await Path.Combine(StringConstants.AnimeCollectionPath, anime.Folder, anime.Logo).GetBase64Image(),
             Video = anime.Video,
             Brands = anime.AnimeBrands.Select(ab => ab.Brand).ToList().ToListDto(),
             Tags = anime.AnimeTags.Select(at => at.Tag).ToList().ToListDto(),
@@ -22,11 +23,11 @@ public static class AnimeConverter
         };
     }
 
-    public static ICollection<AnimeDto> ToListDto(this ICollection<Anime> animes)
+    public static async Task<ICollection<AnimeDto>> ToListDto(this ICollection<Anime> animes)
     {
         if (animes == null || animes.Count == 0) return new List<AnimeDto>();
 
-        return animes.Select(x => x.ToDto()).ToList();
+        return await Task.WhenAll(animes.Select(x => x.ToDto()));
     }
 
     public static Anime ToEntity(this AnimeDto animeDto)

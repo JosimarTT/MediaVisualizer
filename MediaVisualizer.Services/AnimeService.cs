@@ -21,13 +21,13 @@ public class AnimeService : IAnimeService
     public async Task<AnimeDto> Get(int animeId)
     {
         var anime = await _animeRepository.Get(animeId);
-        return anime.ToDto();
+        return await anime.ToDto();
     }
 
     public async Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters)
     {
         var (totalCount, animes) = await _animeRepository.GetList(filters);
-        var animeListDto = animes.ToList().ToListDto();
+        var animeListDto = await animes.ToList().ToListDto();
         return new ListResponse<AnimeDto>(animeListDto, totalCount, filters.Size!.Value, filters.Page!.Value);
     }
 
@@ -117,13 +117,13 @@ public class AnimeService : IAnimeService
 
         var anime = await _animeRepository.Add(animeDto.ToEntity());
 
-        return anime.ToDto();
+        return await anime.ToDto();
     }
 
     public async Task<AnimeDto> Update(int animeId, AnimeDto animeDto)
     {
         var anime = await _animeRepository.Update(animeId, animeDto.ToEntity());
-        return anime.ToDto();
+        return await anime.ToDto();
     }
 }
 

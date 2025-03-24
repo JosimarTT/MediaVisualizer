@@ -21,7 +21,7 @@ public partial class AnimeList
     {
         var filters = new FiltersRequest
         {
-            Size = 10,
+            Size = 18,
             Page = 1
         };
 

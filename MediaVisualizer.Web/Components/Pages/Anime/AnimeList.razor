@@ -13,13 +13,17 @@
 }
 else
 {
-    <div class="container">
-        <h1>Anime List</h1>
-        <ul>
-            @foreach (var anime in _animeList)
-            {
-                <li>@anime.Title</li>
-            }
-        </ul>
-    </div>
+    @foreach (var anime in _animeList)
+    {
+        <div class="card p-0 hover-effect" style="height: 356px">
+            <a href="@anime.Title" target="_blank" class="h-100">
+                <img alt="..." class="card-img object-fit-cover" style="max-height: 300px; border-bottom-left-radius: 0; border-bottom-right-radius: 0" src="@anime.Logo">
+                <div class="card-body position-absolute bottom-0 w-100 text-white" style="background: #212529; border-radius: var(--bs-card-border-radius); border-top-left-radius: 0; border-top-right-radius: 0">
+                    <div class="card-title-container">
+                        <p class="card-title text-center m-0 text-ellipsis">@anime.Title @anime.ChapterNumber</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
 }
