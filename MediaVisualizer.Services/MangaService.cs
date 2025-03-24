@@ -29,10 +29,24 @@ public class MangaService : IMangaService
         return new ListResponse<MangaDto>(mangaListDto, totalCount, filters.Size!.Value, filters.Page!.Value);
     }
 
-    public async Task<MangaDto> GetRandom()
+    public async Task<string> GetRandom()
     {
         var manga = await _mangaRepository.GetRandom();
-        return manga.ToDto();
+
+        var mangaPath = Path.Combine(Constants.MangaCollectionPath, manga.Folder);
+
+        if (!Directory.Exists(mangaPath))
+            throw new DirectoryNotFoundException($"Manga with title '{manga.Title}' not found.");
+
+        var fileName = Path.Combine(mangaPath, $"001{manga.PageExtension}");
+        if (File.Exists(fileName))
+        {
+            var fileBytes = await File.ReadAllBytesAsync(fileName);
+            var base64String = Convert.ToBase64String(fileBytes);
+            return $"data:image/jpeg;base64,{base64String}";
+        }
+
+        throw new FileNotFoundException("Manga logo not found.");
     }
 
     public Task<string[]> GetTitlesToAdd()
@@ -74,7 +88,7 @@ public interface IMangaService
 {
     public Task<MangaDto> Get(int mangaId);
     public Task<ListResponse<MangaDto>> GetList(FiltersRequest filters);
-    public Task<MangaDto> GetRandom();
+    public Task<string> GetRandom();
     Task<string[]> GetTitlesToAdd();
     Task<List<string>> GetTitles();
     Task<MangaDto> Add(MangaDto manga);

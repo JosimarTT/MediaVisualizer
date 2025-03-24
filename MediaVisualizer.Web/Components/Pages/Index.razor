@@ -46,8 +46,8 @@
     protected override async Task OnInitializedAsync()
     {
         animeImageUrl = await FetchImageUrl("Anime/GetRandom");
-        // mangaImageUrl = await FetchImageUrl("Manga/GetImage");
-        // manwhaImageUrl = await FetchImageUrl("Manwha/GetImage");
+        mangaImageUrl = await FetchImageUrl("Manga/GetRandom");
+        manwhaImageUrl = await FetchImageUrl("Manwha/GetRandom");
     }
 
     private async Task<string> FetchImageUrl(string endpoint)
