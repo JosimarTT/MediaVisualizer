@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MediaVisualizer.DataAccess\MediaVisualizer.DataAccess.csproj" />
-      <ProjectReference Include="..\MediaVisualizer.Shared\MediaVisualizer.Shared.csproj" />
+        <ProjectReference Include="..\MediaVisualizer.DataAccess\MediaVisualizer.DataAccess.csproj"/>
+        <ProjectReference Include="..\MediaVisualizer.Shared\MediaVisualizer.Shared.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FuzzySharp" Version="2.0.2" />
+        <PackageReference Include="FuzzySharp" Version="2.0.2"/>
     </ItemGroup>
 
 </Project>
