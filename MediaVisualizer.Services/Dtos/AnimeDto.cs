@@ -11,4 +11,5 @@ public class AnimeDto
     public ICollection<BrandDto> Brands { get; set; } = new List<BrandDto>();
     public ICollection<TagDto> Tags { get; set; } = new List<TagDto>();
     public string BasePath { get; set; } = string.Empty;
+    public long Length { get; set; }
 }
