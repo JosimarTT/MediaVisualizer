@@ -125,65 +125,6 @@ public class AnimeService : IAnimeService
         var anime = await _animeRepository.Update(animeId, animeDto.ToEntity());
         return anime.ToDto();
     }
-
-    public async Task<Stream> StreamAnimeVideo(AnimeDto animeDto, long start, long end)
-    {
-        var animePath = Path.Combine(StringConstants.AnimeCollectionPath, animeDto.Folder);
-
-        if (!Directory.Exists(animePath))
-            throw new DirectoryNotFoundException($"Anime with title '{animeDto.Title}' not found.");
-
-        var fileName = Path.Combine(animePath, animeDto.Video);
-        if (!File.Exists(fileName))
-            throw new FileNotFoundException($"Video '{animeDto.Video}' not found.");
-
-        var fileInfo = new FileInfo(fileName);
-        var fileLength = fileInfo.Length;
-
-        if (end == 0 || end >= fileLength) end = fileLength - 1;
-
-        var length = end - start + 1;
-        var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true);
-        stream.Seek(start, SeekOrigin.Begin);
-
-        return new LimitedStream(stream, length);
-    }
-
-    public async Task<long> GetVideoLength(AnimeDto animeDto)
-    {
-        var animePath = Path.Combine(StringConstants.AnimeCollectionPath, animeDto.Folder);
-
-        if (!Directory.Exists(animePath))
-            throw new DirectoryNotFoundException($"Anime with title '{animeDto.Title}' not found.");
-
-        var fileName = Path.Combine(animePath, animeDto.Video);
-        if (!File.Exists(fileName))
-            throw new FileNotFoundException($"Video '{animeDto.Video}' not found.");
-
-        var fileInfo = new FileInfo(fileName);
-        return fileInfo.Length;
-    }
-
-    public async Task<VideoMetadataDto> GetVideoMetadata(AnimeDto animeDto)
-    {
-        var animePath = Path.Combine(StringConstants.AnimeCollectionPath, animeDto.Folder);
-
-        if (!Directory.Exists(animePath))
-            throw new DirectoryNotFoundException($"Anime with title '{animeDto.Title}' not found.");
-
-        var fileName = Path.Combine(animePath, animeDto.Video);
-        if (!File.Exists(fileName))
-            throw new FileNotFoundException($"Video '{animeDto.Video}' not found.");
-
-        var fileInfo = new FileInfo(fileName);
-        var metadata = new VideoMetadataDto
-        {
-            Length = fileInfo.Length
-            // Add other metadata properties here
-        };
-
-        return metadata;
-    }
 }
 
 public interface IAnimeService
@@ -195,7 +136,4 @@ public interface IAnimeService
     Task<IEnumerable<string>> GetTitles();
     Task<AnimeDto> Add(AnimeDto animeDto);
     Task<AnimeDto> Update(int animeId, AnimeDto animeDto);
-    Task<Stream> StreamAnimeVideo(AnimeDto animeDto, long start, long end);
-    Task<long> GetVideoLength(AnimeDto animeDto);
-    Task<VideoMetadataDto> GetVideoMetadata(AnimeDto animeDto);
 }
