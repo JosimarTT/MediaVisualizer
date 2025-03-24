@@ -21,7 +21,7 @@ public static class MangaConverter
             PageExtension = manga.PageExtension,
             Tags = manga.MangaTags.Select(x => x.Tag).ToList().ToListDto(),
             Artists = manga.MangaArtists.Select(x => x.Artist).ToList().ToListDto(),
-            BasePath = Path.Combine(Constants.BaseCollectionPath, Constants.MangaFolderPath, manga.Folder)
+            BasePath = Path.Combine(StringConstants.BaseCollectionPath, StringConstants.MangaFolderPath, manga.Folder)
         };
     }
 

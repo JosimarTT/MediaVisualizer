@@ -33,7 +33,7 @@ public class MangaService : IMangaService
     {
         var manga = await _mangaRepository.GetRandom();
 
-        var mangaPath = Path.Combine(Constants.MangaCollectionPath, manga.Folder);
+        var mangaPath = Path.Combine(StringConstants.MangaCollectionPath, manga.Folder);
 
         if (!Directory.Exists(mangaPath))
             throw new DirectoryNotFoundException($"Manga with title '{manga.Title}' not found.");
@@ -51,7 +51,7 @@ public class MangaService : IMangaService
 
     public Task<string[]> GetTitlesToAdd()
     {
-        var files = Directory.GetFiles(Constants.MangaDownloadPath, "*.cbz");
+        var files = Directory.GetFiles(StringConstants.MangaDownloadPath, "*.cbz");
         return Task.FromResult(files);
     }
 
@@ -67,7 +67,7 @@ public class MangaService : IMangaService
 
     public async Task<string> GetMangaPage(MangaDto mangaDto, int pageNumber)
     {
-        var mangaPath = Path.Combine(Constants.MangaCollectionPath, mangaDto.Folder);
+        var mangaPath = Path.Combine(StringConstants.MangaCollectionPath, mangaDto.Folder);
 
         if (!Directory.Exists(mangaPath))
             throw new DirectoryNotFoundException($"Manga with title '{mangaDto.Title}' not found.");

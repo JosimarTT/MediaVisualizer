@@ -18,7 +18,7 @@ public static class AnimeConverter
             Video = anime.Video,
             Brands = anime.AnimeBrands.Select(ab => ab.Brand).ToList().ToListDto(),
             Tags = anime.AnimeTags.Select(at => at.Tag).ToList().ToListDto(),
-            BasePath = Path.Combine(Constants.BaseCollectionPath, Constants.AnimeFolderPath, anime.Folder)
+            BasePath = Path.Combine(StringConstants.BaseCollectionPath, StringConstants.AnimeFolderPath, anime.Folder)
         };
     }
 

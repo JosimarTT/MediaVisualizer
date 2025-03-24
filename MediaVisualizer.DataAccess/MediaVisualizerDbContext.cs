@@ -29,7 +29,7 @@ public class MediaVisualizerDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var connection = new SqliteConnection($"Data Source={Constants.DbPath}");
+        var connection = new SqliteConnection($"Data Source={StringConstants.DbPath}");
         connection.Open();
         using (var command = connection.CreateCommand())
         {

@@ -65,7 +65,7 @@ public class AnimeController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Stream()
     {
-        var filePath = Path.Combine(Constants.AnimeCollectionPath, "Enjo Kouhai", "enjo-kouhai-1.mp4");
+        var filePath = Path.Combine(StringConstants.AnimeCollectionPath, "Enjo Kouhai", "enjo-kouhai-1.mp4");
 
         if (!System.IO.File.Exists(filePath))
             return NotFound();

@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MediaVisualizer.Shared\MediaVisualizer.Shared.csproj" />
+        <ProjectReference Include="..\MediaVisualizer.Shared\MediaVisualizer.Shared.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.3"/>
     </ItemGroup>
 
 </Project>

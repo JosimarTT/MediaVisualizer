@@ -33,7 +33,7 @@ public class ManwhaService : IManwhaService
     {
         var manwha = await _manwhaRepository.GetRandom();
 
-        var mangaPath = Path.Combine(Constants.ManwhaCollectionPath, manwha.Folder);
+        var mangaPath = Path.Combine(StringConstants.ManwhaCollectionPath, manwha.Folder);
 
         if (!Directory.Exists(mangaPath))
             throw new DirectoryNotFoundException($"Manga with title '{manwha.Title}' not found.");

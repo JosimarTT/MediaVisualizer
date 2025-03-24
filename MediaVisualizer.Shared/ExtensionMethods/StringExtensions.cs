@@ -7,13 +7,13 @@ public static partial class StringExtensions
     public static bool IsImage(this string path)
     {
         var extension = Path.GetExtension(path);
-        return Constants.ImageExtensions.Contains(extension);
+        return StringConstants.ImageExtensions.Contains(extension);
     }
 
     public static bool IsVideo(this string path)
     {
         var extension = Path.GetExtension(path);
-        return Constants.VideoExtensions.Contains(extension);
+        return StringConstants.VideoExtensions.Contains(extension);
     }
 
     public static string RemoveExtraSpaces(this string text)

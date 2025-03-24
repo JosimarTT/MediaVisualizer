@@ -35,7 +35,7 @@ public class AnimeService : IAnimeService
     {
         var anime = await _animeRepository.GetRandom();
 
-        var animePath = Path.Combine(Constants.AnimeCollectionPath, anime.Folder);
+        var animePath = Path.Combine(StringConstants.AnimeCollectionPath, anime.Folder);
 
         if (!Directory.Exists(animePath))
             throw new DirectoryNotFoundException($"Anime folder '{anime.Folder}' not found.");
@@ -53,7 +53,7 @@ public class AnimeService : IAnimeService
 
     public Task<List<NewAnime>> SearchNew()
     {
-        var newAnimes = Directory.GetFiles(Constants.AnimeDownloadPath).Select(Path.GetFileName).ToList();
+        var newAnimes = Directory.GetFiles(StringConstants.AnimeDownloadPath).Select(Path.GetFileName).ToList();
         var result = new List<NewAnime>();
 
         while (newAnimes.Count > 0)
@@ -95,8 +95,8 @@ public class AnimeService : IAnimeService
     public async Task<AnimeDto> Add(AnimeDto animeDto)
     {
         // Store original file paths
-        var originalLogoPath = Path.Combine(Constants.AnimeDownloadPath, animeDto.Logo);
-        var originalVideoPath = Path.Combine(Constants.AnimeDownloadPath, animeDto.Video);
+        var originalLogoPath = Path.Combine(StringConstants.AnimeDownloadPath, animeDto.Logo);
+        var originalVideoPath = Path.Combine(StringConstants.AnimeDownloadPath, animeDto.Video);
 
         // Step 1: Rename the files
         animeDto.Title = animeDto.Title.Trim().RemoveExtraSpaces();
@@ -108,7 +108,7 @@ public class AnimeService : IAnimeService
         animeDto.Video = $"{baseName}{videoExtension}";
 
         // Step 2: Move the files to another folder
-        var newPath = Path.Combine(Constants.AnimeCollectionPath, animeDto.Folder);
+        var newPath = Path.Combine(StringConstants.AnimeCollectionPath, animeDto.Folder);
         Directory.CreateDirectory(newPath);
         var newLogoPath = Path.Combine(newPath, animeDto.Logo);
         var newVideoPath = Path.Combine(newPath, animeDto.Video);
@@ -128,7 +128,7 @@ public class AnimeService : IAnimeService
 
     public async Task<Stream> StreamAnimeVideo(AnimeDto animeDto, long start, long end)
     {
-        var animePath = Path.Combine(Constants.AnimeCollectionPath, animeDto.Folder);
+        var animePath = Path.Combine(StringConstants.AnimeCollectionPath, animeDto.Folder);
 
         if (!Directory.Exists(animePath))
             throw new DirectoryNotFoundException($"Anime with title '{animeDto.Title}' not found.");
@@ -151,7 +151,7 @@ public class AnimeService : IAnimeService
 
     public async Task<long> GetVideoLength(AnimeDto animeDto)
     {
-        var animePath = Path.Combine(Constants.AnimeCollectionPath, animeDto.Folder);
+        var animePath = Path.Combine(StringConstants.AnimeCollectionPath, animeDto.Folder);
 
         if (!Directory.Exists(animePath))
             throw new DirectoryNotFoundException($"Anime with title '{animeDto.Title}' not found.");
@@ -166,7 +166,7 @@ public class AnimeService : IAnimeService
 
     public async Task<VideoMetadataDto> GetVideoMetadata(AnimeDto animeDto)
     {
-        var animePath = Path.Combine(Constants.AnimeCollectionPath, animeDto.Folder);
+        var animePath = Path.Combine(StringConstants.AnimeCollectionPath, animeDto.Folder);
 
         if (!Directory.Exists(animePath))
             throw new DirectoryNotFoundException($"Anime with title '{animeDto.Title}' not found.");

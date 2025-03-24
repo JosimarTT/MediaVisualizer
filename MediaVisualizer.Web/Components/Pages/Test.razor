@@ -29,7 +29,7 @@
     protected override void OnInitialized()
     {
         Countries = GetMockData();
-        multipleSelectionData = new List<string>() { Countries.ElementAt(1).Iso, Countries.ElementAt(2).Iso };
+        multipleSelectionData = new List<string> { Countries.ElementAt(1).Iso, Countries.ElementAt(2).Iso };
         base.OnInitialized();
     }
 
@@ -52,4 +52,5 @@
         public string Iso { get; set; }
         public string Capital { get; set; }
     }
+
 }

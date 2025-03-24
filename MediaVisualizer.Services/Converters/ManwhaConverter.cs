@@ -21,7 +21,7 @@ public static class ManwhaConverter
             PageExtension = manwha.PageExtension,
             Tags = manwha.ManwhaTags.Select(x => x.Tag).ToList().ToListDto(),
             Artists = manwha.ManwhaArtists.Select(x => x.Artist).ToList().ToListDto(),
-            BasePath = Path.Combine(Constants.BaseCollectionPath, Constants.ManwhaFolderPath, manwha.Folder)
+            BasePath = Path.Combine(StringConstants.BaseCollectionPath, StringConstants.ManwhaFolderPath, manwha.Folder)
         };
     }
 
