@@ -10,4 +10,10 @@
         <ProjectReference Include="..\MediaVisualizer.Shared\MediaVisualizer.Shared.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Blazorise.Bootstrap5" Version="1.7.5"/>
+        <PackageReference Include="Blazorise.Components" Version="1.7.5"/>
+        <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.7.5"/>
+    </ItemGroup>
+
 </Project>

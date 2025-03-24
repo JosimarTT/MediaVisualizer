@@ -1,0 +1,55 @@
+﻿@page "/Test"
+
+@rendermode InteractiveServer
+
+<Autocomplete TItem="Country"
+              TValue="string"
+              Data="@Countries"
+              TextField="@(item => item.Name)"
+              ValueField="@(item => item.Iso)"
+              Placeholder="Search..."
+              SelectionMode="AutocompleteSelectionMode.Multiple"
+              FreeTyping
+              @bind-SelectedValues="multipleSelectionData"
+              @bind-SelectedTexts="multipleSelectionTexts">
+</Autocomplete>
+
+<Field Horizontal>
+    <FieldBody ColumnSize="ColumnSize.Is12">
+        Selected Values: @string.Join(',', multipleSelectionData)
+    </FieldBody>
+    <FieldBody ColumnSize="ColumnSize.Is12">
+        Selected Texts: @(multipleSelectionTexts == null ? null : string.Join(',', multipleSelectionTexts))
+    </FieldBody>
+</Field>
+
+@code {
+    public IEnumerable<Country> Countries;
+
+    protected override void OnInitialized()
+    {
+        Countries = GetMockData();
+        multipleSelectionData = new List<string>() { Countries.ElementAt(1).Iso, Countries.ElementAt(2).Iso };
+        base.OnInitialized();
+    }
+
+    private IEnumerable<Country> GetMockData()
+    {
+        return new List<Country>
+        {
+            new() { Name = "United States", Iso = "US", Capital = "Washington, D.C." },
+            new() { Name = "Canada", Iso = "CA", Capital = "Ottawa" },
+            new() { Name = "Mexico", Iso = "MX", Capital = "Mexico City" }
+        };
+    }
+
+    List<string> multipleSelectionData { get; set; }
+    List<string> multipleSelectionTexts { get; set; }
+
+    public class Country
+    {
+        public string Name { get; set; }
+        public string Iso { get; set; }
+        public string Capital { get; set; }
+    }
+}
