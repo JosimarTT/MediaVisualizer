@@ -1,3 +1,4 @@
+﻿
 .hover-effect {
     transition: transform 0.3s ease, background-color 0.3s;
 }
@@ -43,12 +44,17 @@
     margin-bottom: 1rem;
 }
 
-header ul.nav li.nav-item:not(:last-child) {
-    margin-right: 10px;
+.card {
+    cursor: pointer;
+    width: 35rem;
 }
 
-.header-button-active {
-    font-size: 1.5rem;
-    pointer-events: none;
-    opacity: 1;
+p {
+    font-size: 5rem;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
