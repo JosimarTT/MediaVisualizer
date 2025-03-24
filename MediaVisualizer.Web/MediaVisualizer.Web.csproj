@@ -7,8 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MediaVisualizer.Services\MediaVisualizer.Services.csproj" />
-      <ProjectReference Include="..\MediaVisualizer.Shared\MediaVisualizer.Shared.csproj" />
+        <ProjectReference Include="..\MediaVisualizer.Shared\MediaVisualizer.Shared.csproj"/>
     </ItemGroup>
 
 </Project>

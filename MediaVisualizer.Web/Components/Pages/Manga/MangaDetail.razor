@@ -1,8 +1,6 @@
 ﻿@page "/MangaDetail"
 @rendermode InteractiveServer
-@using MediaVisualizer.Services
-@using MediaVisualizer.Services.Dtos
-@inject IMangaService MangaService
+@inject HttpClient Http
 
 <h3>MangaDetail</h3>
 
@@ -16,7 +14,7 @@
     </div>
     @if (mangaPages.Count < mangaDto.PagesCount)
     {
-        <button @onclick="LoadMoreImages">Load More</button>
+        <button @onclick="LoadMore">Load More</button>
     }
 }
 else
@@ -25,7 +23,7 @@ else
 }
 
 @code {
-    private List<string> mangaPages = new();
+    private readonly List<string> mangaPages = new();
     private int currentPage = 1;
     private const int pageSize = 5;
 
@@ -38,15 +36,27 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadMoreImages();
+        await LoadMore();
     }
 
-    private async Task LoadMoreImages()
+    private async Task LoadMore()
     {
         for (var i = 0; i < pageSize && currentPage <= mangaDto.PagesCount; i++, currentPage++)
         {
-            var mangaPage = await MangaService.GetMangaPage(mangaDto, currentPage);
-            mangaPages.Add(mangaPage);
+            var response = await Http.GetAsync($"Manga/GetMangaPage/page?folder={mangaDto.Folder}&page={currentPage}&extension={mangaDto.PageExtension}");
+            if (response.IsSuccessStatusCode)
+            {
+                var mangaPage = await response.Content.ReadAsStringAsync();
+                mangaPages.Add(mangaPage);
+            }
         }
     }
+
+    public class MangaDto
+    {
+        public string Folder { get; set; }
+        public int PagesCount { get; set; }
+        public string PageExtension { get; set; }
+    }
+
 }

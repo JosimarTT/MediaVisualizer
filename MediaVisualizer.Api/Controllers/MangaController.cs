@@ -53,4 +53,20 @@ public class MangaController : ControllerBase
     {
         return Ok(await _mangaService.Add(manga));
     }
+
+    [HttpGet("page")]
+    public async Task<IActionResult> GetMangaPage([FromQuery] string folder, [FromQuery] int page,
+        [FromQuery] string extension)
+    {
+        var mangaDto = new MangaDto
+        {
+            Folder = folder,
+            PagesCount = 0, // This value is not used in GetMangaPage
+            PageExtension = extension
+        };
+
+        var mangaPage = await _mangaService.GetMangaPage(mangaDto, page);
+        if (string.IsNullOrEmpty(mangaPage)) return NotFound();
+        return Ok(mangaPage);
+    }
 }

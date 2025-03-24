@@ -1,22 +1,15 @@
 ﻿@page "/AnimeDetail"
-@using MediaVisualizer.Services
-@using MediaVisualizer.Services.Dtos
 @rendermode InteractiveServer
-@inject IAnimeService AnimeService
 @inject IJSRuntime JSRuntime
 <h3>AnimeDetail</h3>
 
 <video id="animeVideo" controls></video>
 
 @code {
-    private AnimeDto _anime;
     private bool _isFirstRender = true;
 
     protected override async Task OnInitializedAsync()
     {
-        // Assuming you have a way to get the animeId, e.g., from route parameters
-        var animeId = 1; // Replace with actual animeId
-        _anime = await AnimeService.Get(animeId);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
