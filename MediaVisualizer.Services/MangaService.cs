@@ -19,13 +19,13 @@ public class MangaService : IMangaService
     public async Task<MangaDto> Get(int mangaId)
     {
         var manga = await _mangaRepository.Get(mangaId);
-        return manga.ToDto();
+        return await manga.ToDto();
     }
 
     public async Task<ListResponse<MangaDto>> GetList(FiltersRequest filters)
     {
         var (totalCount, mangas) = await _mangaRepository.GetList(filters);
-        var mangaListDto = mangas.ToList().ToListDto();
+        var mangaListDto = await mangas.ToList().ToListDto();
         return new ListResponse<MangaDto>(mangaListDto, totalCount, filters.Size!.Value, filters.Page!.Value);
     }
 

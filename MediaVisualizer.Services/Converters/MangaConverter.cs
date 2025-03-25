@@ -1,12 +1,13 @@
 ﻿using MediaVisualizer.DataAccess.Entities.Manga;
 using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared;
+using MediaVisualizer.Shared.ExtensionMethods;
 
 namespace MediaVisualizer.Services.Converters;
 
 public static class MangaConverter
 {
-    public static MangaDto ToDto(this Manga manga)
+    public static async Task<MangaDto> ToDto(this Manga manga)
     {
         if (manga == null) return null;
 
@@ -17,7 +18,8 @@ public static class MangaConverter
             Title = manga.Title,
             ChapterNumber = manga.ChapterNumber,
             PagesCount = manga.PagesCount,
-            Logo = manga.Logo,
+            Logo = await Path.Combine(StringConstants.MangaCollectionPath, manga.Folder, manga.Logo)
+                .ResizeImageToBase64(20),
             PageExtension = manga.PageExtension,
             Tags = manga.MangaTags.Select(x => x.Tag).ToList().ToListDto(),
             Artists = manga.MangaArtists.Select(x => x.Artist).ToList().ToListDto(),
@@ -25,10 +27,10 @@ public static class MangaConverter
         };
     }
 
-    public static ICollection<MangaDto> ToListDto(this ICollection<Manga> mangas)
+    public static async Task<ICollection<MangaDto>> ToListDto(this ICollection<Manga> mangas)
     {
         if (mangas == null || mangas.Count == 0) return new List<MangaDto>();
 
-        return mangas.Select(x => x.ToDto()).ToList();
+        return await Task.WhenAll(mangas.Select(x => x.ToDto()));
     }
 }

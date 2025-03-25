@@ -1,7 +1,40 @@
 ﻿@page "/MangaList"
+@using MediaVisualizer.Web.Components.Layout
+@attribute [StreamRendering]
+@rendermode InteractiveServer
 
-<h3>MangaList</h3>
+<PageTitle>Anime List</PageTitle>
 
-@code {
-
+@if (_isLoading)
+{
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 }
+else
+{
+    <main style="margin-top: auto !important;margin-bottom: auto !important;">
+        <div class="collection-grid" id="collection">
+            @foreach (var anime in _mangaList)
+            {
+                <div class="card p-0 hover-effect" style="height: 356px">
+                    <a href="@anime.Logo" target="_blank" class="h-100">
+                        <img alt="..." class="card-img object-fit-cover"
+                             style="max-height: 300px; border-bottom-left-radius: 0; border-bottom-right-radius: 0"
+                             src="@anime.Logo">
+                        <div class="card-body position-absolute bottom-0 w-100 text-white"
+                             style="background: #212529; border-radius: var(--bs-card-border-radius); border-top-left-radius: 0; border-top-right-radius: 0">
+                            <div class="card-title-container">
+                                <p class="card-title text-center m-0 text-ellipsis">@anime.Title @anime.ChapterNumber</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </main>
+}
+
+<Footer _currentPage="_currentPage" _totalPages="_totalPages" OnPageChanged="OnPageChanged"/>
