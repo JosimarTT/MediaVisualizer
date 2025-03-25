@@ -3,6 +3,10 @@ html, body {
     margin: 0;
 }
 
+body {
+    font-family: "Inter", "Open Sans", "Helvetica", "Arial", "sans-serif"
+}
+
 .hover-effect {
     transition: transform 0.3s ease, background-color 0.3s;
 }
