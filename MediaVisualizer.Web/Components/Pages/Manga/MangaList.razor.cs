@@ -17,43 +17,52 @@ public partial class MangaList
 
     protected override async Task OnInitializedAsync()
     {
-        Console.Write("Manga OnInitializedAsync called");
         await FetchMangaList(new FiltersRequest { Size = 18, Page = 1 });
     }
 
     private async Task FetchMangaList(FiltersRequest filters)
     {
         _isLoading = true;
+        _currentPage = filters.Page ?? 1;
 
-        // Check if the current page is already cached
-        if (_pageCache.TryGetValue(filters.Page ?? 1, out var cachedPage))
+        await FetchCurrentPage(filters);
+
+        _isLoading = false;
+
+        _ = FetchRemainingPages(filters);
+    }
+
+    private async Task FetchCurrentPage(FiltersRequest filters)
+    {
+        if (!_pageCache.TryGetValue(_currentPage, out var cachedPage))
         {
-            _mangaList = cachedPage;
-            _currentPage = filters.Page ?? 1;
-            _isLoading = false;
+            var currentPageResponse = await FetchPage(filters);
+            _pageCache[_currentPage] = currentPageResponse.Items.ToList();
+            _totalPages = currentPageResponse.TotalPages;
+            _mangaList = currentPageResponse.Items.ToList();
         }
         else
         {
-            var currentPageResponse = await FetchPage(filters);
-            _pageCache[filters.Page ?? 1] = currentPageResponse.Items.ToList();
-            _totalPages = currentPageResponse.TotalPages;
-            _mangaList = currentPageResponse.Items.ToList();
-            _currentPage = filters.Page ?? 1;
-            _isLoading = false;
+            _mangaList = cachedPage;
         }
+    }
 
-        var pagesToCheck = new List<int> { filters.Page ?? 1 };
-        if (filters.Page > 1) pagesToCheck.Add(filters.Page.Value - 1);
-        if (filters.Page > 2) pagesToCheck.Add(filters.Page.Value - 2);
-        if (filters.Page < _totalPages) pagesToCheck.Add(filters.Page.Value + 1);
-        if (filters.Page < _totalPages - 1) pagesToCheck.Add(filters.Page.Value + 2);
+    private async Task FetchRemainingPages(FiltersRequest filters)
+    {
+        var pagesToCheck = new List<int> { _currentPage };
+        if (_currentPage > 1) pagesToCheck.Add(_currentPage - 1);
+        if (_currentPage > 2) pagesToCheck.Add(_currentPage - 2);
+        if (_currentPage < _totalPages) pagesToCheck.Add(_currentPage + 1);
+        if (_currentPage < _totalPages - 1) pagesToCheck.Add(_currentPage + 2);
 
         var pagesToFetch = pagesToCheck
             .Where(page => !_pageCache.ContainsKey(page))
+            .Distinct()
             .ToList();
 
-        var tasks = pagesToFetch.Distinct()
-            .Select(page => FetchPage(new FiltersRequest { Size = filters.Size, Page = page })).ToList();
+        var tasks = pagesToFetch
+            .Select(page => FetchPage(new FiltersRequest { Size = filters.Size, Page = page }))
+            .ToList();
 
         var responses = await Task.WhenAll(tasks);
 
@@ -61,7 +70,6 @@ public partial class MangaList
             if (response != null)
                 _pageCache[response.Page] = response.Items.ToList();
 
-        // Remove pages that are not within the range of current page ± 2
         var pagesToKeep = new HashSet<int>
             { _currentPage, _currentPage - 1, _currentPage - 2, _currentPage + 1, _currentPage + 2 };
 
@@ -90,7 +98,6 @@ public partial class MangaList
 
     public async Task OnPageChanged(int newPage)
     {
-        _currentPage = newPage;
         await FetchMangaList(new FiltersRequest { Size = 18, Page = newPage });
     }
 }
