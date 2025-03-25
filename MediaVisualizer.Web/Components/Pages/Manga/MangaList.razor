@@ -1,7 +1,7 @@
 ﻿@page "/MangaList"
 @using MediaVisualizer.Web.Components.Layout
 @attribute [StreamRendering]
-@rendermode InteractiveServer
+@rendermode @(new InteractiveServerRenderMode(false))
 
 <PageTitle>Anime List</PageTitle>
 

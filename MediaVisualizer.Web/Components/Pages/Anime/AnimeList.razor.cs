@@ -10,12 +10,14 @@ public partial class AnimeList
 {
     private List<AnimeDto> _animeList = new();
     private int _currentPage = 1;
+    private bool _isFirstRender = true;
     private bool _isLoading = true;
     private int _totalPages = 1;
     [Inject] private HttpClient HttpClient { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine("AnimeList OnInitializedAsync called");
         await FetchAnimeList(new FiltersRequest { Size = 18, Page = 1 });
     }
 

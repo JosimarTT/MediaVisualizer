@@ -25,7 +25,7 @@ public class MangaService : IMangaService
     public async Task<ListResponse<MangaDto>> GetList(FiltersRequest filters)
     {
         var (totalCount, mangas) = await _mangaRepository.GetList(filters);
-        var mangaListDto = await mangas.ToList().ToListDto();
+        var mangaListDto = await mangas.ToList().ToListDto(filters.Percentage!.Value);
         return new ListResponse<MangaDto>(mangaListDto, totalCount, filters.Size!.Value, filters.Page!.Value);
     }
 

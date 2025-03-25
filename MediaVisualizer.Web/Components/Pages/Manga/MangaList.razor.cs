@@ -16,6 +16,7 @@ public partial class MangaList
 
     protected override async Task OnInitializedAsync()
     {
+        Console.Write("Manga OnInitializedAsync called");
         await FetchMangaList(new FiltersRequest { Size = 18, Page = 1 });
     }
 
@@ -32,7 +33,7 @@ public partial class MangaList
         if (filters.BrandIds != null) query["BrandIds"] = string.Join(",", filters.BrandIds);
         if (filters.ArtistIds != null) query["ArtistIds"] = string.Join(",", filters.ArtistIds);
         if (!string.IsNullOrEmpty(filters.Title)) query["Title"] = filters.Title;
-
+        query["Percentage"] = 20.ToString();
         var url = $"Manga/GetList?{query}";
         var response = await HttpClient.GetFromJsonAsync<ListResponse<MangaDto>>(url);
         if (response != null)

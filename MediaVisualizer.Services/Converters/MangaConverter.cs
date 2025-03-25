@@ -7,7 +7,7 @@ namespace MediaVisualizer.Services.Converters;
 
 public static class MangaConverter
 {
-    public static async Task<MangaDto> ToDto(this Manga manga)
+    public static async Task<MangaDto> ToDto(this Manga manga, double? percentage = null)
     {
         if (manga == null) return null;
 
@@ -19,7 +19,7 @@ public static class MangaConverter
             ChapterNumber = manga.ChapterNumber,
             PagesCount = manga.PagesCount,
             Logo = await Path.Combine(StringConstants.MangaCollectionPath, manga.Folder, manga.Logo)
-                .ResizeImageToBase64(20),
+                .ResizeImageToBase64(percentage),
             PageExtension = manga.PageExtension,
             Tags = manga.MangaTags.Select(x => x.Tag).ToList().ToListDto(),
             Artists = manga.MangaArtists.Select(x => x.Artist).ToList().ToListDto(),
@@ -27,10 +27,10 @@ public static class MangaConverter
         };
     }
 
-    public static async Task<ICollection<MangaDto>> ToListDto(this ICollection<Manga> mangas)
+    public static async Task<ICollection<MangaDto>> ToListDto(this ICollection<Manga> mangas, double? percentage = null)
     {
         if (mangas == null || mangas.Count == 0) return new List<MangaDto>();
 
-        return await Task.WhenAll(mangas.Select(x => x.ToDto()));
+        return await Task.WhenAll(mangas.Select(x => x.ToDto(percentage)));
     }
 }
