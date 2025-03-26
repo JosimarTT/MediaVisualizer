@@ -1,46 +1,46 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using MediaVisualizer.Services.Dtos;
+using MediaVisualizer.Shared;
+using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Pages.Manga;
 
 public partial class MangaDetail
 {
-    private const int pageSize = 5;
-
-    private readonly MangaDto mangaDto = new()
-    {
-        Folder = @"O\One Piece",
-        PagesCount = 43,
-        PageExtension = ".jpg"
-    };
-
-    private readonly List<string> mangaPages = new();
-    private int currentPage = 1;
+    private readonly List<string> _pages = new();
+    private bool _isFirstRender = true;
+    private bool _isLoading = true;
+    private MangaDto _manga { get; set; }
     [Parameter] public int MangaId { get; set; }
+    [Inject] private HttpClient HttpClient { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadMore();
+        _manga = await HttpClient.GetFromJsonAsync<MangaDto>($"Manga/{MangaId}");
+        await LoadPages();
+        _isLoading = false;
     }
 
-    private async Task LoadMore()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        for (var i = 0; i < pageSize && currentPage <= mangaDto.PagesCount; i++, currentPage++)
+        if (firstRender && _isFirstRender)
         {
-            var response =
-                await Http.GetAsync(
-                    $"Manga/GetMangaPage/page?folder={mangaDto.Folder}&page={currentPage}&extension={mangaDto.PageExtension}");
-            if (response.IsSuccessStatusCode)
-            {
-                var mangaPage = await response.Content.ReadAsStringAsync();
-                mangaPages.Add(mangaPage);
-            }
+            _isFirstRender = false;
         }
     }
 
-    public class MangaDto
+    private async Task LoadPages()
     {
-        public string Folder { get; set; }
-        public int PagesCount { get; set; }
-        public string PageExtension { get; set; }
+        _isLoading = true;
+        for (var i = 1; i <= _manga.PagesCount; i++)
+        {
+            var filePath = Path.Combine(StringConstants.MangaCollectionPath, _manga.Folder,
+                $"{i:D3}{_manga.PageExtension}");
+            var encodedFilePath = Uri.EscapeDataString(filePath);
+            var pageUrl =
+                await HttpClient.GetStringAsync($"FileProcessor/ProcessImage?filePath={encodedFilePath}&percentage=20");
+            _pages.Add(pageUrl);
+        }
+
+        _isLoading = false;
     }
 }

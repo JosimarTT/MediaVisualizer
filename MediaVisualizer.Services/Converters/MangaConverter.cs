@@ -19,7 +19,7 @@ public static class MangaConverter
             ChapterNumber = manga.ChapterNumber,
             PagesCount = manga.PagesCount,
             Logo = await Path.Combine(StringConstants.MangaCollectionPath, manga.Folder, manga.Logo)
-                .ResizeImageToBase64(percentage),
+                .ResizeImageToBase64(percentage ?? FilterConstants.DefaultPercentage),
             PageExtension = manga.PageExtension,
             Tags = manga.MangaTags.Select(x => x.Tag).ToList().ToListDto(),
             Artists = manga.MangaArtists.Select(x => x.Artist).ToList().ToListDto(),

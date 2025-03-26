@@ -1,23 +1,21 @@
 ﻿@page "/MangaDetail/{MangaId:int}"
-@rendermode InteractiveServer
-@inject HttpClient Http
+@attribute [StreamRendering]
+@rendermode @(new InteractiveServerRenderMode(false))
 
-<h3>MangaDetail</h3>
-
-@if (mangaPages != null)
+@if (_isLoading)
 {
-    <div>
-        @foreach (var mangaPage in mangaPages)
-        {
-            <img src="@mangaPage" alt="Manga Page"/>
-        }
-    </div>
-    @if (mangaPages.Count < mangaDto.PagesCount)
-    {
-        <button @onclick="LoadMore">Load More</button>
-    }
+    <Spinning/>
 }
 else
 {
-    <p>Loading...</p>
+    <main>
+        <div class="chapter-collection-grid py-3" id="chapter-collection">
+            @foreach (var currentPage in _pages)
+            {
+                <div>
+                    <img src="@(currentPage)" class="img-fluid hover-effect" style="height: 100%">
+                </div>
+            }
+        </div>
+    </main>
 }
