@@ -16,10 +16,21 @@ else
             @foreach (var manga in _mangaList)
             {
                 <div class="card p-0 hover-effect" style="height: 356px">
-                    <a href="@($"MangaDetail/{manga.MangaId}")" target="_blank" class="h-100">
-                        <img alt="..." class="card-img object-fit-cover"
-                             style="max-height: 300px; border-bottom-left-radius: 0; border-bottom-right-radius: 0"
-                             src="@manga.Logo">
+                    @if (manga.IsLoading)
+                    {
+                        <div class="d-flex justify-content-center align-items-center" style="height: 356px">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    }
+                    <a href="@($"MangaDetail/{manga.MangaId}")" target="_blank"
+                       class="h-100 @(manga.IsLoading ? "d-none" : "")">
+                        <div class="position-relative" style="max-height: 300px;">
+                            <img alt="..." class="card-img object-fit-cover"
+                                 style="max-height: 300px; border-bottom-left-radius: 0; border-bottom-right-radius: 0"
+                                 src="@manga.Logo" @onload="() => manga.IsLoading = false">
+                        </div>
                         <div class="card-body position-absolute bottom-0 w-100 text-white"
                              style="background: #212529; border-radius: var(--bs-card-border-radius); border-top-left-radius: 0; border-top-right-radius: 0">
                             <div class="card-title-container">

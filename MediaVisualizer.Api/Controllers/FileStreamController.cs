@@ -6,11 +6,11 @@ namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class FileProcessorController : ControllerBase
+public class FileStreamController : ControllerBase
 {
-    private readonly ILogger<FileProcessorController> _logger;
+    private readonly ILogger<FileStreamController> _logger;
 
-    public FileProcessorController(ILogger<FileProcessorController> logger)
+    public FileStreamController(ILogger<FileStreamController> logger)
     {
         _logger = logger;
     }
@@ -34,16 +34,11 @@ public class FileProcessorController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> ProcessImage([FromQuery] string filePath, [FromQuery] double? percentage)
+    public async Task<IActionResult> StreamImage([FromQuery] string filePath, [FromQuery] double? percentage,
+        [FromQuery] int? quality)
     {
-        _logger.LogInformation("Processing image: {FilePath} with percentage: {Percentage}", filePath, percentage);
-        return Ok(await filePath.ResizeImageToBase64(percentage));
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> ProcessImageV2([FromQuery] string filePath, [FromQuery] double? percentage)
-    {
-        _logger.LogInformation("Processing image: {FilePath} with percentage: {Percentage}", filePath, percentage);
+        _logger.LogInformation("Processing image: {FilePath} with percentage: {Percentage}, quality: {Quality}",
+            filePath, percentage, quality);
 
         var imagePath = Path.Combine(StringConstants.MangaCollectionPath, filePath);
         if (!System.IO.File.Exists(imagePath))
@@ -52,7 +47,7 @@ public class FileProcessorController : ControllerBase
             return NotFound();
         }
 
-        var resizedImageStream = await filePath.ResizeImageToStream(percentage);
+        var resizedImageStream = await filePath.ResizeImageToStream(percentage, quality);
         return new FileStreamResult(resizedImageStream, "image/jpeg");
     }
 }

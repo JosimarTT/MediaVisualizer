@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using MediaVisualizer.Services.Dtos;
+using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Requests;
 using MediaVisualizer.Shared.Responses;
 using Microsoft.AspNetCore.Components;
@@ -8,7 +9,6 @@ namespace MediaVisualizer.Web.Components.Pages.Manga;
 
 public partial class MangaList
 {
-    private readonly Dictionary<int, List<MangaDto>> _pageCache = new();
     private int _currentPage = 1;
     private bool _isLoading = true;
     private List<MangaDto> _mangaList = new();
@@ -28,54 +28,22 @@ public partial class MangaList
         await FetchCurrentPage(filters);
 
         _isLoading = false;
-
-        _ = FetchRemainingPages(filters);
     }
 
     private async Task FetchCurrentPage(FiltersRequest filters)
     {
-        if (!_pageCache.TryGetValue(_currentPage, out var cachedPage))
+        var currentPageResponse = await FetchPage(filters);
+        _totalPages = currentPageResponse.TotalPages;
+        _mangaList = currentPageResponse.Items.ToList();
+        foreach (var manga in _mangaList)
         {
-            var currentPageResponse = await FetchPage(filters);
-            _pageCache[_currentPage] = currentPageResponse.Items.ToList();
-            _totalPages = currentPageResponse.TotalPages;
-            _mangaList = currentPageResponse.Items.ToList();
+            var filePath = Path.Combine(StringConstants.MangaCollectionPath, manga.Folder,
+                $"001{manga.PageExtension}");
+            var encodedFilePath = Uri.EscapeDataString(filePath);
+            var pageUrl =
+                $"{HttpClient.BaseAddress}FileStream/StreamImage?filePath={encodedFilePath}&percentage=20&quality=50";
+            manga.Logo = pageUrl;
         }
-        else
-        {
-            _mangaList = cachedPage;
-        }
-    }
-
-    private async Task FetchRemainingPages(FiltersRequest filters)
-    {
-        var pagesToCheck = new List<int> { _currentPage };
-        if (_currentPage > 1) pagesToCheck.Add(_currentPage - 1);
-        if (_currentPage > 2) pagesToCheck.Add(_currentPage - 2);
-        if (_currentPage < _totalPages) pagesToCheck.Add(_currentPage + 1);
-        if (_currentPage < _totalPages - 1) pagesToCheck.Add(_currentPage + 2);
-
-        var pagesToFetch = pagesToCheck
-            .Where(page => !_pageCache.ContainsKey(page))
-            .Distinct()
-            .ToList();
-
-        var tasks = pagesToFetch
-            .Select(page => FetchPage(new FiltersRequest { Size = filters.Size, Page = page }))
-            .ToList();
-
-        var responses = await Task.WhenAll(tasks);
-
-        foreach (var response in responses)
-            if (response != null)
-                _pageCache[response.Page] = response.Items.ToList();
-
-        var pagesToKeep = new HashSet<int>
-            { _currentPage, _currentPage - 1, _currentPage - 2, _currentPage + 1, _currentPage + 2 };
-
-        foreach (var page in _pageCache.Keys.ToList())
-            if (!pagesToKeep.Contains(page))
-                _pageCache.Remove(page);
     }
 
     private async Task<ListResponse<MangaDto>> FetchPage(FiltersRequest filters)
