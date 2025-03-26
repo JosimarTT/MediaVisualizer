@@ -1,4 +1,4 @@
-﻿@page "/MangaDetail"
+﻿@page "/MangaDetail/{MangaId:int}"
 @rendermode InteractiveServer
 @inject HttpClient Http
 
@@ -20,43 +20,4 @@
 else
 {
     <p>Loading...</p>
-}
-
-@code {
-    private readonly List<string> mangaPages = new();
-    private int currentPage = 1;
-    private const int pageSize = 5;
-
-    readonly MangaDto mangaDto = new()
-    {
-        Folder = @"O\One Piece",
-        PagesCount = 43,
-        PageExtension = ".jpg"
-    };
-
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadMore();
-    }
-
-    private async Task LoadMore()
-    {
-        for (var i = 0; i < pageSize && currentPage <= mangaDto.PagesCount; i++, currentPage++)
-        {
-            var response = await Http.GetAsync($"Manga/GetMangaPage/page?folder={mangaDto.Folder}&page={currentPage}&extension={mangaDto.PageExtension}");
-            if (response.IsSuccessStatusCode)
-            {
-                var mangaPage = await response.Content.ReadAsStringAsync();
-                mangaPages.Add(mangaPage);
-            }
-        }
-    }
-
-    public class MangaDto
-    {
-        public string Folder { get; set; }
-        public int PagesCount { get; set; }
-        public string PageExtension { get; set; }
-    }
-
 }
