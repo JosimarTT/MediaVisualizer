@@ -14,6 +14,7 @@ public partial class MangaList
     private List<MangaDto> _mangaList = new();
     private int _totalPages = 1;
     [Inject] private HttpClient HttpClient { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -28,6 +29,7 @@ public partial class MangaList
         await FetchCurrentPage(filters);
 
         _isLoading = false;
+        UpdateUrlWithCurrentPage();
     }
 
     private async Task FetchCurrentPage(FiltersRequest filters)
@@ -67,5 +69,14 @@ public partial class MangaList
     public async Task OnPageChanged(int newPage)
     {
         await FetchMangaList(new FiltersRequest { Size = 18, Page = newPage });
+    }
+
+    private void UpdateUrlWithCurrentPage()
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        var query = HttpUtility.ParseQueryString(uri.Query);
+        query["page"] = _currentPage.ToString();
+        var newUri = $"{uri.GetLeftPart(UriPartial.Path)}?{query}";
+        NavigationManager.NavigateTo(newUri, false);
     }
 }
