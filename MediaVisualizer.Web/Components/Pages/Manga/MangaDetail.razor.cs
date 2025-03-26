@@ -15,32 +15,21 @@ public partial class MangaDetail
 
     protected override async Task OnInitializedAsync()
     {
-        _manga = await HttpClient.GetFromJsonAsync<MangaDto>($"Manga/{MangaId}");
-        await LoadPages();
+        _manga = await HttpClient.GetFromJsonAsync<MangaDto>($"Manga/{MangaId}")!;
+        await LoadPages(1, 18);
         _isLoading = false;
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private async Task LoadPages(int startPage, int pageCount)
     {
-        if (firstRender && _isFirstRender)
-        {
-            _isFirstRender = false;
-        }
-    }
-
-    private async Task LoadPages()
-    {
-        _isLoading = true;
-        for (var i = 1; i <= _manga.PagesCount; i++)
+        for (var i = startPage; i < startPage + pageCount && i <= _manga.PagesCount; i++)
         {
             var filePath = Path.Combine(StringConstants.MangaCollectionPath, _manga.Folder,
                 $"{i:D3}{_manga.PageExtension}");
             var encodedFilePath = Uri.EscapeDataString(filePath);
             var pageUrl =
-                await HttpClient.GetStringAsync($"FileProcessor/ProcessImage?filePath={encodedFilePath}&percentage=20");
+                $"{HttpClient.BaseAddress}FileProcessor/ProcessImageV2?filePath={encodedFilePath}&percentage=20";
             _pages.Add(pageUrl);
         }
-
-        _isLoading = false;
     }
 }

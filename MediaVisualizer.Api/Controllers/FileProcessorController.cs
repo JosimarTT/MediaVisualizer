@@ -39,4 +39,20 @@ public class FileProcessorController : ControllerBase
         _logger.LogInformation("Processing image: {FilePath} with percentage: {Percentage}", filePath, percentage);
         return Ok(await filePath.ResizeImageToBase64(percentage));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> ProcessImageV2([FromQuery] string filePath, [FromQuery] double? percentage)
+    {
+        _logger.LogInformation("Processing image: {FilePath} with percentage: {Percentage}", filePath, percentage);
+
+        var imagePath = Path.Combine(StringConstants.MangaCollectionPath, filePath);
+        if (!System.IO.File.Exists(imagePath))
+        {
+            _logger.LogWarning("File not found: {FilePath}", imagePath);
+            return NotFound();
+        }
+
+        var resizedImageStream = await filePath.ResizeImageToStream(percentage);
+        return new FileStreamResult(resizedImageStream, "image/jpeg");
+    }
 }
