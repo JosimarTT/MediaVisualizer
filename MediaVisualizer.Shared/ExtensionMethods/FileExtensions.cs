@@ -21,8 +21,7 @@ public static class FileExtensions
         return $"data:image/jpeg;base64,{base64String}";
     }
 
-    public static async Task<Stream> ResizeImageToStream(this string filePath,
-        double? percentage, int? quality = FilterConstants.DefaultQuality)
+    public static async Task<Stream> ResizeImageToStream(this string filePath, double? percentage)
     {
         var image = await Image.LoadAsync(filePath);
         if (percentage.HasValue)
@@ -33,8 +32,7 @@ public static class FileExtensions
         }
 
         var stream = new MemoryStream();
-        var encoder = new JpegEncoder { Quality = quality };
-        await image.SaveAsync(stream, encoder);
+        await image.SaveAsync(stream, new JpegEncoder());
         stream.Position = 0;
         return stream;
     }

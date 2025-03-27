@@ -43,7 +43,7 @@ public partial class MangaList
                 $"001{manga.PageExtension}");
             var encodedFilePath = Uri.EscapeDataString(filePath);
             var pageUrl =
-                $"{HttpClient.BaseAddress}FileStream/StreamImage?filePath={encodedFilePath}&percentage=20&quality=50";
+                $"{HttpClient.BaseAddress}FileStream/StreamImage?filePath={encodedFilePath}&percentage=20";
             manga.Logo = pageUrl;
         }
     }

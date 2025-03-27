@@ -34,11 +34,10 @@ public class FileStreamController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> StreamImage([FromQuery] string filePath, [FromQuery] double? percentage,
-        [FromQuery] int? quality)
+    public async Task<IActionResult> StreamImage([FromQuery] string filePath, [FromQuery] double? percentage)
     {
-        _logger.LogInformation("Processing image: {FilePath} with percentage: {Percentage}, quality: {Quality}",
-            filePath, percentage, quality);
+        _logger.LogInformation("Processing image: {FilePath} with percentage: {Percentage}}",
+            filePath);
 
         var imagePath = Path.Combine(StringConstants.MangaCollectionPath, filePath);
         if (!System.IO.File.Exists(imagePath))
@@ -47,7 +46,7 @@ public class FileStreamController : ControllerBase
             return NotFound();
         }
 
-        var resizedImageStream = await filePath.ResizeImageToStream(percentage, quality);
+        var resizedImageStream = await filePath.ResizeImageToStream(percentage);
         return new FileStreamResult(resizedImageStream, "image/jpeg");
     }
 }

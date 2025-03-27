@@ -28,7 +28,7 @@ public partial class MangaDetail
                 $"{i:D3}{_manga.PageExtension}");
             var encodedFilePath = Uri.EscapeDataString(filePath);
             var pageUrl =
-                $"{HttpClient.BaseAddress}FileStream/StreamImage?filePath={encodedFilePath}&percentage=20&quality=50";
+                $"{HttpClient.BaseAddress}FileStream/StreamImage?filePath={encodedFilePath}&percentage=20";
             _pages.Add(pageUrl);
         }
     }
