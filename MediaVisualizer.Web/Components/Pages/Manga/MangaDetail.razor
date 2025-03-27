@@ -1,4 +1,5 @@
 ﻿@page "/MangaDetail/{MangaId:int}"
+@using MediaVisualizer.Web.Components.Layout
 @attribute [StreamRendering]
 @rendermode @(new InteractiveServerRenderMode(false))
 
@@ -8,14 +9,21 @@
 }
 else
 {
-    <main>
-        <div class="chapter-collection-grid py-3" id="chapter-collection">
-            @foreach (var currentPage in _pages)
+    <main style="margin-top: auto !important;margin-bottom: auto !important;">
+        <div class="collection-grid" id="collection">
+            @foreach (var mangaPage in _pages)
             {
-                <div>
-                    <img src="@(currentPage)" class="img-fluid hover-effect" style="height: 100%">
+                @if (mangaPage.IsLoading)
+                {
+                }
+
+                <div class="card" style="height: 300px">
+                    <img alt="..." class="card-img object-fit-cover hover-effect @(mangaPage.IsLoading ? "d-none" : "")"
+                         src="@mangaPage.pagePath" @onload="() => mangaPage.IsLoading = false" style="height: 300px">
                 </div>
             }
         </div>
     </main>
 }
+
+<Footer _currentPage="_currentPage" _totalPages="_totalPages" OnPageChanged="OnPageChanged"/>

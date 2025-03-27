@@ -36,8 +36,7 @@ public class FileStreamController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> StreamImage([FromQuery] string filePath, [FromQuery] double? percentage)
     {
-        _logger.LogInformation("Processing image: {FilePath} with percentage: {Percentage}}",
-            filePath);
+        _logger.LogInformation("Processing image: {FilePath} with percentage: {Percentage}", filePath, percentage);
 
         var imagePath = Path.Combine(StringConstants.MangaCollectionPath, filePath);
         if (!System.IO.File.Exists(imagePath))
