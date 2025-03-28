@@ -15,7 +15,7 @@ public static class AnimeConverter
             Title = anime.Title,
             ChapterNumber = anime.ChapterNumber,
             Logo = Path.Combine(StringConstants.AnimeCollectionPath, anime.Folder, anime.Logo),
-            Video = anime.Video,
+            Video = Path.Combine(StringConstants.AnimeCollectionPath, anime.Folder, anime.Video),
             Brands = anime.AnimeBrands.Select(ab => ab.Brand).ToList().ToListDto(),
             Tags = anime.AnimeTags.Select(at => at.Tag).ToList().ToListDto(),
             BasePath = Path.Combine(StringConstants.AnimeCollectionPath, anime.Folder)

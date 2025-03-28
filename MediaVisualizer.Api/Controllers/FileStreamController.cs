@@ -16,10 +16,8 @@ public class FileStreamController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> StreamVideo([FromQuery] string path)
+    public async Task<IActionResult> StreamVideo([FromQuery] string filePath)
     {
-        var filePath = Path.Combine(StringConstants.AnimeCollectionPath, path);
-
         if (!System.IO.File.Exists(filePath))
         {
             _logger.LogWarning("File not found: {FilePath}", filePath);

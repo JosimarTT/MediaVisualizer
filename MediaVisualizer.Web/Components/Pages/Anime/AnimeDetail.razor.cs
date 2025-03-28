@@ -1,4 +1,5 @@
 ﻿using MediaVisualizer.Services.Dtos;
+using MediaVisualizer.Web.Api;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -9,7 +10,9 @@ public partial class AnimeDetail
     private bool _isFirstRender = true;
     [Parameter] public int AnimeId { get; set; }
     private AnimeDto Anime { get; set; }
-    [Inject] private HttpClient HttpClient { get; set; }
+
+    [Inject] private IAnimeApi AnimeApi { get; set; }
+    [Inject] private IFileStreamApi FileStreamApi { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -20,14 +23,14 @@ public partial class AnimeDetail
         if (firstRender && _isFirstRender)
         {
             _isFirstRender = false;
-            Anime = await HttpClient.GetFromJsonAsync<AnimeDto>($"Anime/{AnimeId}");
-            await SetVideoSource($"{Anime.Folder}/{Anime.Video}");
+            Anime = await AnimeApi.Get(AnimeId);
+            await SetVideoSource(FileStreamApi.GetStreamVideoPath([Anime.Video]));
         }
     }
 
-    private async Task SetVideoSource(string path)
+    private async Task SetVideoSource(string url)
     {
-        var videoUrl = $"http://localhost:5118/Anime/Stream?path={path}";
-        await JSRuntime.InvokeVoidAsync("setVideoSource", "animeVideo", videoUrl);
+        ;
+        await JSRuntime.InvokeVoidAsync("setVideoSource", "animeVideo", url);
     }
 }

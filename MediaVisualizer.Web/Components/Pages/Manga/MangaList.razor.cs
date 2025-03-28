@@ -1,8 +1,8 @@
 ﻿using System.Web;
 using MediaVisualizer.Services.Dtos;
-using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Requests;
 using MediaVisualizer.Shared.Responses;
+using MediaVisualizer.Web.Api;
 using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Pages.Manga;
@@ -13,7 +13,9 @@ public partial class MangaList
     private bool _isLoading = true;
     private List<MangaDto> _mangaList = new();
     private int _totalPages = 1;
-    [Inject] private HttpClient HttpClient { get; set; }
+
+    [Inject] private IMangaApi MangaApi { get; set; }
+    [Inject] private IFileStreamApi FileStreamApi { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -38,30 +40,12 @@ public partial class MangaList
         _totalPages = currentPageResponse.TotalPages;
         _mangaList = currentPageResponse.Items.ToList();
         foreach (var manga in _mangaList)
-        {
-            var filePath = Path.Combine(StringConstants.MangaCollectionPath, manga.Folder,
-                $"001{manga.PageExtension}");
-            var encodedFilePath = Uri.EscapeDataString(filePath);
-            var pageUrl =
-                $"{HttpClient.BaseAddress}FileStream/StreamImage?filePath={encodedFilePath}&percentage=20";
-            manga.Logo = pageUrl;
-        }
+            manga.Logo = FileStreamApi.GetStreamImagePath([manga.Logo], 20);
     }
 
     private async Task<ListResponse<MangaDto>> FetchPage(FiltersRequest filters)
     {
-        var query = HttpUtility.ParseQueryString(string.Empty);
-        if (filters.Size.HasValue) query["Size"] = filters.Size.Value.ToString();
-        if (filters.Page.HasValue) query["Page"] = filters.Page.Value.ToString();
-        if (!string.IsNullOrEmpty(filters.SortOrder)) query["SortOrder"] = filters.SortOrder;
-        if (filters.AuthorIds != null) query["AuthorIds"] = string.Join(",", filters.AuthorIds);
-        if (filters.TagIds != null) query["TagIds"] = string.Join(",", filters.TagIds);
-        if (filters.BrandIds != null) query["BrandIds"] = string.Join(",", filters.BrandIds);
-        if (filters.ArtistIds != null) query["ArtistIds"] = string.Join(",", filters.ArtistIds);
-        if (!string.IsNullOrEmpty(filters.Title)) query["Title"] = filters.Title;
-        query["Percentage"] = 20.ToString();
-        var url = $"Manga/GetList?{query}";
-        var response = await HttpClient.GetFromJsonAsync<ListResponse<MangaDto>>(url);
+        var response = await MangaApi.GetList(filters);
         response.Page = filters.Page ?? 1;
         return response;
     }

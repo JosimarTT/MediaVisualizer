@@ -1,4 +1,7 @@
 ﻿using MediaVisualizer.Services.Dtos;
+using MediaVisualizer.Shared.Requests;
+using MediaVisualizer.Shared.Responses;
+using MediaVisualizer.Web.Helpers;
 
 namespace MediaVisualizer.Web.Api;
 
@@ -19,8 +22,13 @@ public class AnimeApi : IAnimeApi
     public Task<AnimeDto> GetRandom()
     {
         var fullUrl = new Uri(_httpClient.BaseAddress, "Anime/GetRandom");
-        Console.WriteLine(fullUrl);
         return _httpClient.GetFromJsonAsync<AnimeDto>("Anime/GetRandom");
+    }
+
+    public Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters)
+    {
+        var query = FiltersRequestHelper.BuildFilterRequest(filters);
+        return _httpClient.GetFromJsonAsync<ListResponse<AnimeDto>>($"Anime/GetList?{query}");
     }
 }
 
@@ -28,4 +36,5 @@ public interface IAnimeApi
 {
     Task<AnimeDto> Get(int animeId);
     Task<AnimeDto> GetRandom();
+    Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters);
 }

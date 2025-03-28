@@ -1,6 +1,6 @@
 ﻿using Blazorise;
 using MediaVisualizer.Services.Dtos;
-using MediaVisualizer.Shared;
+using MediaVisualizer.Web.Api;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -21,11 +21,12 @@ public partial class MangaDetail
     private MangaDto _manga { get; set; }
 
     [Parameter] public int MangaId { get; set; }
-    [Inject] private HttpClient HttpClient { get; set; }
+    [Inject] private IMangaApi MangaApi { get; set; }
+    [Inject] private IFileStreamApi FileStreamApi { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        _manga = await HttpClient.GetFromJsonAsync<MangaDto>($"Manga/{MangaId}")!;
+        _manga = await MangaApi.Get(MangaId);
         _totalPages = (int)Math.Ceiling((double)_manga.PagesCount / PageSize);
         await LoadPages(_currentPage);
         _isLoading = false;
@@ -37,16 +38,13 @@ public partial class MangaDetail
         var startPage = (page - 1) * PageSize + 1;
         for (var i = startPage; i < startPage + PageSize && i <= _manga.PagesCount; i++)
         {
-            var filePath = Path.Combine(StringConstants.MangaCollectionPath, _manga.Folder,
-                $"{i:D3}{_manga.PageExtension}");
-            var encodedFilePath = Uri.EscapeDataString(filePath);
+            var filePath = Path.Combine(_manga.BasePath, $"{i:D3}{_manga.PageExtension}");
 
             _pages.Add(new PageIsLoading
             {
                 pageNumber = i,
-                pagePath = $"{HttpClient.BaseAddress}FileStream/StreamImage?filePath={encodedFilePath}&percentage=20",
-                pageFullPath =
-                    $"{HttpClient.BaseAddress}FileStream/StreamImage?filePath={encodedFilePath}&percentage=70"
+                pagePath = FileStreamApi.GetStreamImagePath([filePath], 20),
+                pageFullPath = FileStreamApi.GetStreamImagePath([filePath])
             });
         }
     }
