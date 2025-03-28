@@ -26,7 +26,7 @@ public class MangaApi : IMangaApi
 
     public Task<ListResponse<MangaDto>> GetList(FiltersRequest filters)
     {
-        var query = FiltersRequestHelper.BuildFilterRequest(filters);
+        var query = FiltersRequestHelper.BuildFiltersRequest(filters);
         return _httpClient.GetFromJsonAsync<ListResponse<MangaDto>>($"Manga/GetList?{query}");
     }
 }

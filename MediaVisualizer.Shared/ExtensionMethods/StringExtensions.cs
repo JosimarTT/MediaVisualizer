@@ -28,13 +28,6 @@ public static partial class StringExtensions
         return new string(text.Where(c => !invalidChars.Contains(c)).ToArray());
     }
 
-    public static async Task<string> GetBase64Image(this string path)
-    {
-        var fileBytes = await File.ReadAllBytesAsync(path);
-        var base64String = Convert.ToBase64String(fileBytes);
-        return $"data:image/jpeg;base64,{base64String}";
-    }
-
     [GeneratedRegex(@"\s+")]
     private static partial Regex RemoveExtraSpacesRegex();
 }

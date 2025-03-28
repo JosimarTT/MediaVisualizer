@@ -6,7 +6,7 @@ namespace MediaVisualizer.Web.Helpers;
 
 public static class FiltersRequestHelper
 {
-    public static NameValueCollection BuildFilterRequest(FiltersRequest filters)
+    public static NameValueCollection BuildFiltersRequest(FiltersRequest filters)
     {
         var query = HttpUtility.ParseQueryString(string.Empty);
         if (filters.Size.HasValue) query["Size"] = filters.Size.Value.ToString();

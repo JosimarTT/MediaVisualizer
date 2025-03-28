@@ -27,7 +27,7 @@ public class AnimeApi : IAnimeApi
 
     public Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters)
     {
-        var query = FiltersRequestHelper.BuildFilterRequest(filters);
+        var query = FiltersRequestHelper.BuildFiltersRequest(filters);
         return _httpClient.GetFromJsonAsync<ListResponse<AnimeDto>>($"Anime/GetList?{query}");
     }
 }
