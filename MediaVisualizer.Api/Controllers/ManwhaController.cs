@@ -1,11 +1,12 @@
 ﻿using MediaVisualizer.Services;
+using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
-[Route("[controller]/[action]")]
+[Route("api/[controller]/[action]")]
 public class ManwhaController : ControllerBase
 {
     private readonly IManwhaService _manwhaService;
@@ -16,7 +17,7 @@ public class ManwhaController : ControllerBase
     }
 
     [HttpGet]
-    [Route("~/[controller]/{id:int}")]
+    [Route("~/api/[controller]/{id:int}")]
     public async Task<IActionResult> Get(int id)
     {
         return Ok(await _manwhaService.Get(id));
@@ -29,7 +30,7 @@ public class ManwhaController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetRandom()
+    public async Task<ActionResult<ManwhaDto>> GetRandom()
     {
         return Ok(await _manwhaService.GetRandom());
     }

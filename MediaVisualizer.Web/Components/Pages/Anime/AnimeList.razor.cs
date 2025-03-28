@@ -2,6 +2,7 @@
 using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared.Requests;
 using MediaVisualizer.Shared.Responses;
+using MediaVisualizer.Web.Api;
 using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Pages.Anime;
@@ -13,7 +14,9 @@ public partial class AnimeList
     private bool _isFirstRender = true;
     private bool _isLoading = true;
     private int _totalPages = 1;
+
     [Inject] private HttpClient HttpClient { get; set; }
+    [Inject] private IFileStreamApi FileStreamApi { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -40,6 +43,8 @@ public partial class AnimeList
         if (response != null)
         {
             _animeList = response.Items.ToList();
+            foreach (var anime in _animeList)
+                anime.Logo = FileStreamApi.GetStreamImagePath([anime.Logo]);
             _totalPages = response.TotalPages;
         }
 

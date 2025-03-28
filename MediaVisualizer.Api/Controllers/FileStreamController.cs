@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
-[Route("[controller]/[action]")]
+[Route("api/[controller]/[action]")]
 public class FileStreamController : ControllerBase
 {
     private readonly ILogger<FileStreamController> _logger;
@@ -38,10 +38,9 @@ public class FileStreamController : ControllerBase
     {
         _logger.LogInformation("Processing image: {FilePath} with percentage: {Percentage}", filePath, percentage);
 
-        var imagePath = Path.Combine(StringConstants.MangaCollectionPath, filePath);
-        if (!System.IO.File.Exists(imagePath))
+        if (!System.IO.File.Exists(filePath))
         {
-            _logger.LogWarning("File not found: {FilePath}", imagePath);
+            _logger.LogWarning("File not found: {FilePath}", filePath);
             return NotFound();
         }
 

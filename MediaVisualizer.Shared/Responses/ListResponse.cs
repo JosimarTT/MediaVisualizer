@@ -7,7 +7,7 @@ public class ListResponse<T>
         Items = new List<T>();
     }
 
-    public ListResponse(ICollection<T> items, int totalCount, int size, int page)
+    public ListResponse(IEnumerable<T> items, int totalCount, int size, int page)
     {
         Items = items;
         TotalCount = totalCount;
@@ -16,7 +16,7 @@ public class ListResponse<T>
         Page = page;
     }
 
-    public ICollection<T> Items { get; set; }
+    public IEnumerable<T> Items { get; set; }
     public int TotalCount { get; set; }
     public int TotalPages { get; set; }
     public int Size { get; set; }

@@ -21,34 +21,20 @@ public class AnimeService : IAnimeService
     public async Task<AnimeDto> Get(int animeId)
     {
         var anime = await _animeRepository.Get(animeId);
-        return await anime.ToDto();
+        return anime.ToDto();
     }
 
     public async Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters)
     {
         var (totalCount, animes) = await _animeRepository.GetList(filters);
-        var animeListDto = await animes.ToList().ToListDto();
+        var animeListDto = animes.ToList().ToListDto();
         return new ListResponse<AnimeDto>(animeListDto, totalCount, filters.Size!.Value, filters.Page!.Value);
     }
 
-    public async Task<string> GetRandom()
+    public async Task<AnimeDto> GetRandom()
     {
         var anime = await _animeRepository.GetRandom();
-
-        var animePath = Path.Combine(StringConstants.AnimeCollectionPath, anime.Folder);
-
-        if (!Directory.Exists(animePath))
-            throw new DirectoryNotFoundException($"Anime folder '{anime.Folder}' not found.");
-
-        var fileName = Path.Combine(animePath, $"{anime.Logo}");
-        if (File.Exists(fileName))
-        {
-            var fileBytes = await File.ReadAllBytesAsync(fileName);
-            var base64String = Convert.ToBase64String(fileBytes);
-            return $"data:image/jpeg;base64,{base64String}";
-        }
-
-        throw new FileNotFoundException("File not found.");
+        return anime.ToDto();
     }
 
     public Task<List<NewAnime>> SearchNew()
@@ -117,13 +103,13 @@ public class AnimeService : IAnimeService
 
         var anime = await _animeRepository.Add(animeDto.ToEntity());
 
-        return await anime.ToDto();
+        return anime.ToDto();
     }
 
     public async Task<AnimeDto> Update(int animeId, AnimeDto animeDto)
     {
         var anime = await _animeRepository.Update(animeId, animeDto.ToEntity());
-        return await anime.ToDto();
+        return anime.ToDto();
     }
 }
 
@@ -131,7 +117,7 @@ public interface IAnimeService
 {
     public Task<AnimeDto> Get(int animeId);
     public Task<ListResponse<AnimeDto>> GetList(FiltersRequest filters);
-    Task<string> GetRandom();
+    Task<AnimeDto> GetRandom();
     Task<List<NewAnime>> SearchNew();
     Task<IEnumerable<string>> GetTitles();
     Task<AnimeDto> Add(AnimeDto animeDto);

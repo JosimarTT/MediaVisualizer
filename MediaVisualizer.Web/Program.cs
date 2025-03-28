@@ -1,6 +1,7 @@
 using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using MediaVisualizer.Web.Api;
 using MediaVisualizer.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,13 @@ builder.Services.AddRazorComponents()
 
 // Register HttpClient
 builder.Services.AddScoped<HttpClient>();
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5118") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5118/api/") });
+
+// Register Api Services
+builder.Services.AddScoped<IAnimeApi, AnimeApi>();
+builder.Services.AddScoped<IMangaApi, MangaApi>();
+builder.Services.AddScoped<IManwhaApi, ManwhaApi>();
+builder.Services.AddScoped<IFileStreamApi, FileStreamApi>();
 
 // Register Blazorise
 builder.Services

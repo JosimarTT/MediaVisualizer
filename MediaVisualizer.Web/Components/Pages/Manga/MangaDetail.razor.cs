@@ -46,7 +46,7 @@ public partial class MangaDetail
                 pageNumber = i,
                 pagePath = $"{HttpClient.BaseAddress}FileStream/StreamImage?filePath={encodedFilePath}&percentage=20",
                 pageFullPath =
-                    $"{HttpClient.BaseAddress}FileStream/StreamImage?filePath={encodedFilePath}&percentage=100"
+                    $"{HttpClient.BaseAddress}FileStream/StreamImage?filePath={encodedFilePath}&percentage=70"
             });
         }
     }
@@ -66,27 +66,29 @@ public partial class MangaDetail
 
     private void OnKeyDown(KeyboardEventArgs e)
     {
-        if (e.Key == "ArrowLeft")
-            ShowPreviousImage();
-        else if (e.Key == "ArrowRight") ShowNextImage();
+        switch (e.Key)
+        {
+            case "ArrowLeft":
+                ShowPreviousImage();
+                break;
+            case "ArrowRight":
+                ShowNextImage();
+                break;
+        }
     }
 
     private void ShowPreviousImage()
     {
-        if (currentPage > 1)
-        {
-            currentPage--;
-            modalImageUrl = _pages.First(p => p.pageNumber == currentPage).pageFullPath;
-        }
+        if (currentPage <= 1) return;
+        currentPage--;
+        modalImageUrl = _pages.First(p => p.pageNumber == currentPage).pageFullPath;
     }
 
     private void ShowNextImage()
     {
-        if (currentPage < _pages.Count)
-        {
-            currentPage++;
-            modalImageUrl = _pages.First(p => p.pageNumber == currentPage).pageFullPath;
-        }
+        if (currentPage >= _pages.Count) return;
+        currentPage++;
+        modalImageUrl = _pages.First(p => p.pageNumber == currentPage).pageFullPath;
     }
 
     private class PageIsLoading

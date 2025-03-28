@@ -1,6 +1,5 @@
 ﻿using MediaVisualizer.DataAccess.Repositories;
 using MediaVisualizer.Services.Converters;
-using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
 using MediaVisualizer.Shared.Requests;
 using MediaVisualizer.Shared.Responses;
@@ -29,24 +28,10 @@ public class ManwhaService : IManwhaService
         return new ListResponse<ManwhaDto>(manwhaListDto, totalCount, filters.Size!.Value, filters.Page!.Value);
     }
 
-    public async Task<string> GetRandom()
+    public async Task<ManwhaDto> GetRandom()
     {
         var manwha = await _manwhaRepository.GetRandom();
-
-        var mangaPath = Path.Combine(StringConstants.ManwhaCollectionPath, manwha.Folder);
-
-        if (!Directory.Exists(mangaPath))
-            throw new DirectoryNotFoundException($"Manga with title '{manwha.Title}' not found.");
-
-        var fileName = Path.Combine(mangaPath, $"{manwha.Logo}");
-        if (File.Exists(fileName))
-        {
-            var fileBytes = await File.ReadAllBytesAsync(fileName);
-            var base64String = Convert.ToBase64String(fileBytes);
-            return $"data:image/jpeg;base64,{base64String}";
-        }
-
-        throw new FileNotFoundException("Manwha logo not found.");
+        return manwha.ToDto();
     }
 }
 
@@ -54,5 +39,5 @@ public interface IManwhaService
 {
     public Task<ManwhaDto> Get(int key);
     public Task<ListResponse<ManwhaDto>> GetList(FiltersRequest filters);
-    public Task<string> GetRandom();
+    public Task<ManwhaDto> GetRandom();
 }
