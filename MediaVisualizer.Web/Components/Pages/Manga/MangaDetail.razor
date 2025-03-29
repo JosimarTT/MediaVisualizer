@@ -11,7 +11,7 @@ else
 {
     <main style="margin-top: auto !important;margin-bottom: auto !important;">
         <div class="collection-grid" id="collection">
-            @foreach (var mangaPage in _pages)
+            @foreach (var mangaPage in _pages.Skip((_currentPage - 1) * PageSize).Take(PageSize))
             {
                 @if (mangaPage.IsLoading)
                 {

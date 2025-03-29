@@ -28,15 +28,14 @@ public partial class MangaDetail
     {
         _manga = await MangaApi.Get(MangaId);
         _totalPages = (int)Math.Ceiling((double)_manga.PagesCount / PageSize);
-        await LoadPages(_currentPage);
+        await LoadPages();
         _isLoading = false;
     }
 
-    private async Task LoadPages(int page)
+    private async Task LoadPages()
     {
         _pages.Clear();
-        var startPage = (page - 1) * PageSize + 1;
-        for (var i = startPage; i < startPage + PageSize && i <= _manga.PagesCount; i++)
+        for (var i = 1; i <= _manga.PagesCount; i++)
         {
             var filePath = Path.Combine(_manga.BasePath, $"{i:D3}{_manga.PageExtension}");
 
@@ -52,7 +51,6 @@ public partial class MangaDetail
     public async Task OnPageChanged(int newPage)
     {
         _currentPage = newPage;
-        await LoadPages(newPage);
     }
 
     private Task ShowModal(PageIsLoading mangaPage)
@@ -84,7 +82,7 @@ public partial class MangaDetail
 
     private void ShowNextImage()
     {
-        if (currentPage >= _pages.Count) return;
+        if (currentPage >= _manga.PagesCount) return;
         currentPage++;
         modalImageUrl = _pages.First(p => p.pageNumber == currentPage).pageFullPath;
     }
