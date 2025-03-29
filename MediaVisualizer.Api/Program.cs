@@ -5,6 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Register as Windows service
+builder.Host.UseWindowsService();
+builder.Services.AddWindowsService();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -47,16 +51,12 @@ builder.Services.AddScoped<ITagService, TagService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.MapOpenApi();
+app.UseSwaggerUI(options =>
 {
-    app.MapOpenApi();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/openapi/v1.json", "Media Visualizer Api");
-        options.RoutePrefix = string.Empty;
-    });
-}
+    options.SwaggerEndpoint("/openapi/v1.json", "Media Visualizer Api");
+    options.RoutePrefix = string.Empty;
+});
 
 app.UseHttpsRedirection();
 

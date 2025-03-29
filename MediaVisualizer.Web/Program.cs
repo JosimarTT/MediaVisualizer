@@ -6,13 +6,18 @@ using MediaVisualizer.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Register as Windows service
+builder.Host.UseWindowsService();
+builder.Services.AddWindowsService();
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 // Register HttpClient
 builder.Services.AddScoped<HttpClient>();
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5118/api/") });
+var apiBaseUrl = builder.Configuration.GetSection("ApiSettings:BaseUrl").Value!;
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseUrl) });
 
 // Register Api Services
 builder.Services.AddScoped<IAnimeApi, AnimeApi>();
@@ -38,11 +43,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
 app.UseAntiforgery();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+app.UseStatusCodePagesWithRedirects("/404");
 
 await app.RunAsync();
