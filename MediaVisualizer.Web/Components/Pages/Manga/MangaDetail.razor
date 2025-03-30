@@ -1,7 +1,7 @@
 ﻿@page "/MangaDetail/{MangaId:int}"
 @using MediaVisualizer.Web.Components.Layout
 @attribute [StreamRendering]
-@rendermode @(new InteractiveServerRenderMode(false))
+@rendermode InteractiveServer
 
 @if (_isLoading)
 {
