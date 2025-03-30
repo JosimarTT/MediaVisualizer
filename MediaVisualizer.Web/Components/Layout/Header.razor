@@ -1,4 +1,7 @@
-﻿<header class="border-bottom py-3">
+﻿@inject AppState AppState
+@implements IDisposable
+
+<header class="border-bottom py-3">
     <div class="col-12 d-flex flex-wrap justify-content-center">
         <div class="d-flex align-items-center me-md-auto">
             <ul class="nav d-flex align-items-center">
@@ -14,12 +17,24 @@
             </ul>
         </div>
         <ul class="nav d-flex align-items-center">
-            <li class="nav-item">
-                <button class="btn btn-dark" data-bs-target="#brandsModal" data-bs-toggle="modal">Brands</button>
-            </li>
-            <li class="nav-item me-2">
-                <button class="btn btn-dark" data-bs-target="#tagsModal" data-bs-toggle="modal">Tags</button>
-            </li>
+            @if (AppState.ArtistButton)
+            {
+                <li class="nav-item me-2">
+                    <button class="btn btn-dark" data-bs-target="#artistsModal" data-bs-toggle="modal">Artists</button>
+                </li>
+            }
+            @if (AppState.BrandButton)
+            {
+                <li class="nav-item">
+                    <button class="btn btn-dark" data-bs-target="#brandsModal" data-bs-toggle="modal">Brands</button>
+                </li>
+            }
+            @if (AppState.TagButton)
+            {
+                <li class="nav-item me-2">
+                    <button class="btn btn-dark" data-bs-target="#tagsModal" data-bs-toggle="modal">Tags</button>
+                </li>
+            }
             <li class="nav-item">
                 <div class="input-group" style="width: 500px">
                     <input class="form-control" id="search-title" placeholder="Search title" type="text">
@@ -30,5 +45,20 @@
 </header>
 
 @code {
+
+    protected override void OnInitialized()
+    {
+        AppState.OnChange += OnMyChangeHandler;
+    }
+
+    public void Dispose()
+    {
+        AppState.OnChange -= OnMyChangeHandler;
+    }
+
+    private async void OnMyChangeHandler()
+    {
+        await InvokeAsync(StateHasChanged);
+    }
 
 }

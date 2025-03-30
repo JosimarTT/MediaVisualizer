@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace MediaVisualizer.Web.Components.Pages.Manga;
 
-public partial class MangaDetail
+public partial class MangaDetail : IDisposable
 {
     private const int PageSize = 18;
     private readonly List<PageIsLoading> _pages = new();
@@ -23,9 +23,17 @@ public partial class MangaDetail
     [Parameter] public int MangaId { get; set; }
     [Inject] private IMangaApi MangaApi { get; set; }
     [Inject] private IFileStreamApi FileStreamApi { get; set; }
+    [Inject] private AppState AppState { get; set; }
+
+    public void Dispose()
+    {
+        AppState.OnChange -= OnMyChangeHandler;
+    }
 
     protected override async Task OnInitializedAsync()
     {
+        AppState.OnChange += OnMyChangeHandler;
+        AppState.EnableButtons(true, false, true);
         _manga = await MangaApi.Get(MangaId);
         _totalPages = (int)Math.Ceiling((double)_manga.PagesCount / PageSize);
         await LoadPages();
@@ -85,6 +93,11 @@ public partial class MangaDetail
         if (currentPage >= _manga.PagesCount) return;
         currentPage++;
         modalImageUrl = _pages.First(p => p.pageNumber == currentPage).pageFullPath;
+    }
+
+    private async void OnMyChangeHandler()
+    {
+        await InvokeAsync(StateHasChanged);
     }
 
     private class PageIsLoading

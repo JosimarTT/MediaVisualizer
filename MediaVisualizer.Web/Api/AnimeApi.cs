@@ -21,7 +21,6 @@ public class AnimeApi : IAnimeApi
 
     public Task<AnimeDto> GetRandom()
     {
-        var fullUrl = new Uri(_httpClient.BaseAddress, "Anime/GetRandom");
         return _httpClient.GetFromJsonAsync<AnimeDto>("Anime/GetRandom");
     }
 

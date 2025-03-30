@@ -1,5 +1,4 @@
-﻿using MediaVisualizer.Shared;
-using MediaVisualizer.Shared.ExtensionMethods;
+﻿using MediaVisualizer.Shared.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediaVisualizer.Api.Controllers;

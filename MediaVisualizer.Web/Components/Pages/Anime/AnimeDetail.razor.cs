@@ -5,7 +5,7 @@ using Microsoft.JSInterop;
 
 namespace MediaVisualizer.Web.Components.Pages.Anime;
 
-public partial class AnimeDetail
+public partial class AnimeDetail : IDisposable
 {
     private bool _isFirstRender = true;
     [Parameter] public int AnimeId { get; set; }
@@ -13,9 +13,17 @@ public partial class AnimeDetail
 
     [Inject] private IAnimeApi AnimeApi { get; set; }
     [Inject] private IFileStreamApi FileStreamApi { get; set; }
+    [Inject] private AppState AppState { get; set; }
+
+    public void Dispose()
+    {
+        AppState.OnChange -= OnMyChangeHandler;
+    }
 
     protected override async Task OnInitializedAsync()
     {
+        AppState.OnChange += OnMyChangeHandler;
+        AppState.EnableButtons(false, true, true);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -32,5 +40,10 @@ public partial class AnimeDetail
     {
         ;
         await JSRuntime.InvokeVoidAsync("setVideoSource", "animeVideo", url);
+    }
+
+    private async void OnMyChangeHandler()
+    {
+        await InvokeAsync(StateHasChanged);
     }
 }

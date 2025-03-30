@@ -1,6 +1,7 @@
 using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using MediaVisualizer.Web;
 using MediaVisualizer.Web.Api;
 using MediaVisualizer.Web.Components;
 
@@ -24,6 +25,7 @@ builder.Services.AddScoped<IAnimeApi, AnimeApi>();
 builder.Services.AddScoped<IMangaApi, MangaApi>();
 builder.Services.AddScoped<IManwhaApi, ManwhaApi>();
 builder.Services.AddScoped<IFileStreamApi, FileStreamApi>();
+builder.Services.AddSingleton<AppState>();
 
 // Register Blazorise
 builder.Services
