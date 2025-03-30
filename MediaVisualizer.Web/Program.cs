@@ -24,6 +24,9 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseU
 builder.Services.AddScoped<IAnimeApi, AnimeApi>();
 builder.Services.AddScoped<IMangaApi, MangaApi>();
 builder.Services.AddScoped<IManwhaApi, ManwhaApi>();
+builder.Services.AddScoped<IBrandApi, BrandApi>();
+builder.Services.AddScoped<IArtistApi, ArtistApi>();
+builder.Services.AddScoped<ITagApi, TagApi>();
 builder.Services.AddScoped<IFileStreamApi, FileStreamApi>();
 builder.Services.AddSingleton<AppState>();
 

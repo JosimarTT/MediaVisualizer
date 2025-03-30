@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
-[Route("[controller]/[action]")]
+[Route("api/[controller]/[action]")]
 public class TagController : ControllerBase
 {
     private readonly ITagService _artistService;

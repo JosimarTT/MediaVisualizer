@@ -13,7 +13,7 @@ public class ArtistApi : IArtistApi
 
     public Task<List<ArtistDto>> GetList()
     {
-        return _httpClient.GetFromJsonAsync<List<ArtistDto>>("api/Artist/GetList");
+        return _httpClient.GetFromJsonAsync<List<ArtistDto>>("Artist/GetList");
     }
 }
 
