@@ -1,9 +1,10 @@
 ﻿using MediaVisualizer.Web.Api;
+using MediaVisualizer.Web.Helpers;
 using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Pages;
 
-public partial class Index : PageBase
+public partial class Index
 {
     private string? _animeImageUrl;
     private bool _isLoading = true;
@@ -14,18 +15,16 @@ public partial class Index : PageBase
     [Inject] private IMangaApi MangaApi { get; set; }
     [Inject] private IManwhaApi ManwhaApi { get; set; }
     [Inject] private IBrandApi BrandApi { get; set; }
+    [Inject] private IArtistApi ArtistApi { get; set; }
+    [Inject] private ITagApi TagApi { get; set; }
     [Inject] private IFileStreamApi FileStreamApi { get; set; }
+    [Inject] private PersistentDataHelper PersistentDataHelper { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        await GetOrAddState("brandList", async () => { return await BrandApi.GetList(); });
-
-
-        await GetOrAddState("artistList", async () => { return await BrandApi.GetList(); });
-
-
-        await GetOrAddState("tagList", async () => { return await BrandApi.GetList(); });
-
+        PersistentDataHelper.Brands = await BrandApi.GetList();
+        PersistentDataHelper.Artists = await ArtistApi.GetList();
+        PersistentDataHelper.Tags = await TagApi.GetList();
 
         _isLoading = true;
         var animeTask = AnimeApi.GetRandom();
