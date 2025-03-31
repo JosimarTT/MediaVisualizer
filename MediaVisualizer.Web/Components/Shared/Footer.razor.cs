@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace MediaVisualizer.Web.Components.Layout;
+namespace MediaVisualizer.Web.Components.Shared;
 
 public partial class Footer
 {

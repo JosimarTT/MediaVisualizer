@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Pages.Manga;
 
-public partial class MangaList : IDisposable
+public partial class MangaList
 {
     private int _currentPage = 1;
     private bool _isLoading = true;
@@ -17,18 +17,13 @@ public partial class MangaList : IDisposable
     [Inject] private IMangaApi MangaApi { get; set; }
     [Inject] private IFileStreamApi FileStreamApi { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
-    [Inject] private AppState AppState { get; set; }
 
-    public void Dispose()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        AppState.OnChange += OnMyChangeHandler;
-    }
+        if (!firstRender) return;
 
-    protected override async Task OnInitializedAsync()
-    {
-        AppState.OnChange += OnMyChangeHandler;
-        AppState.EnableButtons(true, false, true);
         await FetchMangaList(new FiltersRequest { Size = 18, Page = 1 });
+        await InvokeAsync(StateHasChanged);
     }
 
     private async Task FetchMangaList(FiltersRequest filters)
@@ -39,7 +34,6 @@ public partial class MangaList : IDisposable
         await FetchCurrentPage(filters);
 
         _isLoading = false;
-        // UpdateUrlWithCurrentPage();
     }
 
     private async Task FetchCurrentPage(FiltersRequest filters)
@@ -70,10 +64,5 @@ public partial class MangaList : IDisposable
         query["page"] = _currentPage.ToString();
         var newUri = $"{uri.GetLeftPart(UriPartial.Path)}?{query}";
         NavigationManager.NavigateTo(newUri, false);
-    }
-
-    private async void OnMyChangeHandler()
-    {
-        await InvokeAsync(StateHasChanged);
     }
 }

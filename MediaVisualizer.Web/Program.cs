@@ -1,7 +1,6 @@
 using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
-using MediaVisualizer.Web;
 using MediaVisualizer.Web.Api;
 using MediaVisualizer.Web.Components;
 
@@ -28,7 +27,6 @@ builder.Services.AddScoped<IBrandApi, BrandApi>();
 builder.Services.AddScoped<IArtistApi, ArtistApi>();
 builder.Services.AddScoped<ITagApi, TagApi>();
 builder.Services.AddScoped<IFileStreamApi, FileStreamApi>();
-builder.Services.AddSingleton<AppState>();
 
 // Register Blazorise
 builder.Services

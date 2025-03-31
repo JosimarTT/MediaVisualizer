@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Pages;
 
-public partial class Index
+public partial class Index : PageBase
 {
     private string? _animeImageUrl;
     private bool _isLoading = true;
@@ -13,10 +13,20 @@ public partial class Index
     [Inject] private IAnimeApi AnimeApi { get; set; }
     [Inject] private IMangaApi MangaApi { get; set; }
     [Inject] private IManwhaApi ManwhaApi { get; set; }
+    [Inject] private IBrandApi BrandApi { get; set; }
     [Inject] private IFileStreamApi FileStreamApi { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        await GetOrAddState("brandList", async () => { return await BrandApi.GetList(); });
+
+
+        await GetOrAddState("artistList", async () => { return await BrandApi.GetList(); });
+
+
+        await GetOrAddState("tagList", async () => { return await BrandApi.GetList(); });
+
+
         _isLoading = true;
         var animeTask = AnimeApi.GetRandom();
         var mangaTask = MangaApi.GetRandom();

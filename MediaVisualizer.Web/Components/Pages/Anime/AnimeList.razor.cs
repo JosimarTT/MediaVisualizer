@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Pages.Anime;
 
-public partial class AnimeList : IDisposable
+public partial class AnimeList
 {
     private List<AnimeDto> _animeList = new();
     private int _currentPage = 1;
@@ -14,20 +14,6 @@ public partial class AnimeList : IDisposable
 
     [Inject] private IAnimeApi AnimeApi { get; set; }
     [Inject] private IFileStreamApi FileStreamApi { get; set; }
-    [Inject] private AppState AppState { get; set; }
-
-    public void Dispose()
-    {
-        AppState.OnChange -= OnMyChangeHandler;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        AppState.OnChange += OnMyChangeHandler;
-        AppState.EnableButtons(false, true, true);
-
-        await FetchAnimeList(new FiltersRequest { Size = 18, Page = 1 });
-    }
 
     private async Task FetchAnimeList(FiltersRequest filters)
     {
@@ -41,15 +27,17 @@ public partial class AnimeList : IDisposable
         _isLoading = false;
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        await FetchAnimeList(new FiltersRequest { Size = 18, Page = 1 });
+        await InvokeAsync(StateHasChanged);
+    }
+
     public async Task OnPageChanged(int newPage)
     {
         _currentPage = newPage;
         await FetchAnimeList(new FiltersRequest { Size = 18, Page = newPage });
-    }
-
-
-    private async void OnMyChangeHandler()
-    {
-        await InvokeAsync(StateHasChanged);
     }
 }
