@@ -1,0 +1,67 @@
+﻿<style>
+    .badge {
+        display: inline-block;
+        padding: 0.5em 0.75em;
+        margin: 0.25em;
+        font-size: 1em;
+        font-weight: normal;
+        line-height: 1;
+        color: #fff;
+        background-color: var(--bs-secondary);
+        border-radius: 0.25rem;
+        cursor: pointer;
+    }
+
+    .badge.active {
+        background-color: var(--bs-success);
+    }
+</style>
+
+@if (Items != null)
+{
+    <Modal @ref="modalRef" Visible="@IsVisible" VisibleChanged="@(value => IsVisibleChanged.InvokeAsync(value))">
+        <ModalContent Centered Size="ModalSize.ExtraLarge" Scrollable="true">
+            <ModalHeader>
+                <ModalTitle>@Title</ModalTitle>
+                <CloseButton @onclick="Hide"/>
+            </ModalHeader>
+            <ModalBody>
+                <div class="grid-container">
+                    @foreach (var item in Items)
+                    {
+                        <span class="badge @(activeItems.Contains(item) ? "active" : "")"
+                              @onclick="() => ToggleFilter(item)">
+                            @item
+                            </span>
+                    }
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary" @onclick="ClearFilters">Reset</Button>
+                <Button Color="Color.Primary">Search</Button>
+            </ModalFooter>
+        </ModalContent>
+    </Modal>
+}
+
+@code {
+    private List<string> activeItems = new();
+
+    private void ToggleFilter(string item)
+    {
+        if (activeItems.Contains(item))
+        {
+            activeItems.Remove(item);
+        }
+        else
+        {
+            activeItems.Add(item);
+        }
+    }
+
+    private void ClearFilters()
+    {
+        activeItems.Clear();
+    }
+
+}
