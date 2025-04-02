@@ -25,20 +25,23 @@ public partial class Index
     {
         if (!firstRender) return;
 
-        PersistentDataHelper.Brands = await BrandApi.GetList();
-        PersistentDataHelper.Artists = await ArtistApi.GetList();
-        PersistentDataHelper.Tags = await TagApi.GetList();
-
         _isLoading = true;
+
+        var brandsTask = BrandApi.GetList();
+        var artistsTask = ArtistApi.GetList();
+        var tagsTask = TagApi.GetList();
         var animeTask = AnimeApi.GetRandom();
         var mangaTask = MangaApi.GetRandom();
         var manwhaTask = ManwhaApi.GetRandom();
 
-        await Task.WhenAll(animeTask, mangaTask, manwhaTask);
+        await Task.WhenAll(animeTask, mangaTask, manwhaTask, brandsTask, artistsTask, tagsTask);
 
         var animeDto = await animeTask;
         var mangaDto = await mangaTask;
         var manwhaDto = await manwhaTask;
+        PersistentDataHelper.Brands = await brandsTask;
+        PersistentDataHelper.Artists = await artistsTask;
+        PersistentDataHelper.Tags = await tagsTask;
 
         _animeImageUrl = FileStreamApi.GetStreamImagePath([animeDto.Logo]);
         _mangaImageUrl =
