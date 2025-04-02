@@ -20,8 +20,11 @@ public partial class Index
     [Inject] private IFileStreamApi FileStreamApi { get; set; }
     [Inject] private PersistentDataHelper PersistentDataHelper { get; set; }
 
-    protected override async Task OnInitializedAsync()
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (!firstRender) return;
+
         PersistentDataHelper.Brands = await BrandApi.GetList();
         PersistentDataHelper.Artists = await ArtistApi.GetList();
         PersistentDataHelper.Tags = await TagApi.GetList();
@@ -43,5 +46,7 @@ public partial class Index
         _manwhaImageUrl =
             FileStreamApi.GetStreamImagePath([manwhaDto.Logo]);
         _isLoading = false;
+
+        StateHasChanged();
     }
 }

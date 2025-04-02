@@ -29,11 +29,11 @@ public partial class Header
                 break;
             default:
                 modalTitle = title;
-                modalItems = new List<string>();
+                modalItems = [];
                 break;
         }
 
-        modalListRef.Show();
+        await modalListRef.Show();
     }
 
     private bool IsCurrentPage(string pageName)
