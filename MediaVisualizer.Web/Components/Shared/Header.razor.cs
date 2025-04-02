@@ -1,4 +1,7 @@
-﻿namespace MediaVisualizer.Web.Components.Shared;
+﻿using MediaVisualizer.Web.Api;
+using Microsoft.AspNetCore.Components;
+
+namespace MediaVisualizer.Web.Components.Shared;
 
 public partial class Header
 {
@@ -7,28 +10,41 @@ public partial class Header
     private ModalList modalListRef;
     private string modalTitle;
 
+    [Inject] private IBrandApi BrandApi { get; set; }
+    [Inject] private IArtistApi ArtistApi { get; set; }
+    [Inject] private ITagApi TagApi { get; set; }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        StateHasChanged();
     }
 
     private async Task ShowModal(string title)
     {
+        modalTitle = title;
         switch (title)
         {
             case "Tags":
-                modalTitle = title;
-                modalItems = DataHelper.Tags.Select(x => x.Name).ToList();
+            {
+                var tags = await TagApi.GetList();
+                modalItems = tags.Select(x => x.Name).ToList();
                 break;
+            }
+
             case "Artists":
-                modalTitle = title;
-                modalItems = DataHelper.Artists.Select(x => x.Name).ToList();
+            {
+                var artists = await ArtistApi.GetList();
+                modalItems = artists.Select(x => x.Name).ToList();
                 break;
+            }
             case "Brands":
-                modalTitle = title;
-                modalItems = DataHelper.Brands.Select(x => x.Name).ToList();
+            {
+                var brands = await BrandApi.GetList();
+                modalItems = brands.Select(x => x.Name).ToList();
                 break;
+            }
+
             default:
-                modalTitle = title;
                 modalItems = [];
                 break;
         }
