@@ -1,9 +1,10 @@
 ﻿using MediaVisualizer.Web.Api;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 
 namespace MediaVisualizer.Web.Components.Shared;
 
-public partial class Header
+public partial class Header : IDisposable
 {
     private bool isModalVisible = false;
     private List<string> modalItems;
@@ -13,8 +14,19 @@ public partial class Header
     [Inject] private IBrandApi BrandApi { get; set; }
     [Inject] private IArtistApi ArtistApi { get; set; }
     [Inject] private ITagApi TagApi { get; set; }
+    [Inject] private NavigationManager Navigation { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    public void Dispose()
+    {
+        Navigation.LocationChanged -= OnLocationChanged;
+    }
+
+    protected override void OnInitialized()
+    {
+        Navigation.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object sender, LocationChangedEventArgs e)
     {
         StateHasChanged();
     }
@@ -52,7 +64,7 @@ public partial class Header
         await modalListRef.Show();
     }
 
-    private bool IsCurrentPage(string pageName)
+    private  bool IsCurrentPage(string pageName)
     {
         return Navigation.Uri.Contains(pageName, StringComparison.OrdinalIgnoreCase);
     }
