@@ -1,25 +1,6 @@
-﻿<style>
-    .badge {
-        display: inline-block;
-        padding: 0.5em 0.75em;
-        margin: 0.25em;
-        font-size: 1em;
-        font-weight: normal;
-        line-height: 1;
-        color: #fff;
-        background-color: var(--bs-secondary);
-        border-radius: 0.25rem;
-        cursor: pointer;
-    }
-
-    .badge.active {
-        background-color: var(--bs-success);
-    }
-</style>
-
-@if (Items != null)
+﻿@if (Items != null)
 {
-    <Modal @ref="modalRef" Visible="@IsVisible" VisibleChanged="@(value => IsVisibleChanged.InvokeAsync(value))">
+    <Modal @ref="_modalRef" Visible="@IsVisible" VisibleChanged="@(value => IsVisibleChanged.InvokeAsync(value))">
         <ModalContent Centered Size="ModalSize.ExtraLarge" Scrollable="true">
             <ModalHeader>
                 <ModalTitle>@Title</ModalTitle>
@@ -29,7 +10,7 @@
                 <div class="grid-container">
                     @foreach (var item in Items)
                     {
-                        <span class="badge @(activeItems.Contains(item) ? "active" : "")"
+                        <span class="badge @(_activeItems.Contains(item) ? "active" : "")"
                               @onclick="() => ToggleFilter(item)">
                             @item
                             </span>

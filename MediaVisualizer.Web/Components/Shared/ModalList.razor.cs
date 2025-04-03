@@ -5,11 +5,11 @@ namespace MediaVisualizer.Web.Components.Shared;
 
 public partial class ModalList
 {
-    private List<string> activeItems = [];
-    private Modal modalRef;
+    private List<string> _activeItems = [];
+    private Modal _modalRef = null!;
 
-    [Parameter] public string Title { get; set; }
-    [Parameter] public List<string> Items { get; set; }
+    [Parameter] public string Title { get; set; } = null!;
+    [Parameter] public List<string>? Items { get; set; }
     [Parameter] public bool IsVisible { get; set; }
     [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
 
@@ -27,12 +27,12 @@ public partial class ModalList
 
     private void ToggleFilter(string item)
     {
-        if (!activeItems.Remove(item))
-            activeItems.Add(item);
+        if (!_activeItems.Remove(item))
+            _activeItems.Add(item);
     }
 
     private void ClearFilters()
     {
-        activeItems.Clear();
+        _activeItems.Clear();
     }
 }
