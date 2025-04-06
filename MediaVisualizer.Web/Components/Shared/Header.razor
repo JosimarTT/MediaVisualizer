@@ -44,5 +44,6 @@
     </div>
 </header>
 
-<ModalList @ref="modalListRef" Title="@modalTitle" Items="@modalItems" IsVisible="@isModalVisible"
-           IsVisibleChanged="@(value => isModalVisible = value)"/>
+<ModalList @ref="_artistsModalRef" Title="@modalTitle" Items="@artistItems" OnItemsSelected="HandleItemsSelected"/>
+<ModalList @ref="_brandsModalRef" Title="@modalTitle" Items="@brandItems" OnItemsSelected="HandleItemsSelected"/>
+<ModalList @ref="_tagsModalRef" Title="@modalTitle" Items="@tagItems" OnItemsSelected="HandleItemsSelected"/>

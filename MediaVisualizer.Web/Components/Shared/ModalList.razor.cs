@@ -5,24 +5,23 @@ namespace MediaVisualizer.Web.Components.Shared;
 
 public partial class ModalList
 {
-    private List<string> _activeItems = [];
+    private List<string> _activeItems = new();
     private Modal _modalRef = null!;
 
     [Parameter] public string Title { get; set; } = null!;
     [Parameter] public List<string>? Items { get; set; }
-    [Parameter] public bool IsVisible { get; set; }
-    [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
+    [Parameter] public EventCallback<List<string>> OnItemsSelected { get; set; }
 
-    public async Task Show()
+    public Task ShowModal()
     {
-        IsVisible = true;
-        await IsVisibleChanged.InvokeAsync(IsVisible);
+        if (_modalRef == null) throw new InvalidOperationException("Modal reference is not set.");
+        return _modalRef.Show();
     }
 
-    private async Task Hide()
+    public Task HideModal()
     {
-        IsVisible = false;
-        await IsVisibleChanged.InvokeAsync(IsVisible);
+        if (_modalRef == null) throw new InvalidOperationException("Modal reference is not set.");
+        return _modalRef.Hide();
     }
 
     private void ToggleFilter(string item)
