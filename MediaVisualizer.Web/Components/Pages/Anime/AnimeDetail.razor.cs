@@ -27,7 +27,6 @@ public partial class AnimeDetail
 
     private async Task SetVideoSource(string url)
     {
-        ;
         await JSRuntime.InvokeVoidAsync("setVideoSource", "animeVideo", url);
     }
 }

@@ -8,16 +8,12 @@ namespace MediaVisualizer.Web.Components.Pages.Anime;
 public partial class AnimeList
 {
     private List<AnimeDto> _animeList = [];
-    private List<BrandDto> _brands = [];
     private int _currentPage = 1;
     private bool _isLoading = true;
-    private List<TagDto> _tags = [];
     private int _totalPages = 1;
 
     [Inject] private IAnimeApi AnimeApi { get; set; } = null!;
     [Inject] private IFileStreamApi FileStreamApi { get; set; } = null!;
-    [Inject] private IBrandApi BrandApi { get; set; } = null!;
-    [Inject] private ITagApi TagApi { get; set; } = null!;
 
     private async Task FetchAnimeList(FiltersRequest filters)
     {
@@ -36,11 +32,6 @@ public partial class AnimeList
         if (!firstRender) return;
 
         await FetchAnimeList(new FiltersRequest { Size = 18, Page = 1 });
-        var brandsTask = BrandApi.GetList();
-        var tagsTask = TagApi.GetList();
-        await Task.WhenAll(brandsTask, tagsTask);
-        _brands = await brandsTask;
-        _tags = await tagsTask;
         StateHasChanged();
     }
 

@@ -17,11 +17,12 @@ public partial class Footer
 
     private bool IsPageNavigationDisabled(string navigation)
     {
-        if (navigation.Equals(PREVIOUS)) return _currentPage == 1;
-
-        if (navigation.Equals(NEXT)) return _currentPage == _totalPages;
-
-        return false;
+        return navigation switch
+        {
+            PREVIOUS => _currentPage == 1,
+            NEXT => _currentPage == _totalPages,
+            _ => false
+        };
     }
 
     private async Task Previous()
