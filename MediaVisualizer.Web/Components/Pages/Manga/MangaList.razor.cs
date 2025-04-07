@@ -11,7 +11,7 @@ public partial class MangaList
 {
     private int _currentPage = 1;
     private bool _isLoading = true;
-    private List<MangaDto> _mangaList = new();
+    private List<MangaDto> _mangaList = [];
     private int _totalPages = 1;
 
     [Inject] private IMangaApi MangaApi { get; set; }

@@ -5,7 +5,7 @@ namespace MediaVisualizer.Web.Components.Shared;
 
 public partial class ModalList
 {
-    private List<string> _activeItems = new();
+    private List<string> _activeItems = [];
     private Modal _modalRef = null!;
 
     [Parameter] public string Title { get; set; } = null!;
@@ -17,7 +17,7 @@ public partial class ModalList
         return _modalRef.Show();
     }
 
-    public Task HideModal()
+    private Task HideModal()
     {
         return _modalRef.Hide();
     }

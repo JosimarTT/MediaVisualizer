@@ -29,7 +29,7 @@
     protected override void OnInitialized()
     {
         Countries = GetMockData();
-        multipleSelectionData = new List<string> { Countries.ElementAt(1).Iso, Countries.ElementAt(2).Iso };
+        multipleSelectionData = [Countries.ElementAt(1).Iso, Countries.ElementAt(2).Iso];
         base.OnInitialized();
     }
 

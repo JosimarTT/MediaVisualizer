@@ -9,7 +9,7 @@ namespace MediaVisualizer.Web.Components.Pages.Manga;
 public partial class MangaDetail
 {
     private const int PageSize = 18;
-    private readonly List<PageIsLoading> _pages = new();
+    private readonly List<PageIsLoading> _pages = [];
     private int _currentPage = 1;
     private bool _isFirstRender = true;
     private bool _isLoading = true;
