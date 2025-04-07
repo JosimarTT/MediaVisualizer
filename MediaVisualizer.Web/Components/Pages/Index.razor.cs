@@ -10,10 +10,10 @@ public partial class Index
     private string? _mangaImageUrl;
     private string? _manwhaImageUrl;
 
-    [Inject] private IAnimeApi AnimeApi { get; set; }
-    [Inject] private IMangaApi MangaApi { get; set; }
-    [Inject] private IManwhaApi ManwhaApi { get; set; }
-    [Inject] private IFileStreamApi FileStreamApi { get; set; }
+    [Inject] private IAnimeApi AnimeApi { get; set; } = null!;
+    [Inject] private IMangaApi MangaApi { get; set; } = null!;
+    [Inject] private IManwhaApi ManwhaApi { get; set; } = null!;
+    [Inject] private IFileStreamApi FileStreamApi { get; set; } = null!;
 
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -32,11 +32,9 @@ public partial class Index
         var mangaDto = await mangaTask;
         var manwhaDto = await manwhaTask;
 
-        _animeImageUrl = FileStreamApi.GetStreamImagePath([animeDto.Logo]);
-        _mangaImageUrl =
-            FileStreamApi.GetStreamImagePath([mangaDto.Logo], 30);
-        _manwhaImageUrl =
-            FileStreamApi.GetStreamImagePath([manwhaDto.Logo]);
+        _animeImageUrl = FileStreamApi.GetStreamImagePath(animeDto.Logo);
+        _mangaImageUrl = FileStreamApi.GetStreamImagePath(mangaDto.Logo, 560);
+        _manwhaImageUrl = FileStreamApi.GetStreamImagePath(manwhaDto.Logo);
         _isLoading = false;
 
         StateHasChanged();

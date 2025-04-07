@@ -42,7 +42,7 @@ public partial class MangaList
         _totalPages = currentPageResponse.TotalPages;
         _mangaList = currentPageResponse.Items.ToList();
         foreach (var manga in _mangaList)
-            manga.Logo = FileStreamApi.GetStreamImagePath([manga.Logo], 20);
+            manga.Logo = FileStreamApi.GetStreamImagePath(manga.Logo, 210);
     }
 
     private async Task<ListResponse<MangaDto>> FetchPage(FiltersRequest filters)

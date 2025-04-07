@@ -1,4 +1,5 @@
 ﻿using MediaVisualizer.Shared.ExtensionMethods;
+using MediaVisualizer.Shared.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediaVisualizer.Api.Controllers;
@@ -19,7 +20,7 @@ public class FileStreamController : ControllerBase
     {
         if (!System.IO.File.Exists(filePath))
         {
-            _logger.LogWarning("File not found: {FilePath}", filePath);
+            _logger.LogError("File not found: {FilePath}", filePath);
             return NotFound();
         }
 
@@ -31,17 +32,19 @@ public class FileStreamController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> StreamImage([FromQuery] string filePath, [FromQuery] double? percentage)
+    public async Task<IActionResult> StreamImage([FromQuery] ImageRequest request)
     {
-        _logger.LogInformation("Processing image: {FilePath} with percentage: {Percentage}", filePath, percentage);
+        _logger.LogInformation("Processing image: {FilePath} with width: {Width} and height: {Height}",
+            request.FilePath, request.Width, request.Height);
 
-        if (!System.IO.File.Exists(filePath))
+        var decodedFilePath = Uri.UnescapeDataString(request.FilePath);
+        if (!System.IO.File.Exists(decodedFilePath))
         {
-            _logger.LogWarning("File not found: {FilePath}", filePath);
+            _logger.LogError("File not found: {FilePath}", decodedFilePath);
             return NotFound();
         }
 
-        var resizedImageStream = await filePath.ResizeImageToStream(percentage);
+        var resizedImageStream = await decodedFilePath.ResizeImageToStream(request.Width, request.Height);
         return new FileStreamResult(resizedImageStream, "image/jpeg");
     }
 }

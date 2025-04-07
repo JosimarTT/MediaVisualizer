@@ -1,4 +1,7 @@
-﻿namespace MediaVisualizer.Web.Api;
+﻿using MediaVisualizer.Shared.Requests;
+using MediaVisualizer.Web.Helpers;
+
+namespace MediaVisualizer.Web.Api;
 
 public class FileStreamApi : IFileStreamApi
 {
@@ -9,24 +12,28 @@ public class FileStreamApi : IFileStreamApi
         _httpClient = httpClient;
     }
 
-    public string GetStreamVideoPath(string[] paths)
+    public string GetStreamVideoPath(string filePath)
     {
-        var filePath = Path.Combine(paths[0]);
         var encodedFilePath = Uri.EscapeDataString(filePath);
         return $"{_httpClient.BaseAddress}FileStream/StreamVideo?filePath={encodedFilePath}";
     }
 
-    public string GetStreamImagePath(string[] paths, double? percentage = null)
+    public string GetStreamImagePath(string filePath, int? width = null, int? height = null)
     {
-        var filePath = Path.Combine(paths[0]);
         var encodedFilePath = Uri.EscapeDataString(filePath);
-        var percentageQuery = percentage.HasValue ? $"&percentage={percentage.Value}" : string.Empty;
-        return $"{_httpClient.BaseAddress}FileStream/StreamImage?filePath={encodedFilePath}{percentageQuery}";
+        var filters = new ImageRequest
+        {
+            FilePath = encodedFilePath,
+            Width = width,
+            Height = height
+        };
+        var query = FiltersRequestHelper.BuildImageRequest(filters);
+        return $"{_httpClient.BaseAddress}FileStream/StreamImage?{query}";
     }
 }
 
 public interface IFileStreamApi
 {
-    string GetStreamVideoPath(string[] paths);
-    string GetStreamImagePath(string[] paths, double? percentage = null);
+    string GetStreamVideoPath(string filePath);
+    string GetStreamImagePath(string filePath, int? width = null, int? height = null);
 }

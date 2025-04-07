@@ -50,8 +50,8 @@ public partial class MangaDetail
             _pages.Add(new PageIsLoading
             {
                 pageNumber = i,
-                pagePath = FileStreamApi.GetStreamImagePath([filePath], 20),
-                pageFullPath = FileStreamApi.GetStreamImagePath([filePath])
+                pagePath = FileStreamApi.GetStreamImagePath(filePath, 210),
+                pageFullPath = FileStreamApi.GetStreamImagePath(filePath)
             });
         }
     }

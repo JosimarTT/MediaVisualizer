@@ -10,5 +10,4 @@ public class FiltersRequest
     public List<int>? BrandIds { get; set; }
     public List<int>? ArtistIds { get; set; }
     public string? Title { get; set; }
-    public double? Percentage { get; set; }
 }

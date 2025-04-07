@@ -17,7 +17,19 @@ public static class FiltersRequestHelper
         if (filters.BrandIds != null) query["BrandIds"] = string.Join(",", filters.BrandIds);
         if (filters.ArtistIds != null) query["ArtistIds"] = string.Join(",", filters.ArtistIds);
         if (!string.IsNullOrEmpty(filters.Title)) query["Title"] = filters.Title;
-        if (filters.Percentage.HasValue) query["Percentage"] = filters.Percentage.Value.ToString();
+
+        return query;
+    }
+
+    public static NameValueCollection BuildImageRequest(ImageRequest filters)
+    {
+        if (string.IsNullOrWhiteSpace(filters.FilePath))
+            throw new ArgumentException("FilePath cannot be null or empty");
+
+        var query = HttpUtility.ParseQueryString(string.Empty);
+        query["FilePath"] = filters.FilePath;
+        if (filters.Height.HasValue) query["Height"] = filters.Height.Value.ToString();
+        if (filters.Width.HasValue) query["Width"] = filters.Width.Value.ToString();
 
         return query;
     }

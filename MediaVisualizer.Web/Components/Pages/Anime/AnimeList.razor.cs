@@ -25,7 +25,7 @@ public partial class AnimeList
         var response = await AnimeApi.GetList(filters);
         _animeList = response.Items.ToList();
         foreach (var anime in _animeList)
-            anime.Logo = FileStreamApi.GetStreamImagePath([anime.Logo]);
+            anime.Logo = FileStreamApi.GetStreamImagePath(anime.Logo);
         _totalPages = response.TotalPages;
         _currentPage = filters.Page ?? 1;
         _isLoading = false;

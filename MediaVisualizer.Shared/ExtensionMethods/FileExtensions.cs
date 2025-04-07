@@ -6,14 +6,17 @@ namespace MediaVisualizer.Shared.ExtensionMethods;
 
 public static class FileExtensions
 {
-    public static async Task<Stream> ResizeImageToStream(this string filePath, double? percentage)
+    public static async Task<Stream> ResizeImageToStream(this string filePath, int? width, int? height)
     {
         var image = await Image.LoadAsync(filePath);
-        if (percentage.HasValue)
+        if (width.HasValue || height.HasValue)
         {
-            var width = (int)(image.Width * (percentage.Value / 100));
-            var height = (int)(image.Height * (percentage.Value / 100));
-            image.Mutate(x => x.Resize(width, height));
+            var resizeOptions = new ResizeOptions
+            {
+                Mode = ResizeMode.Max,
+                Size = new Size(width ?? 0, height ?? 0)
+            };
+            image.Mutate(x => x.Resize(resizeOptions));
         }
 
         var stream = new MemoryStream();

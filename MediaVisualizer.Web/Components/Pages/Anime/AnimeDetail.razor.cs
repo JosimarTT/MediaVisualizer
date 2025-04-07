@@ -8,11 +8,12 @@ namespace MediaVisualizer.Web.Components.Pages.Anime;
 public partial class AnimeDetail
 {
     private bool _isFirstRender = true;
-    [Parameter] public int AnimeId { get; set; }
     private AnimeDto Anime { get; set; }
 
-    [Inject] private IAnimeApi AnimeApi { get; set; }
-    [Inject] private IFileStreamApi FileStreamApi { get; set; }
+    [Parameter] public int AnimeId { get; set; }
+
+    [Inject] private IAnimeApi AnimeApi { get; set; } = null!;
+    [Inject] private IFileStreamApi FileStreamApi { get; set; } = null!;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -20,7 +21,7 @@ public partial class AnimeDetail
         {
             _isFirstRender = false;
             Anime = await AnimeApi.Get(AnimeId);
-            await SetVideoSource(FileStreamApi.GetStreamVideoPath([Anime.Video]));
+            await SetVideoSource(FileStreamApi.GetStreamVideoPath(Anime.Video));
         }
     }
 
