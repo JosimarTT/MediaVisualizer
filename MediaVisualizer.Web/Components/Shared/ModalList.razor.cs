@@ -14,13 +14,11 @@ public partial class ModalList
 
     public Task ShowModal()
     {
-        if (_modalRef == null) throw new InvalidOperationException("Modal reference is not set.");
         return _modalRef.Show();
     }
 
     public Task HideModal()
     {
-        if (_modalRef == null) throw new InvalidOperationException("Modal reference is not set.");
         return _modalRef.Hide();
     }
 

@@ -4,11 +4,10 @@
 
 .hover-effect:hover {
     border-color: #0d6efd;
-    box-shadow: 0 0 20px rgba(13, 110, 253, 0.5);
+    box-shadow: 0 0 20px 20px rgba(13, 110, 253, 0.5);
 }
 
 .card {
-    cursor: pointer;
     width: 35rem;
     padding: 0;
 }
