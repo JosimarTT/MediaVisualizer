@@ -1,6 +1,7 @@
 ﻿using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared.Requests;
 using MediaVisualizer.Web.Api;
+using MediaVisualizer.Web.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Pages.Anime;
@@ -14,6 +15,7 @@ public partial class AnimeList
 
     [Inject] private IAnimeApi AnimeApi { get; set; } = null!;
     [Inject] private IFileStreamApi FileStreamApi { get; set; } = null!;
+    [Inject] private IFiltersStateService FiltersStateService { get; set; } = null!;
 
     private async Task FetchAnimeList(FiltersRequest filters)
     {
@@ -38,6 +40,7 @@ public partial class AnimeList
     public async Task OnPageChanged(int newPage)
     {
         _currentPage = newPage;
+
         await FetchAnimeList(new FiltersRequest { Size = 18, Page = newPage });
     }
 }

@@ -1,6 +1,6 @@
 ﻿using MediaVisualizer.Web.Api;
 using MediaVisualizer.Web.Constants;
-using MediaVisualizer.Web.Storage;
+using MediaVisualizer.Web.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Pages;

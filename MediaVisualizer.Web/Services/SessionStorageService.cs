@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using Microsoft.JSInterop;
 
-namespace MediaVisualizer.Web.Storage;
+namespace MediaVisualizer.Web.Services;
 
 public class SessionStorageService : ISessionStorageService
 {

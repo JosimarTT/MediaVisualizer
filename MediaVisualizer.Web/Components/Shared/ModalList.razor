@@ -11,7 +11,7 @@
                     @foreach (var item in Items)
                     {
                         <span class="badge @(_activeItems.Contains(item) ? "active" : "")"
-                              @onclick="() => ToggleFilter(item)">
+                              @onclick="() => ToggleItemSelected(item)">
                             @item
                         </span>
                     }
@@ -20,7 +20,7 @@
         </ModalBody>
         <ModalFooter>
             <Button Color="Color.Secondary" @onclick="ClearFilters">Reset</Button>
-            <Button Color="Color.Primary" @onclick="() => OnItemsSelected.InvokeAsync(_activeItems)">Search</Button>
+            <Button Color="Color.Primary" @onclick="TriggerSearch">Search</Button>
         </ModalFooter>
     </ModalContent>
 </Modal>

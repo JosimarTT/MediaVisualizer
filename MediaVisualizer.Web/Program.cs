@@ -3,7 +3,7 @@ using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using MediaVisualizer.Web.Api;
 using MediaVisualizer.Web.Components;
-using MediaVisualizer.Web.Storage;
+using MediaVisualizer.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +31,7 @@ builder.Services.AddScoped<IFileStreamApi, FileStreamApi>();
 
 // Register other Services
 builder.Services.AddScoped<ISessionStorageService, SessionStorageService>();
+builder.Services.AddScoped<IFiltersStateService, FiltersStateService>();
 
 // Register Blazorise
 builder.Services

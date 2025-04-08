@@ -1,4 +1,5 @@
 ﻿using Blazorise;
+using MediaVisualizer.Web.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Shared;
@@ -10,7 +11,10 @@ public partial class ModalList
 
     [Parameter] public string Title { get; set; } = null!;
     [Parameter] public List<string>? Items { get; set; }
-    [Parameter] public EventCallback<List<string>> OnItemsSelected { get; set; }
+    [Parameter] public EventCallback<List<string>> OnSearchClicked { get; set; }
+
+    [Inject] private ISessionStorageService SessionStorageService { get; set; } = null!;
+    [Inject] private IFiltersStateService FiltersStateService { get; set; } = null!;
 
     public Task ShowModal()
     {
@@ -22,7 +26,7 @@ public partial class ModalList
         return _modalRef.Hide();
     }
 
-    private void ToggleFilter(string item)
+    private void ToggleItemSelected(string item)
     {
         if (!_activeItems.Remove(item))
             _activeItems.Add(item);
@@ -31,5 +35,11 @@ public partial class ModalList
     private void ClearFilters()
     {
         _activeItems.Clear();
+    }
+
+    private async Task TriggerSearch()
+    {
+        await OnSearchClicked.InvokeAsync(_activeItems);
+        await _modalRef.Hide();
     }
 }
