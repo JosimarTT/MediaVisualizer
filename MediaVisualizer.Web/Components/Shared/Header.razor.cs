@@ -1,4 +1,5 @@
-﻿using MediaVisualizer.Web.Api;
+﻿using MediaVisualizer.Shared.Requests;
+using MediaVisualizer.Web.Api;
 using MediaVisualizer.Web.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
@@ -9,6 +10,7 @@ public partial class Header : IDisposable
 {
     private ModalList _artistsModalRef;
     private ModalList _brandsModalRef;
+    private FiltersRequest _filters = new();
     private ModalList _tagsModalRef;
     private List<string> artistItems = [];
     private List<string> brandItems = [];
@@ -25,6 +27,20 @@ public partial class Header : IDisposable
     public void Dispose()
     {
         NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+    private void UpdateFilters()
+    {
+        var filters = new FiltersRequest
+        {
+            // Set filter properties as needed
+        };
+        FiltersStateService.UpdateFilters(filters);
+    }
+
+    private void ClearFilters()
+    {
+        FiltersStateService.ClearFilters();
     }
 
     protected override void OnInitialized()
@@ -72,6 +88,9 @@ public partial class Header : IDisposable
             .Where(x => selectedItems.Contains(x.Name))
             .Select(x => x.ArtistId)
             .ToList();
+
+        _filters.ArtistIds = selectedArtists;
+        FiltersStateService.UpdateFilters(_filters);
     }
 
     private async Task HandleBrandsSearchClicked(List<string> selectedItems)
@@ -82,7 +101,8 @@ public partial class Header : IDisposable
             .Select(x => x.BrandId)
             .ToList();
 
-        // Do something with the selected brands
+        _filters.BrandIds = selectedBrands;
+        FiltersStateService.UpdateFilters(_filters);
     }
 
     private async Task HandleTagsSearchClicked(List<string> selectedItems)
@@ -93,6 +113,7 @@ public partial class Header : IDisposable
             .Select(x => x.TagId)
             .ToList();
 
-        // Do something with the selected tags
+        _filters.TagIds = selectedTags;
+        FiltersStateService.UpdateFilters(_filters);
     }
 }

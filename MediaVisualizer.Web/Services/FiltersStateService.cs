@@ -5,7 +5,6 @@ namespace MediaVisualizer.Web.Services;
 public class FiltersStateService : IFiltersStateService
 {
     public FiltersRequest Filters { get; private set; } = new();
-
     public event Action? OnFiltersChanged;
 
     public void UpdateFilters(FiltersRequest filters)
