@@ -8,15 +8,15 @@ namespace MediaVisualizer.Web.Components.Shared;
 
 public partial class Header : IDisposable
 {
-    private ModalList _artistsModalRef;
-    private ModalList _brandsModalRef;
+    private List<string> _artistItems = [];
+    private ModalList _artistsModalRef = null!;
+    private List<string> _brandItems = [];
+    private ModalList _brandsModalRef = null!;
     private FiltersRequest _filters = new();
-    private ModalList _tagsModalRef;
-    private List<string> artistItems = [];
-    private List<string> brandItems = [];
-    private bool isModalVisible = false;
-    private string modalTitle;
-    private List<string> tagItems = [];
+    private bool _isModalVisible = false;
+    private string _modalTitle = string.Empty;
+    private List<string> _tagItems = [];
+    private ModalList _tagsModalRef = null!;
 
     [Inject] private IBrandApi BrandApi { get; set; } = null!;
     [Inject] private IArtistApi ArtistApi { get; set; } = null!;
@@ -26,42 +26,38 @@ public partial class Header : IDisposable
 
     public void Dispose()
     {
-        NavigationManager.LocationChanged -= OnLocationChanged;
-    }
-
-    private void ClearFilters()
-    {
-        FiltersStateService.ClearFilters();
+        NavigationManager.LocationChanged -= OnLocationChanged!;
     }
 
     protected override void OnInitialized()
     {
-        NavigationManager.LocationChanged += OnLocationChanged;
+        NavigationManager.LocationChanged += OnLocationChanged!;
     }
 
     private void OnLocationChanged(object sender, LocationChangedEventArgs e)
     {
+        ClearAllFilters();
         StateHasChanged();
     }
 
     private async Task ShowModal(string title)
     {
-        modalTitle = title;
+        _modalTitle = title;
         switch (title)
         {
             case "Tags":
                 var tags = await TagApi.GetListAsync();
-                tagItems = tags.Select(x => x.Name).ToList();
+                _tagItems = tags.Select(x => x.Name).ToList();
                 await _tagsModalRef.ShowModal();
                 break;
             case "Artists":
                 var artists = await ArtistApi.GetListAsync();
-                artistItems = artists.Select(x => x.Name).ToList();
+                _artistItems = artists.Select(x => x.Name).ToList();
                 await _artistsModalRef.ShowModal();
                 break;
             case "Brands":
                 var brands = await BrandApi.GetListAsync();
-                brandItems = brands.Select(x => x.Name).ToList();
+                _brandItems = brands.Select(x => x.Name).ToList();
                 await _brandsModalRef.ShowModal();
                 break;
         }
@@ -106,5 +102,13 @@ public partial class Header : IDisposable
 
         _filters.TagIds = selectedTags;
         FiltersStateService.UpdateFilters(_filters);
+    }
+
+    private void ClearAllFilters()
+    {
+        FiltersStateService.ClearFilters();
+        _artistsModalRef.ClearFilters();
+        _brandsModalRef.ClearFilters();
+        _tagsModalRef.ClearFilters();
     }
 }

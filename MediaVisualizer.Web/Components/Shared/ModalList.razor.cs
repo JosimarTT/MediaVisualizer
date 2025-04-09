@@ -32,7 +32,7 @@ public partial class ModalList
             _activeItems.Add(item);
     }
 
-    private void ClearFilters()
+    public void ClearFilters()
     {
         _activeItems.Clear();
     }
