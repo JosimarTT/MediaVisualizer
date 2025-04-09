@@ -7,6 +7,7 @@ namespace MediaVisualizer.Web.Api;
 
 public class MangaApi : IMangaApi
 {
+    private const string BaseUrl = "Manga";
     private readonly HttpClient _httpClient;
 
     public MangaApi(HttpClient httpClient)
@@ -14,26 +15,31 @@ public class MangaApi : IMangaApi
         _httpClient = httpClient;
     }
 
-    public Task<MangaDto> Get(int mangaId)
+    public Task<MangaDto> GetAsync(int mangaId)
     {
-        return _httpClient.GetFromJsonAsync<MangaDto>($"Manga/{mangaId}");
+        return _httpClient.GetFromJsonAsync<MangaDto>($"{BaseUrl}/{mangaId}");
     }
 
-    public Task<MangaDto> GetRandom()
+    public Task<MangaDto> GetRandomAsync()
     {
-        return _httpClient.GetFromJsonAsync<MangaDto>("Manga/GetRandom");
+        return _httpClient.GetFromJsonAsync<MangaDto>($"{BaseUrl}/GetRandom");
     }
 
-    public Task<ListResponse<MangaDto>> GetList(FiltersRequest filters)
+    public Task<ListResponse<MangaDto>> GetListAsync(FiltersRequest filters)
     {
         var query = FiltersRequestHelper.BuildFiltersRequest(filters);
-        return _httpClient.GetFromJsonAsync<ListResponse<MangaDto>>($"Manga/GetList?{query}");
+        return _httpClient.GetFromJsonAsync<ListResponse<MangaDto>>($"{BaseUrl}/GetList?{query}");
+    }
+
+    public Task<List<string>> GetTitlesAsync()
+    {
+        return _httpClient.GetFromJsonAsync<List<string>>($"{BaseUrl}/GetTitles");
     }
 }
 
 public interface IMangaApi
 {
-    Task<MangaDto> Get(int mangaId);
-    Task<MangaDto> GetRandom();
-    Task<ListResponse<MangaDto>> GetList(FiltersRequest filters);
+    Task<MangaDto> GetAsync(int mangaId);
+    Task<MangaDto> GetRandomAsync();
+    Task<ListResponse<MangaDto>> GetListAsync(FiltersRequest filters);
 }

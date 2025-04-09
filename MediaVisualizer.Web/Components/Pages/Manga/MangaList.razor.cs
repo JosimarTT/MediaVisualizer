@@ -47,7 +47,7 @@ public partial class MangaList
 
     private async Task<ListResponse<MangaDto>> FetchPage(FiltersRequest filters)
     {
-        var response = await MangaApi.GetList(filters);
+        var response = await MangaApi.GetListAsync(filters);
         response.Page = filters.Page ?? 1;
         return response;
     }

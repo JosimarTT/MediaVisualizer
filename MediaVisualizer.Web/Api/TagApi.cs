@@ -4,6 +4,7 @@ namespace MediaVisualizer.Web.Api;
 
 public class TagApi : ITagApi
 {
+    private const string BaseUrl = "Tag";
     private readonly HttpClient _httpClient;
 
     public TagApi(HttpClient httpClient)
@@ -11,13 +12,13 @@ public class TagApi : ITagApi
         _httpClient = httpClient;
     }
 
-    public Task<List<TagDto>> GetList()
+    public Task<List<TagDto>> GetListAsync()
     {
-        return _httpClient.GetFromJsonAsync<List<TagDto>>("Tag/GetList");
+        return _httpClient.GetFromJsonAsync<List<TagDto>>($"{BaseUrl}/GetList");
     }
 }
 
 public interface ITagApi
 {
-    Task<List<TagDto>> GetList();
+    Task<List<TagDto>> GetListAsync();
 }

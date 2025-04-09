@@ -36,7 +36,7 @@ public partial class AnimeList
     private async Task FetchAnimeList(FiltersRequest filters)
     {
         _isLoading = true;
-        var response = await AnimeApi.GetList(filters);
+        var response = await AnimeApi.GetListAsync(filters);
         _animeList = response.Items.ToList();
         foreach (var anime in _animeList)
             anime.Logo = FileStreamApi.GetStreamImagePath(anime.Logo);

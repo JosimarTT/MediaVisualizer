@@ -4,6 +4,7 @@ namespace MediaVisualizer.Web.Api;
 
 public class ArtistApi : IArtistApi
 {
+    private const string BaseUrl = "Artist";
     private readonly HttpClient _httpClient;
 
     public ArtistApi(HttpClient httpClient)
@@ -11,13 +12,13 @@ public class ArtistApi : IArtistApi
         _httpClient = httpClient;
     }
 
-    public Task<List<ArtistDto>> GetList()
+    public Task<List<ArtistDto>> GetListAsync()
     {
-        return _httpClient.GetFromJsonAsync<List<ArtistDto>>("Artist/GetList");
+        return _httpClient.GetFromJsonAsync<List<ArtistDto>>($"{BaseUrl}/GetList");
     }
 }
 
 public interface IArtistApi
 {
-    Task<List<ArtistDto>> GetList();
+    Task<List<ArtistDto>> GetListAsync();
 }

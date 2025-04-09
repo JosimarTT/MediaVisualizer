@@ -28,12 +28,12 @@ public partial class Index
 
         _isLoading = true;
 
-        var animeTask = AnimeApi.GetRandom();
-        var mangaTask = MangaApi.GetRandom();
-        var manwhaTask = ManwhaApi.GetRandom();
-        var brandTask = BrandApi.GetList();
-        var artistTask = ArtistApi.GetList();
-        var tagTask = TagApi.GetList();
+        var animeTask = AnimeApi.GetRandomAsync();
+        var mangaTask = MangaApi.GetRandomAsync();
+        var manwhaTask = ManwhaApi.GetRandomAsync();
+        var brandTask = BrandApi.GetListAsync();
+        var artistTask = ArtistApi.GetListAsync();
+        var tagTask = TagApi.GetListAsync();
 
         await Task.WhenAll(animeTask, mangaTask, manwhaTask, brandTask, artistTask, tagTask);
 

@@ -20,7 +20,7 @@ public partial class AnimeDetail
         if (firstRender && _isFirstRender)
         {
             _isFirstRender = false;
-            Anime = await AnimeApi.Get(AnimeId);
+            Anime = await AnimeApi.GetAsync(AnimeId);
             await SetVideoSource(FileStreamApi.GetStreamVideoPath(Anime.Video));
         }
     }

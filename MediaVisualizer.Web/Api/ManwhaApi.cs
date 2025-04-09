@@ -4,6 +4,7 @@ namespace MediaVisualizer.Web.Api;
 
 public class ManwhaApi : IManwhaApi
 {
+    private const string BaseUrl = "Manwha";
     private readonly HttpClient _httpClient;
 
     public ManwhaApi(HttpClient httpClient)
@@ -11,19 +12,24 @@ public class ManwhaApi : IManwhaApi
         _httpClient = httpClient;
     }
 
-    public Task<ManwhaDto> Get(int manwhaId)
+    public Task<ManwhaDto> GetAsync(int manwhaId)
     {
-        return _httpClient.GetFromJsonAsync<ManwhaDto>($"Manwha/{manwhaId}");
+        return _httpClient.GetFromJsonAsync<ManwhaDto>($"{BaseUrl}/{manwhaId}");
     }
 
-    public Task<ManwhaDto> GetRandom()
+    public Task<ManwhaDto> GetRandomAsync()
     {
-        return _httpClient.GetFromJsonAsync<ManwhaDto>("Manwha/GetRandom");
+        return _httpClient.GetFromJsonAsync<ManwhaDto>($"{BaseUrl}/GetRandom");
+    }
+
+    public Task<List<string>> GetTitlesAsync()
+    {
+        return _httpClient.GetFromJsonAsync<List<string>>($"{BaseUrl}/GetTitles");
     }
 }
 
 public interface IManwhaApi
 {
-    Task<ManwhaDto> Get(int manwhaId);
-    Task<ManwhaDto> GetRandom();
+    Task<ManwhaDto> GetAsync(int manwhaId);
+    Task<ManwhaDto> GetRandomAsync();
 }

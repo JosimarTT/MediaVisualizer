@@ -33,7 +33,7 @@ public partial class MangaDetail
     {
         if (!firstRender) return;
 
-        _manga = await MangaApi.Get(MangaId);
+        _manga = await MangaApi.GetAsync(MangaId);
         _totalPages = (int)Math.Ceiling((double)_manga.PagesCount / PageSize);
         await LoadPages();
         _isLoading = false;

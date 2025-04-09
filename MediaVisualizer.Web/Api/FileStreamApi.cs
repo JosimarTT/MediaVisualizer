@@ -5,6 +5,7 @@ namespace MediaVisualizer.Web.Api;
 
 public class FileStreamApi : IFileStreamApi
 {
+    private const string BaseUrl = "FileStream";
     private readonly HttpClient _httpClient;
 
     public FileStreamApi(HttpClient httpClient)
@@ -15,7 +16,7 @@ public class FileStreamApi : IFileStreamApi
     public string GetStreamVideoPath(string filePath)
     {
         var encodedFilePath = Uri.EscapeDataString(filePath);
-        return $"{_httpClient.BaseAddress}FileStream/StreamVideo?filePath={encodedFilePath}";
+        return $"{_httpClient.BaseAddress}{BaseUrl}/StreamVideo?filePath={encodedFilePath}";
     }
 
     public string GetStreamImagePath(string filePath, int? width = null, int? height = null)
@@ -28,7 +29,7 @@ public class FileStreamApi : IFileStreamApi
             Height = height
         };
         var query = FiltersRequestHelper.BuildImageRequest(filters);
-        return $"{_httpClient.BaseAddress}FileStream/StreamImage?{query}";
+        return $"{_httpClient.BaseAddress}{BaseUrl}/StreamImage?{query}";
     }
 }
 

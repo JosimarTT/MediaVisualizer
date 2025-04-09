@@ -50,17 +50,17 @@ public partial class Header : IDisposable
         switch (title)
         {
             case "Tags":
-                var tags = await TagApi.GetList();
+                var tags = await TagApi.GetListAsync();
                 tagItems = tags.Select(x => x.Name).ToList();
                 await _tagsModalRef.ShowModal();
                 break;
             case "Artists":
-                var artists = await ArtistApi.GetList();
+                var artists = await ArtistApi.GetListAsync();
                 artistItems = artists.Select(x => x.Name).ToList();
                 await _artistsModalRef.ShowModal();
                 break;
             case "Brands":
-                var brands = await BrandApi.GetList();
+                var brands = await BrandApi.GetListAsync();
                 brandItems = brands.Select(x => x.Name).ToList();
                 await _brandsModalRef.ShowModal();
                 break;
@@ -74,7 +74,7 @@ public partial class Header : IDisposable
 
     private async Task HandleArtistsSearchClicked(List<string> selectedItems)
     {
-        var artists = await ArtistApi.GetList();
+        var artists = await ArtistApi.GetListAsync();
         var selectedArtists = artists
             .Where(x => selectedItems.Contains(x.Name))
             .Select(x => x.ArtistId)
@@ -86,7 +86,7 @@ public partial class Header : IDisposable
 
     private async Task HandleBrandsSearchClicked(List<string> selectedItems)
     {
-        var brands = await BrandApi.GetList();
+        var brands = await BrandApi.GetListAsync();
         var selectedBrands = brands
             .Where(x => selectedItems.Contains(x.Name))
             .Select(x => x.BrandId)
@@ -98,7 +98,7 @@ public partial class Header : IDisposable
 
     private async Task HandleTagsSearchClicked(List<string> selectedItems)
     {
-        var tags = await TagApi.GetList();
+        var tags = await TagApi.GetListAsync();
         var selectedTags = tags
             .Where(x => selectedItems.Contains(x.Name))
             .Select(x => x.TagId)
