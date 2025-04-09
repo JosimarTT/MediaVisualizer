@@ -18,6 +18,12 @@ public partial class Header : IDisposable
     private List<string> _tagItems = [];
     private ModalFilter _tagsModalRef = null!;
 
+
+    private IEnumerable<string> AnimeTitles = new List<string> { "Naruto", "One Piece", "Attack on Titan" };
+    private string selectedAutoCompleteText;
+    private string selectedSearchValue;
+
+
     [Inject] private IBrandApi BrandApi { get; set; } = null!;
     [Inject] private IArtistApi ArtistApi { get; set; } = null!;
     [Inject] private ITagApi TagApi { get; set; } = null!;
@@ -27,6 +33,11 @@ public partial class Header : IDisposable
     public void Dispose()
     {
         NavigationManager.LocationChanged -= OnLocationChanged!;
+    }
+
+    private void HandleSearchChanged(string value)
+    {
+        Console.WriteLine($"Selected Value: {value}");
     }
 
     protected override void OnInitialized()

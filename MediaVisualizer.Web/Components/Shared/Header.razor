@@ -37,13 +37,14 @@
             </li>
             <li class="nav-item">
                 <div class="input-group" style="width: 500px">
-                    <input class="form-control" id="search-title" placeholder="Search title" type="text">
+                    <AutocompleteSingleFilter Items="@AnimeTitles" OnSearchChanged="HandleSearchChanged"/>
                 </div>
             </li>
         </ul>
     </div>
 </header>
 
-<ModalFilter @ref="_artistsModalRef" Title="Artists" Items="@_artistItems" OnSearchClicked="HandleArtistsSearchClicked"/>
+<ModalFilter @ref="_artistsModalRef" Title="Artists" Items="@_artistItems"
+             OnSearchClicked="HandleArtistsSearchClicked"/>
 <ModalFilter @ref="_brandsModalRef" Title="Brands" Items="@_brandItems" OnSearchClicked="HandleBrandsSearchClicked"/>
 <ModalFilter @ref="_tagsModalRef" Title="Tags" Items="@_tagItems" OnSearchClicked="HandleTagsSearchClicked"/>
