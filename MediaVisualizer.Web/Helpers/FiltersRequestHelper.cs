@@ -9,28 +9,42 @@ public static class FiltersRequestHelper
     public static NameValueCollection BuildFiltersRequest(FiltersRequest filters)
     {
         var query = HttpUtility.ParseQueryString(string.Empty);
-        if (filters.Size.HasValue) query["Size"] = filters.Size.Value.ToString();
-        if (filters.Page.HasValue) query["Page"] = filters.Page.Value.ToString();
-        if (!string.IsNullOrEmpty(filters.SortOrder)) query["SortOrder"] = filters.SortOrder;
-        if (filters.AuthorIds != null) query["AuthorIds"] = string.Join(",", filters.AuthorIds);
-        if (filters.TagIds != null) query["TagIds"] = string.Join(",", filters.TagIds);
-        if (filters.BrandIds != null) query["BrandIds"] = string.Join(",", filters.BrandIds);
-        if (filters.ArtistIds != null) query["ArtistIds"] = string.Join(",", filters.ArtistIds);
-        if (!string.IsNullOrEmpty(filters.Title)) query["Title"] = filters.Title;
+
+        AddQueryParameter(query, "Size", filters.Size?.ToString());
+        AddQueryParameter(query, "Page", filters.Page?.ToString());
+        AddQueryParameter(query, "SortOrder", filters.SortOrder);
+        AddArrayQueryParameters(query, "AuthorIds", filters.AuthorIds);
+        AddArrayQueryParameters(query, "TagIds", filters.TagIds);
+        AddArrayQueryParameters(query, "BrandIds", filters.BrandIds);
+        AddArrayQueryParameters(query, "ArtistIds", filters.ArtistIds);
+        AddQueryParameter(query, "Title", filters.Title);
 
         return query;
     }
 
     public static NameValueCollection BuildImageRequest(ImageRequest filters)
     {
-        if (string.IsNullOrWhiteSpace(filters.FilePath))
-            throw new ArgumentException("FilePath cannot be null or empty");
-
         var query = HttpUtility.ParseQueryString(string.Empty);
-        query["FilePath"] = filters.FilePath;
-        if (filters.Height.HasValue) query["Height"] = filters.Height.Value.ToString();
-        if (filters.Width.HasValue) query["Width"] = filters.Width.Value.ToString();
+
+        AddQueryParameter(query, "FilePath", filters.FilePath);
+        AddQueryParameter(query, "Width", filters.Width?.ToString());
+        AddQueryParameter(query, "Height", filters.Height?.ToString());
 
         return query;
+    }
+
+    private static void AddQueryParameter(NameValueCollection query, string key, string? value)
+    {
+        if (!string.IsNullOrEmpty(value))
+            query[key] = value;
+    }
+
+    private static void AddArrayQueryParameters(NameValueCollection query, string key, IEnumerable<int>? values)
+    {
+        if (values == null)
+            return;
+
+        foreach (var value in values)
+            query.Add(key, value.ToString());
     }
 }

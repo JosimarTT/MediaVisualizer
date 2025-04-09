@@ -29,15 +29,6 @@ public partial class Header : IDisposable
         NavigationManager.LocationChanged -= OnLocationChanged;
     }
 
-    private void UpdateFilters()
-    {
-        var filters = new FiltersRequest
-        {
-            // Set filter properties as needed
-        };
-        FiltersStateService.UpdateFilters(filters);
-    }
-
     private void ClearFilters()
     {
         FiltersStateService.ClearFilters();

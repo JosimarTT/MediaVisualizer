@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using MediaVisualizer.Services.Dtos;
+﻿using MediaVisualizer.Services.Dtos;
 using MediaVisualizer.Shared.Requests;
 using MediaVisualizer.Web.Api;
 using MediaVisualizer.Web.Services;
@@ -23,14 +22,10 @@ public partial class AnimeList
         FiltersStateService.OnFiltersChanged += HandleFiltersChanged;
     }
 
-    private void HandleFiltersChanged()
+    private async void HandleFiltersChanged()
     {
-        var filters = FiltersStateService.Filters;
-        var filtersJson = JsonSerializer.Serialize(FiltersStateService.Filters, new JsonSerializerOptions
-        {
-            WriteIndented = true // Makes the JSON output more readable
-        });
-        Console.WriteLine(filtersJson);
+        await FetchAnimeList(FiltersStateService.Filters);
+        StateHasChanged();
     }
 
     public void Dispose()
