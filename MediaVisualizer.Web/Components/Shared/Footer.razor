@@ -10,7 +10,7 @@
                     </PaginationLink>
                 </PaginationItem>
                 @{
-                    var maxDisplayedPages = 5;
+                    const int maxDisplayedPages = 5;
                     var startPage = Math.Max(1, _currentPage - maxDisplayedPages / 2);
                     var endPage = Math.Min(_totalPages, startPage + maxDisplayedPages - 1);
 

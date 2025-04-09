@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Shared;
 
-public partial class ModalList
+public partial class ModalFilter
 {
     private List<string> _activeItems = [];
     private Modal _modalRef = null!;

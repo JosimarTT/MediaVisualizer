@@ -9,14 +9,14 @@ namespace MediaVisualizer.Web.Components.Shared;
 public partial class Header : IDisposable
 {
     private List<string> _artistItems = [];
-    private ModalList _artistsModalRef = null!;
+    private ModalFilter _artistsModalRef = null!;
     private List<string> _brandItems = [];
-    private ModalList _brandsModalRef = null!;
+    private ModalFilter _brandsModalRef = null!;
     private FiltersRequest _filters = new();
     private bool _isModalVisible = false;
     private string _modalTitle = string.Empty;
     private List<string> _tagItems = [];
-    private ModalList _tagsModalRef = null!;
+    private ModalFilter _tagsModalRef = null!;
 
     [Inject] private IBrandApi BrandApi { get; set; } = null!;
     [Inject] private IArtistApi ArtistApi { get; set; } = null!;
