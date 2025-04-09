@@ -42,4 +42,5 @@ public interface IMangaApi
     Task<MangaDto> GetAsync(int mangaId);
     Task<MangaDto> GetRandomAsync();
     Task<ListResponse<MangaDto>> GetListAsync(FiltersRequest filters);
+    Task<List<string>> GetTitlesAsync();
 }

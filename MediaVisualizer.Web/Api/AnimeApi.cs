@@ -42,4 +42,5 @@ public interface IAnimeApi
     Task<AnimeDto> GetAsync(int animeId);
     Task<AnimeDto> GetRandomAsync();
     Task<ListResponse<AnimeDto>> GetListAsync(FiltersRequest filters);
+    Task<List<string>> GetTitlesAsync();
 }

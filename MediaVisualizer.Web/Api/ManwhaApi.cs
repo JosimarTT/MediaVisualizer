@@ -32,4 +32,5 @@ public interface IManwhaApi
 {
     Task<ManwhaDto> GetAsync(int manwhaId);
     Task<ManwhaDto> GetRandomAsync();
+    Task<List<string>> GetTitlesAsync();
 }
