@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Pages.Anime;
 
-public partial class AnimeList
+public partial class AnimeList : IDisposable
 {
     private List<AnimeDto> _animeList = [];
     private int _currentPage = 1;
@@ -16,6 +16,11 @@ public partial class AnimeList
     [Inject] private IAnimeApi AnimeApi { get; set; } = null!;
     [Inject] private IFileStreamApi FileStreamApi { get; set; } = null!;
     [Inject] private IFiltersStateService FiltersStateService { get; set; } = null!;
+
+    public void Dispose()
+    {
+        FiltersStateService.OnFiltersChanged -= HandleFiltersChanged;
+    }
 
     protected override void OnInitialized()
     {
@@ -28,13 +33,9 @@ public partial class AnimeList
         StateHasChanged();
     }
 
-    public void Dispose()
-    {
-        FiltersStateService.OnFiltersChanged -= HandleFiltersChanged;
-    }
-
     private async Task FetchAnimeList(FiltersRequest filters)
     {
+        Console.WriteLine("Feching anime list...");
         _isLoading = true;
         var response = await AnimeApi.GetListAsync(filters);
         _animeList = response.Items.ToList();
