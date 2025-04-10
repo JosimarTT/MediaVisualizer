@@ -27,7 +27,7 @@ public partial class Header : IDisposable
 
     private IEnumerable<string> _titles = [];
 
-
+    [Inject] private ILogger<Header> Logger { get; set; } = null!;
     [Inject] private IBrandApi BrandApi { get; set; } = null!;
     [Inject] private IArtistApi ArtistApi { get; set; } = null!;
     [Inject] private ITagApi TagApi { get; set; } = null!;
@@ -39,27 +39,32 @@ public partial class Header : IDisposable
 
     public void Dispose()
     {
+        Logger.LogInformation("{MethodName} called", nameof(Dispose));
         NavigationManager.LocationChanged -= OnLocationChanged!;
     }
 
     private void HandleSearchChanged(string value)
     {
+        Logger.LogInformation("{MethodName} called with value: {Value}", nameof(HandleSearchChanged), value);
         _filters.Title = value;
         FiltersStateService.UpdateFilters(_filters);
     }
 
     protected override void OnInitialized()
     {
+        Logger.LogInformation("{MethodName} called", nameof(OnInitialized));
         NavigationManager.LocationChanged += OnLocationChanged!;
     }
 
     protected override async Task OnInitializedAsync()
     {
+        Logger.LogInformation("{MethodName} called", nameof(OnInitializedAsync));
         _titles = await LoadTitles();
     }
 
     private async void OnLocationChanged(object sender, LocationChangedEventArgs e)
     {
+        Logger.LogInformation("{MethodName} called with new URL: {NewUrl}", nameof(OnLocationChanged), e.Location);
         _titles = await LoadTitles();
         ClearAllFilters();
         StateHasChanged();
@@ -67,6 +72,7 @@ public partial class Header : IDisposable
 
     private async Task<List<string>> LoadTitles()
     {
+        Logger.LogInformation("{MethodName} called", nameof(LoadTitles));
         if (IsCurrentPage(Anime))
             return await AnimeApi.GetTitlesAsync();
         if (IsCurrentPage(Manga))
@@ -79,6 +85,7 @@ public partial class Header : IDisposable
 
     private async Task ShowModal(string title)
     {
+        Logger.LogInformation("{MethodName} called with title: {Title}", nameof(ShowModal), title);
         _modalTitle = title;
         switch (title)
         {
@@ -100,13 +107,17 @@ public partial class Header : IDisposable
         }
     }
 
+    // TODO: Find why this method is called twice every time a modal is opened
     private bool IsCurrentPage(string pageName)
     {
+        Logger.LogInformation("{MethodName} called with page name: {PageName}", nameof(IsCurrentPage), pageName);
         return NavigationManager.Uri.Contains(pageName, StringComparison.OrdinalIgnoreCase);
     }
 
     private async Task HandleArtistsSearchClicked(List<string> selectedItems)
     {
+        Logger.LogInformation("{MethodName} called with selected items: {SelectedItems}",
+            nameof(HandleArtistsSearchClicked), string.Join(", ", selectedItems));
         var artists = await ArtistApi.GetListAsync();
         var selectedArtists = artists
             .Where(x => selectedItems.Contains(x.Name))
@@ -119,6 +130,8 @@ public partial class Header : IDisposable
 
     private async Task HandleBrandsSearchClicked(List<string> selectedItems)
     {
+        Logger.LogInformation("{MethodName} called with selected items: {SelectedItems}",
+            nameof(HandleBrandsSearchClicked), string.Join(", ", selectedItems));
         var brands = await BrandApi.GetListAsync();
         var selectedBrands = brands
             .Where(x => selectedItems.Contains(x.Name))
@@ -131,6 +144,8 @@ public partial class Header : IDisposable
 
     private async Task HandleTagsSearchClicked(List<string> selectedItems)
     {
+        Logger.LogInformation("{MethodName} called with selected items: {SelectedItems}",
+            nameof(HandleTagsSearchClicked), string.Join(", ", selectedItems));
         var tags = await TagApi.GetListAsync();
         var selectedTags = tags
             .Where(x => selectedItems.Contains(x.Name))
@@ -143,6 +158,7 @@ public partial class Header : IDisposable
 
     private void ClearAllFilters()
     {
+        Logger.LogInformation("{MethodName} called", nameof(ClearAllFilters));
         FiltersStateService.ClearFilters();
         _artistsModalRef.ClearFilters();
         _brandsModalRef.ClearFilters();
