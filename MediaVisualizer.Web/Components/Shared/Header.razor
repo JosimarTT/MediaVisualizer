@@ -14,7 +14,7 @@
             </ul>
         </div>
         <ul class="nav d-flex align-items-center">
-            @if (IsCurrentPage("manga") || IsCurrentPage("manwha"))
+            @if (IsCurrentPage(Manga) || IsCurrentPage(Manwha))
             {
                 <li class="nav-item me-2">
                     <button class="btn btn-dark" @onclick='() => ShowModal("Artists")'>
@@ -22,7 +22,7 @@
                     </button>
                 </li>
             }
-            @if (IsCurrentPage("anime"))
+            @if (IsCurrentPage(Anime))
             {
                 <li class="nav-item">
                     <button class="btn btn-dark" @onclick='() => ShowModal("Brands")'>
@@ -37,7 +37,7 @@
             </li>
             <li class="nav-item">
                 <div class="input-group" style="width: 500px">
-                    <AutocompleteSingleFilter Items="@AnimeTitles" OnSearchChanged="HandleSearchChanged"/>
+                    <AutocompleteSingleFilter Items="@_titles" OnSearchChanged="HandleSearchChanged"/>
                 </div>
             </li>
         </ul>

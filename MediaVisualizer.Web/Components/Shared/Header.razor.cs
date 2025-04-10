@@ -8,6 +8,12 @@ namespace MediaVisualizer.Web.Components.Shared;
 
 public partial class Header : IDisposable
 {
+    private const string Tags = "Tags";
+    private const string Artists = "Artists";
+    private const string Brands = "Brands";
+    private const string Anime = "Anime";
+    private const string Manga = "Manga";
+    private const string Manwha = "Manwha";
     private List<string> _artistItems = [];
     private ModalFilter _artistsModalRef = null!;
     private List<string> _brandItems = [];
@@ -19,9 +25,7 @@ public partial class Header : IDisposable
     private ModalFilter _tagsModalRef = null!;
 
 
-    private IEnumerable<string> AnimeTitles = new List<string> { "Naruto", "One Piece", "Attack on Titan" };
-    private string selectedAutoCompleteText;
-    private string selectedSearchValue;
+    private IEnumerable<string> _titles = [];
 
 
     [Inject] private IBrandApi BrandApi { get; set; } = null!;
@@ -29,6 +33,9 @@ public partial class Header : IDisposable
     [Inject] private ITagApi TagApi { get; set; } = null!;
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;
     [Inject] private IFiltersStateService FiltersStateService { get; set; } = null!;
+    [Inject] private IAnimeApi AnimeApi { get; set; } = null!;
+    [Inject] private IMangaApi MangaApi { get; set; } = null!;
+    [Inject] private IManwhaApi ManwhaApi { get; set; } = null!;
 
     public void Dispose()
     {
@@ -37,7 +44,8 @@ public partial class Header : IDisposable
 
     private void HandleSearchChanged(string value)
     {
-        Console.WriteLine($"Selected Value: {value}");
+        _filters.Title = value;
+        FiltersStateService.UpdateFilters(_filters);
     }
 
     protected override void OnInitialized()
@@ -45,10 +53,28 @@ public partial class Header : IDisposable
         NavigationManager.LocationChanged += OnLocationChanged!;
     }
 
-    private void OnLocationChanged(object sender, LocationChangedEventArgs e)
+    protected override async Task OnInitializedAsync()
     {
+        _titles = await LoadTitles();
+    }
+
+    private async void OnLocationChanged(object sender, LocationChangedEventArgs e)
+    {
+        _titles = await LoadTitles();
         ClearAllFilters();
         StateHasChanged();
+    }
+
+    private async Task<List<string>> LoadTitles()
+    {
+        if (IsCurrentPage(Anime))
+            return await AnimeApi.GetTitlesAsync();
+        if (IsCurrentPage(Manga))
+            return await MangaApi.GetTitlesAsync();
+        if (IsCurrentPage(Manwha))
+            return await ManwhaApi.GetTitlesAsync();
+
+        return [];
     }
 
     private async Task ShowModal(string title)
@@ -56,17 +82,17 @@ public partial class Header : IDisposable
         _modalTitle = title;
         switch (title)
         {
-            case "Tags":
+            case Tags:
                 var tags = await TagApi.GetListAsync();
                 _tagItems = tags.Select(x => x.Name).ToList();
                 await _tagsModalRef.ShowModal();
                 break;
-            case "Artists":
+            case Artists:
                 var artists = await ArtistApi.GetListAsync();
                 _artistItems = artists.Select(x => x.Name).ToList();
                 await _artistsModalRef.ShowModal();
                 break;
-            case "Brands":
+            case Brands:
                 var brands = await BrandApi.GetListAsync();
                 _brandItems = brands.Select(x => x.Name).ToList();
                 await _brandsModalRef.ShowModal();
