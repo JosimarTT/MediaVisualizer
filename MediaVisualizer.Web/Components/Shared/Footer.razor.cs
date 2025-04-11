@@ -27,12 +27,14 @@ public partial class Footer
 
     private async Task Previous()
     {
-        if (_currentPage > 1) await OnPageChanged.InvokeAsync(_currentPage - 1);
+        if (_currentPage > 1)
+            await OnPageChanged.InvokeAsync(_currentPage - 1);
     }
 
     private async Task Next()
     {
-        if (_currentPage < _totalPages) await OnPageChanged.InvokeAsync(_currentPage + 1);
+        if (_currentPage < _totalPages)
+            await OnPageChanged.InvokeAsync(_currentPage + 1);
     }
 
     private async Task SetActive(string page)

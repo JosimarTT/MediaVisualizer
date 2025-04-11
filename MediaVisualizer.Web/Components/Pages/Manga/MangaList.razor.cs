@@ -66,6 +66,7 @@ public partial class MangaList : IDisposable
     public async Task OnPageChanged(int newPage)
     {
         Logger.LogInformation("{MethodName} called with newPage: {NewPage}", nameof(OnPageChanged), newPage);
-        await FetchMangaList(new FiltersRequest { Size = 18, Page = newPage });
+        FiltersStateService.Filters.Page = newPage;
+        await FetchMangaList(FiltersStateService.Filters);
     }
 }

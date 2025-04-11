@@ -66,7 +66,7 @@ public partial class AnimeList : IDisposable
     {
         Logger.LogInformation("{MethodName} called with newPage: {NewPage}", nameof(OnPageChanged), newPage);
         _currentPage = newPage;
-
-        await FetchAnimeList(new FiltersRequest { Size = 18, Page = newPage });
+        FiltersStateService.Filters.Page = newPage;
+        await FetchAnimeList(FiltersStateService.Filters);
     }
 }

@@ -15,7 +15,7 @@ public class FiltersStateService : IFiltersStateService
 
     public void ClearFilters()
     {
-        Filters = new FiltersRequest(); // Reset to default
+        Filters = new FiltersRequest();
         OnFiltersChanged?.Invoke();
     }
 }
