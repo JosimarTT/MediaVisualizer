@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazorise.Components;
+using Microsoft.AspNetCore.Components;
 
 namespace MediaVisualizer.Web.Components.Shared;
 
 public partial class AutocompleteSingleFilter : ComponentBase
 {
+    private Autocomplete<string, string>? _autocompleteRef;
     private string _selectedText = string.Empty;
     private string _selectedValue = string.Empty;
 
@@ -13,5 +15,11 @@ public partial class AutocompleteSingleFilter : ComponentBase
     private async Task HandleSearchChanged(string searchText)
     {
         await OnSearchChanged.InvokeAsync(searchText);
+    }
+
+    public void ClearSearch()
+    {
+        _autocompleteRef?.Clear();
+        StateHasChanged();
     }
 }

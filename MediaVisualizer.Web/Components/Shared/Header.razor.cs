@@ -22,6 +22,7 @@ public partial class Header : IDisposable
     private bool _isModalVisible = false;
     private string _modalTitle = string.Empty;
     private List<string> _tagItems = [];
+    private AutocompleteSingleFilter _autocompleteFilterRef = null!;
     private ModalFilter _tagsModalRef = null!;
 
 
@@ -160,6 +161,7 @@ public partial class Header : IDisposable
     {
         Logger.LogInformation("{MethodName} called", nameof(ClearAllFilters));
         FiltersStateService.ClearFilters();
+        _autocompleteFilterRef.ClearSearch();
         _artistsModalRef.ClearFilters();
         _brandsModalRef.ClearFilters();
         _tagsModalRef.ClearFilters();
