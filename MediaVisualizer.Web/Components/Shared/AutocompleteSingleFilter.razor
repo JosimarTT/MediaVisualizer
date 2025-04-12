@@ -1,0 +1,16 @@
+﻿<Autocomplete @ref="_autocompleteRef"
+              TItem="string"
+              TValue="string"
+              Data="@Items"
+              TextField="@(item => item)"
+              ValueField="@(item => item)"
+              @bind-SelectedValue="@_selectedValue"
+              @bind-SelectedText="_selectedText"
+              Placeholder="Search title..."
+              Filter="AutocompleteFilter.Contains"
+              HighlightSearch
+              SearchChanged="HandleSearchChanged"
+              FreeTyping="true"
+              Style="width: 100%">
+    <NotFoundContent> Sorry... @context was not found! :(</NotFoundContent>
+</Autocomplete>

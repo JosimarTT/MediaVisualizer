@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MediaVisualizer.Api.Controllers;
 
 [ApiController]
-[Route("[controller]/[action]")]
+[Route("api/[controller]/[action]")]
 public class AnimeController : ControllerBase
 {
     private readonly IAnimeService _animeService;
@@ -18,7 +18,7 @@ public class AnimeController : ControllerBase
     }
 
     [HttpGet]
-    [Route("~/[controller]/{id:int}")]
+    [Route("~/api/[controller]/{id:int}")]
     public async Task<IActionResult> Get(int id)
     {
         return Ok(await _animeService.Get(id));
@@ -31,7 +31,7 @@ public class AnimeController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetRandom()
+    public async Task<ActionResult<AnimeDto>> GetRandom()
     {
         return Ok(await _animeService.GetRandom());
     }
@@ -49,23 +49,23 @@ public class AnimeController : ControllerBase
     }
 
     [HttpPost]
-    [Route("~/[controller]")]
+    [Route("~/api/[controller]")]
     public async Task<IActionResult> Add([FromBody] AnimeDto anime)
     {
         return Ok(await _animeService.Add(anime));
     }
 
     [HttpPut]
-    [Route("~/[controller]/{animeId:int}")]
+    [Route("~/api/[controller]/{animeId:int}")]
     public async Task<IActionResult> Update(int animeId, [FromBody] AnimeDto animeDto)
     {
         return Ok(await _animeService.Update(animeId, animeDto));
     }
 
     [HttpGet]
-    public async Task<IActionResult> Stream()
+    public async Task<IActionResult> Stream([FromQuery] string path)
     {
-        var filePath = Path.Combine(Constants.AnimeCollectionPath, "Enjo Kouhai", "enjo-kouhai-1.mp4");
+        var filePath = Path.Combine(StringConstants.AnimeCollectionPath, path);
 
         if (!System.IO.File.Exists(filePath))
             return NotFound();

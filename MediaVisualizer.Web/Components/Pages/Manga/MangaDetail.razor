@@ -1,0 +1,43 @@
+﻿@page "/MangaDetail/{MangaId:int}"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+@if (_isLoading)
+{
+    <Spinning/>
+}
+else
+{
+    <main style="margin-top: auto !important;margin-bottom: auto !important;">
+        <div class="collection-grid" id="collection">
+            @foreach (var mangaPage in _pages.Skip((_currentPage - 1) * PageSize).Take(PageSize))
+            {
+                @if (mangaPage.IsLoading)
+                {
+                }
+
+                <div class="card" style="height: 300px">
+                    <button class="p-0 border-0 bg-transparent" @onclick="() => ShowModal(mangaPage)">
+                        <img alt="..."
+                             class="card-img object-fit-cover hover-effect @(mangaPage.IsLoading ? "d-none" : "")"
+                             src="@mangaPage.pagePath" @onload="() => mangaPage.IsLoading = false"
+                             style="height: 300px">
+                    </button>
+                </div>
+            }
+        </div>
+    </main>
+}
+
+<Modal @ref="modalRef" @onkeydown="OnKeyDown">
+    <ModalContent Size="ModalSize.Fullscreen">
+        <ModalBody class="text-center p-0">
+            <Image Source="@modalImageUrl" class="img-fluid h-100"/>
+        </ModalBody>
+        <ModalFooter Class="p-0 justify-content-center border-0">
+            <p>@currentPage</p>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+<Footer _currentPage="_currentPage" _totalPages="_totalPages" OnPageChanged="OnPageChanged"/>

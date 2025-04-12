@@ -1,0 +1,26 @@
+﻿<Modal @ref="_modalRef">
+    <ModalContent Centered Size="ModalSize.ExtraLarge" Scrollable="true">
+        <ModalHeader>
+            <ModalTitle>@Title</ModalTitle>
+            <CloseButton @onclick="HideModal"/>
+        </ModalHeader>
+        <ModalBody>
+            <div class="grid-container">
+                @if (Items != null)
+                {
+                    @foreach (var item in Items)
+                    {
+                        <span class="badge @(_activeItems.Contains(item) ? "active" : "")"
+                              @onclick="() => ToggleItemSelected(item)">
+                            @item
+                        </span>
+                    }
+                }
+            </div>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" @onclick="ClearFilters">Reset</Button>
+            <Button Color="Color.Primary" @onclick="TriggerSearch">Search</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>

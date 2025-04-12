@@ -1,0 +1,50 @@
+﻿<header class="border-bottom py-3">
+    <div class="col-12 d-flex flex-wrap justify-content-center">
+        <div class="d-flex align-items-center me-md-auto">
+            <ul class="nav d-flex align-items-center">
+                <li class="nav-item">
+                    <NavLink class="btn btn-dark" href="AnimeList">Animes</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="btn btn-dark" href="MangaList">Mangas</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="btn btn-dark" href="ManwhaList">Manwhas</NavLink>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav d-flex align-items-center">
+            @if (IsCurrentPage(Manga) || IsCurrentPage(Manwha))
+            {
+                <li class="nav-item me-2">
+                    <button class="btn btn-dark" @onclick='() => ShowModal("Artists")'>
+                        Artists
+                    </button>
+                </li>
+            }
+            @if (IsCurrentPage(Anime))
+            {
+                <li class="nav-item">
+                    <button class="btn btn-dark" @onclick='() => ShowModal("Brands")'>
+                        Brands
+                    </button>
+                </li>
+            }
+            <li class="nav-item me-2">
+                <button class="btn btn-dark" @onclick='() => ShowModal("Tags")'>
+                    Tags
+                </button>
+            </li>
+            <li class="nav-item">
+                <div class="input-group" style="width: 500px">
+                    <AutocompleteSingleFilter @ref="_autocompleteFilterRef" Items="@_titles" OnSearchChanged="HandleSearchChanged"/>
+                </div>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<ModalFilter @ref="_artistsModalRef" Title="Artists" Items="@_artistItems"
+             OnSearchClicked="HandleArtistsSearchClicked"/>
+<ModalFilter @ref="_brandsModalRef" Title="Brands" Items="@_brandItems" OnSearchClicked="HandleBrandsSearchClicked"/>
+<ModalFilter @ref="_tagsModalRef" Title="Tags" Items="@_tagItems" OnSearchClicked="HandleTagsSearchClicked"/>

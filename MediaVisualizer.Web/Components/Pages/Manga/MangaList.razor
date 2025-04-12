@@ -1,0 +1,41 @@
+﻿@page "/MangaList"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<PageTitle>Anime List</PageTitle>
+
+@if (_isLoading)
+{
+    <Spinning/>
+}
+else
+{
+    <main style="margin-top: auto !important;margin-bottom: auto !important;">
+        <div class="collection-grid" id="collection">
+            @foreach (var manga in _mangaList)
+            {
+                <div class="card p-0 hover-effect" style="height: 356px">
+                    @if (manga.IsLoading)
+                    {
+                    }
+                    <a href="@($"MangaDetail/{manga.MangaId}")" target="_blank"
+                       class="h-100">
+                        <div class="position-relative" style="max-height: 300px;">
+                            <img alt="..." class="card-img object-fit-cover"
+                                 style="max-height: 300px; border-bottom-left-radius: 0; border-bottom-right-radius: 0"
+                                 src="@manga.Logo">
+                        </div>
+                        <div class="card-body position-absolute bottom-0 w-100 text-white"
+                             style="background: #212529; border-radius: var(--bs-card-border-radius); border-top-left-radius: 0; border-top-right-radius: 0">
+                            <div class="card-title-container">
+                                <p class="card-title text-center m-0 text-ellipsis">@manga.Title @manga.ChapterNumber</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </main>
+}
+
+<Footer _currentPage="_currentPage" _totalPages="_totalPages" OnPageChanged="OnPageChanged"/>

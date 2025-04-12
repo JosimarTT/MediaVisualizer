@@ -1,0 +1,68 @@
+﻿@rendermode InteractiveServer
+
+<footer class="footer py-3 border-top">
+    <div class="container">
+        <nav aria-label="Page navigation">
+            <Pagination Class="m-0 justify-content-center">
+                <PaginationItem Disabled="@IsPageNavigationDisabled(PREVIOUS)" @onclick="Previous">
+                    <PaginationLink>
+                        <span aria-hidden="true">«</span>
+                    </PaginationLink>
+                </PaginationItem>
+                @{
+                    const int maxDisplayedPages = 5;
+                    var startPage = Math.Max(1, _currentPage - maxDisplayedPages / 2);
+                    var endPage = Math.Min(_totalPages, startPage + maxDisplayedPages - 1);
+
+                    if (endPage - startPage + 1 < maxDisplayedPages)
+                    {
+                        startPage = Math.Max(1, endPage - maxDisplayedPages + 1);
+                    }
+
+                    if (startPage > 1)
+                    {
+                        <PaginationItem @key="1" Active="@IsActive("1")">
+                            <PaginationLink Page="1" Clicked="SetActive">1</PaginationLink>
+                        </PaginationItem>
+                        if (startPage > 2)
+                        {
+                            <PaginationItem Disabled="true">
+                                <PaginationLink>...</PaginationLink>
+                            </PaginationItem>
+                        }
+                    }
+
+                    for (var i = startPage; i <= endPage; i++)
+                    {
+                        var pageNumberAsString = i.ToString();
+                        <PaginationItem @key="pageNumberAsString" Active="@IsActive(pageNumberAsString)">
+                            <PaginationLink Page="@pageNumberAsString" Clicked="SetActive">
+                                @pageNumberAsString
+                            </PaginationLink>
+                        </PaginationItem>
+                    }
+
+                    if (endPage < _totalPages)
+                    {
+                        if (endPage < _totalPages - 1)
+                        {
+                            <PaginationItem Disabled="true">
+                                <PaginationLink>...</PaginationLink>
+                            </PaginationItem>
+                        }
+
+                        <PaginationItem @key="@_totalPages.ToString()" Active="@IsActive(_totalPages.ToString())">
+                            <PaginationLink Page="@_totalPages.ToString()"
+                                            Clicked="SetActive">@_totalPages</PaginationLink>
+                        </PaginationItem>
+                    }
+                }
+                <PaginationItem Disabled="@IsPageNavigationDisabled(NEXT)" @onclick="Next">
+                    <PaginationLink>
+                        <span aria-hidden="true">»</span>
+                    </PaginationLink>
+                </PaginationItem>
+            </Pagination>
+        </nav>
+    </div>
+</footer>
