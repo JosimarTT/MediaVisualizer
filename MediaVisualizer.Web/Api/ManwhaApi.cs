@@ -1,4 +1,7 @@
 ﻿using MediaVisualizer.Shared.Dtos;
+using MediaVisualizer.Shared.Requests;
+using MediaVisualizer.Shared.Responses;
+using MediaVisualizer.Web.Helpers;
 
 namespace MediaVisualizer.Web.Api;
 
@@ -26,11 +29,18 @@ public class ManwhaApi : IManwhaApi
     {
         return _httpClient.GetFromJsonAsync<List<string>>($"{BaseUrl}/GetTitles");
     }
+
+    public Task<ListResponse<ManwhaDto>> GetListAsync(FiltersRequest filters)
+    {
+        var query = FiltersRequestHelper.BuildFiltersRequest(filters);
+        return _httpClient.GetFromJsonAsync<ListResponse<ManwhaDto>>($"{BaseUrl}/GetList?{query}");
+    }
 }
 
 public interface IManwhaApi
 {
     Task<ManwhaDto> GetAsync(int manwhaId);
+    Task<ListResponse<ManwhaDto>> GetListAsync(FiltersRequest filters);
     Task<ManwhaDto> GetRandomAsync();
     Task<List<string>> GetTitlesAsync();
 }

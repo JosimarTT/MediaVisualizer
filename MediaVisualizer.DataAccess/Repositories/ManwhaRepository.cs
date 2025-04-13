@@ -50,6 +50,14 @@ public class ManwhaRepository : IManwhaRepository
         return await query.Skip(randomIndex).FirstAsync();
     }
 
+    public Task<List<string>> GetTitles()
+    {
+        return _context.Manwhas
+            .Select(x => x.Title)
+            .OrderBy(x => x)
+            .ToListAsync();
+    }
+
     public async Task<Manwha> Get(int manwhaKey)
     {
         var query = GetBaseQuery();
@@ -69,4 +77,5 @@ public interface IManwhaRepository
     public Task<Manwha> Get(int manwhaKey);
     public Task<(int totalCount, IEnumerable<Manwha>)> GetList(FiltersRequest filters);
     public Task<Manwha> GetRandom();
+    Task<List<string>> GetTitles();
 }
