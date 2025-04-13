@@ -58,7 +58,8 @@ public partial class ManwhaList : IDisposable
         _currentPage = filters.Page ?? 1;
         _totalPages = response.TotalPages;
         foreach (var manwha in _manwhaList)
-            manwha.Logo = FileStreamApi.GetStreamImagePath(manwha.Logo, 210);
+            for (var i = 0; i < manwha.Logos.Length; i++)
+                manwha.Logos[i] = FileStreamApi.GetStreamImagePath(manwha.Logos[i], 210);
 
         _isLoading = false;
     }

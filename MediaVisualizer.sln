@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.Services", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.Api", "MediaVisualizer.Api\MediaVisualizer.Api.csproj", "{069E5C52-2B8D-479B-B79B-363B021990DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaVisualizer.DataImporter", "MediaVisualizer.DataImporter\MediaVisualizer.DataImporter.csproj", "{D7A17884-AEB0-4174-8A24-CC4B9D12901F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{069E5C52-2B8D-479B-B79B-363B021990DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{069E5C52-2B8D-479B-B79B-363B021990DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{069E5C52-2B8D-479B-B79B-363B021990DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7A17884-AEB0-4174-8A24-CC4B9D12901F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A17884-AEB0-4174-8A24-CC4B9D12901F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A17884-AEB0-4174-8A24-CC4B9D12901F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A17884-AEB0-4174-8A24-CC4B9D12901F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
