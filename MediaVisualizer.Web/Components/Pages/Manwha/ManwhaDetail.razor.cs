@@ -15,7 +15,8 @@ public partial class ManwhaDetail
     private bool _isLoading = true;
     private int _totalPages = 1;
     private int currentPage;
-    private string modalImageUrl;
+    private readonly List<string> modalImageUrl = [];
+
 
     private Modal modalRef;
     private ManwhaDto _manwha { get; set; }
@@ -43,18 +44,12 @@ public partial class ManwhaDetail
     private async Task LoadPages()
     {
         _pages.Clear();
-        foreach (var chapter in _manwha.Chapters)
-            for (var i = 1; i <= chapter.PagesCount; i++)
+        for (var i = 1; i <= _manwha.Chapters.Count; i++)
+            _pages.Add(new PageIsLoading
             {
-                var filePath = Path.Combine(_manwha.BasePath, $"{chapter.ChapterNumber}-{i}.{chapter.PageExtension}");
-                var logo = chapter.Logo;
-                _pages.Add(new PageIsLoading
-                {
-                    pageNumber = i,
-                    logo = FileStreamApi.GetStreamImagePath(chapter.Logo),
-                    pagePath = FileStreamApi.GetStreamImagePath(filePath)
-                });
-            }
+                pageNumber = i,
+                logo = FileStreamApi.GetStreamImagePath(_manwha.Chapters.ToList()[i - 1].Logo)
+            });
     }
 
     public async Task OnPageChanged(int newPage)
@@ -64,7 +59,14 @@ public partial class ManwhaDetail
 
     private Task ShowModal(PageIsLoading manwhaPage)
     {
-        modalImageUrl = manwhaPage.pageFullPath;
+        modalImageUrl.Clear();
+        var chapter = _manwha.Chapters.ToList()[_currentPage];
+        for (var i = 1; i <= chapter.PagesCount; i++)
+        {
+            var path = Path.Combine(_manwha.BasePath, $"{chapter.ChapterNumber}-{i}{chapter.PageExtension}");
+            modalImageUrl.Add(FileStreamApi.GetStreamImagePath(path));
+        }
+
         currentPage = manwhaPage.pageNumber;
         return modalRef.Show();
     }
@@ -86,14 +88,14 @@ public partial class ManwhaDetail
     {
         if (currentPage <= 1) return;
         currentPage--;
-        modalImageUrl = _pages.First(p => p.pageNumber == currentPage).pageFullPath;
+        // modalImageUrl = _pages.First(p => p.pageNumber == currentPage).pageFullPath;
     }
 
     private void ShowNextImage()
     {
         if (currentPage >= _manwha.Chapters.Count) return;
         currentPage++;
-        modalImageUrl = _pages.First(p => p.pageNumber == currentPage).pageFullPath;
+        // modalImageUrl = _pages.First(p => p.pageNumber == currentPage).pageFullPath;
     }
 
     private class PageIsLoading
