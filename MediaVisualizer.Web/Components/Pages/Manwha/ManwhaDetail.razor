@@ -27,7 +27,12 @@ else
     </main>
 }
 
-<Modal @ref="modalRef" Class="modal-image-fit" @onkeydown="OnKeyDown" Style="background-color: #212529;">
+<Modal ElementId="manwhaModal"
+       @ref="modalRef"
+       ScrollToTop="true"
+       Class="modal-image-fit"
+       @onkeydown="OnKeyDown"
+       Style="background-color: #212529;">
     <ModalContent Class="border-0">
         <ModalBody class="text-center p-0">
             <div style="display: flex; flex-direction: column; align-items: center;">
@@ -38,7 +43,7 @@ else
             </div>
         </ModalBody>
         <ModalFooter Class="p-0 justify-content-center border-0">
-            <p>@currentPage</p>
+            <p>@currentChapter</p>
         </ModalFooter>
     </ModalContent>
 </Modal>

@@ -10,12 +10,12 @@ public partial class ManwhaDetail
 {
     private const int PageSize = 18;
     private readonly List<PageIsLoading> _pages = [];
+    private readonly List<string> modalImageUrl = [];
     private int _currentPage = 1;
     private bool _isFirstRender = true;
     private bool _isLoading = true;
     private int _totalPages = 1;
-    private int currentPage;
-    private readonly List<string> modalImageUrl = [];
+    private int currentChapter;
 
 
     private Modal modalRef;
@@ -24,7 +24,6 @@ public partial class ManwhaDetail
     [Parameter] public int ManwhaId { get; set; }
     [Inject] private IManwhaApi ManwhaApi { get; set; }
     [Inject] private IFileStreamApi FileStreamApi { get; set; }
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -60,42 +59,54 @@ public partial class ManwhaDetail
     private Task ShowModal(PageIsLoading manwhaPage)
     {
         modalImageUrl.Clear();
-        var chapter = _manwha.Chapters.ToList()[_currentPage];
+        var chapter = _manwha.Chapters.ToList()[manwhaPage.pageNumber - 1];
         for (var i = 1; i <= chapter.PagesCount; i++)
         {
             var path = Path.Combine(_manwha.BasePath, $"{chapter.ChapterNumber}-{i}{chapter.PageExtension}");
             modalImageUrl.Add(FileStreamApi.GetStreamImagePath(path));
         }
 
-        currentPage = manwhaPage.pageNumber;
+        currentChapter = manwhaPage.pageNumber;
         return modalRef.Show();
     }
 
-    private void OnKeyDown(KeyboardEventArgs e)
+    private async Task OnKeyDown(KeyboardEventArgs e)
     {
         switch (e.Key)
         {
             case "ArrowLeft":
-                ShowPreviousImage();
+                ShowPreviousChapter();
                 break;
             case "ArrowRight":
-                ShowNextImage();
+                ShowNextChapter();
                 break;
         }
     }
 
-    private void ShowPreviousImage()
+    private void ShowPreviousChapter()
     {
-        if (currentPage <= 1) return;
-        currentPage--;
-        // modalImageUrl = _pages.First(p => p.pageNumber == currentPage).pageFullPath;
+        if (currentChapter <= 1) return;
+        currentChapter--;
+        modalImageUrl.Clear();
+        var chapter = _manwha.Chapters.ToList()[currentChapter - 1];
+        for (var i = 1; i <= chapter.PagesCount; i++)
+        {
+            var path = Path.Combine(_manwha.BasePath, $"{chapter.ChapterNumber}-{i}{chapter.PageExtension}");
+            modalImageUrl.Add(FileStreamApi.GetStreamImagePath(path));
+        }
     }
 
-    private void ShowNextImage()
+    private void ShowNextChapter()
     {
-        if (currentPage >= _manwha.Chapters.Count) return;
-        currentPage++;
-        // modalImageUrl = _pages.First(p => p.pageNumber == currentPage).pageFullPath;
+        if (currentChapter >= _manwha.Chapters.Count) return;
+        currentChapter++;
+        modalImageUrl.Clear();
+        var chapter = _manwha.Chapters.ToList()[currentChapter - 1];
+        for (var i = 1; i <= chapter.PagesCount; i++)
+        {
+            var path = Path.Combine(_manwha.BasePath, $"{chapter.ChapterNumber}-{i}{chapter.PageExtension}");
+            modalImageUrl.Add(FileStreamApi.GetStreamImagePath(path));
+        }
     }
 
     private class PageIsLoading
