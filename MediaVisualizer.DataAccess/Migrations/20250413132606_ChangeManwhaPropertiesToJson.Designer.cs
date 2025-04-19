@@ -3,6 +3,7 @@ using System;
 using MediaVisualizer.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaVisualizer.DataAccess.Migrations
 {
     [DbContext(typeof(MediaVisualizerDbContext))]
-    partial class MediaVisualizerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250413132606_ChangeManwhaPropertiesToJson")]
+    partial class ChangeManwhaPropertiesToJson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
@@ -50,7 +53,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasKey("AnimeId");
 
-                    b.ToTable("Anime.Anime", (string)null);
+                    b.ToTable("Anime.Anime");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.AnimeBrand", b =>
@@ -71,7 +74,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.ToTable("Anime.AnimeBrand", (string)null);
+                    b.ToTable("Anime.AnimeBrand");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.AnimeTag", b =>
@@ -92,7 +95,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("Anime.AnimeTag", (string)null);
+                    b.ToTable("Anime.AnimeTag");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.Manga", b =>
@@ -131,7 +134,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasKey("MangaId");
 
-                    b.ToTable("Manga.Manga", (string)null);
+                    b.ToTable("Manga.Manga");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.MangaArtist", b =>
@@ -152,7 +155,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasIndex("MangaId");
 
-                    b.ToTable("Manga.MangaArtist", (string)null);
+                    b.ToTable("Manga.MangaArtist");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manga.MangaTag", b =>
@@ -173,7 +176,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("Manga.MangaTag", (string)null);
+                    b.ToTable("Manga.MangaTag");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha.Manwha", b =>
@@ -205,7 +208,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasKey("ManwhaId");
 
-                    b.ToTable("Manwha.Manwha", (string)null);
+                    b.ToTable("Manwha.Manwha");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha.ManwhaArtist", b =>
@@ -226,7 +229,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasIndex("ManwhaId");
 
-                    b.ToTable("Manwha.ManwhaArtist", (string)null);
+                    b.ToTable("Manwha.ManwhaArtist");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Manwha.ManwhaTag", b =>
@@ -247,7 +250,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("Manwha.ManwhaTag", (string)null);
+                    b.ToTable("Manwha.ManwhaTag");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Shared.Artist", b =>
@@ -268,7 +271,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasKey("ArtistId");
 
-                    b.ToTable("Shared.Artist", (string)null);
+                    b.ToTable("Shared.Artist");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Shared.Brand", b =>
@@ -289,7 +292,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasKey("BrandId");
 
-                    b.ToTable("Shared.Brand", (string)null);
+                    b.ToTable("Shared.Brand");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Shared.Tag", b =>
@@ -310,7 +313,7 @@ namespace MediaVisualizer.DataAccess.Migrations
 
                     b.HasKey("TagId");
 
-                    b.ToTable("Shared.Tag", (string)null);
+                    b.ToTable("Shared.Tag");
                 });
 
             modelBuilder.Entity("MediaVisualizer.DataAccess.Entities.Anime.AnimeBrand", b =>

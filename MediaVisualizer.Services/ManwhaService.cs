@@ -33,6 +33,11 @@ public class ManwhaService : IManwhaService
         var manwha = await _manwhaRepository.GetRandom();
         return manwha.ToDto();
     }
+
+    public Task<List<string>> GetTitles()
+    {
+        return _manwhaRepository.GetTitles();
+    }
 }
 
 public interface IManwhaService
@@ -40,4 +45,5 @@ public interface IManwhaService
     public Task<ManwhaDto> Get(int key);
     public Task<ListResponse<ManwhaDto>> GetList(FiltersRequest filters);
     public Task<ManwhaDto> GetRandom();
+    Task<List<string>> GetTitles();
 }

@@ -1,4 +1,5 @@
-﻿using MediaVisualizer.DataAccess.Entities.Manwha;
+﻿using System.Text.Json;
+using MediaVisualizer.DataAccess.Entities.Manwha;
 using MediaVisualizer.Shared;
 using MediaVisualizer.Shared.Dtos;
 
@@ -10,18 +11,36 @@ public static class ManwhaConverter
     {
         if (manwha == null) return null;
 
+        var basePath = Path.Combine(StringConstants.ManwhaCollectionPath, manwha.Folder);
+
+        var chapters = !string.IsNullOrWhiteSpace(manwha.Chapters)
+            ? JsonSerializer.Deserialize<List<ManwhaChapterDto>>(manwha.Chapters)!
+            : [];
+
+        foreach (var chapter in chapters)
+            chapter.Logo = !string.IsNullOrWhiteSpace(chapter.Logo)
+                ? Path.Combine(basePath, chapter.Logo)
+                : string.Empty;
+
+        var logos = !string.IsNullOrWhiteSpace(manwha.Logos)
+            ? JsonSerializer.Deserialize<string[]>(manwha.Logos)!
+            : [];
+
+        for (var i = 0; i < logos.Length; i++)
+            logos[i] = !string.IsNullOrWhiteSpace(logos[i])
+                ? Path.Combine(basePath, logos[i])
+                : string.Empty;
+
         return new ManwhaDto
         {
             ManwhaId = manwha.ManwhaId,
             Folder = manwha.Folder,
             Title = manwha.Title,
-            Logo = Path.Combine(StringConstants.ManwhaCollectionPath, manwha.Folder, manwha.Logo),
-            ChapterNumber = manwha.ChapterNumber,
-            PagesCount = manwha.PagesCount,
-            PageExtension = manwha.PageExtension,
+            Logos = logos,
+            Chapters = chapters,
             Tags = manwha.ManwhaTags.Select(x => x.Tag).ToList().ToListDto(),
             Artists = manwha.ManwhaArtists.Select(x => x.Artist).ToList().ToListDto(),
-            BasePath = Path.Combine(StringConstants.ManwhaCollectionPath, manwha.Folder)
+            BasePath = basePath
         };
     }
 

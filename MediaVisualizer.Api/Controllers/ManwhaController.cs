@@ -34,4 +34,10 @@ public class ManwhaController : ControllerBase
     {
         return Ok(await _manwhaService.GetRandom());
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetTitles()
+    {
+        return Ok(await _manwhaService.GetTitles());
+    }
 }

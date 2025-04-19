@@ -1,7 +1,51 @@
-﻿@page "/ManwhaDetail"
+﻿@page "/ManwhaDetail/{ManwhaId:int}"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
 
-<h3>ManwhaDetail</h3>
-
-@code {
-
+@if (_isLoading)
+{
+    <Spinning/>
 }
+else
+{
+    <main style="margin-top: auto !important;margin-bottom: auto !important;">
+        <div class="collection-grid" id="collection">
+            @foreach (var manwhaPage in _pages.Skip((_currentPage - 1) * PageSize).Take(PageSize))
+            {
+                <div class="card">
+                    <button class="p-0 border-0 bg-transparent" @onclick="() => ShowModal(manwhaPage)">
+                        <img alt="..."
+                             class="card-img object-fit-contain hover-effect"
+                             src="@manwhaPage.logo">
+                        <div class="text-center mt-2 mb-2">
+                            Chapter @manwhaPage.pageNumber
+                        </div>
+                    </button>
+                </div>
+            }
+        </div>
+    </main>
+}
+
+<Modal ElementId="manwhaModal"
+       @ref="modalRef"
+       ScrollToTop="true"
+       Class="modal-image-fit"
+       @onkeydown="OnKeyDown"
+       Style="background-color: #212529;">
+    <ModalContent Class="border-0">
+        <ModalBody class="text-center p-0">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                @foreach (var image in modalImageUrl)
+                {
+                    <Image Loading="true" Source="@image" Class="img-fluid mb-2" Style="max-width: 100%;"/>
+                }
+            </div>
+        </ModalBody>
+        <ModalFooter Class="p-0 justify-content-center border-0">
+            <p>@currentChapter</p>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+<Footer _currentPage="_currentPage" _totalPages="_totalPages" OnPageChanged="OnPageChanged"/>

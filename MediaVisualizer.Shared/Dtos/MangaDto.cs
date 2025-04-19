@@ -12,5 +12,4 @@ public class MangaDto
     public int PagesCount { get; set; }
     public string Logo { get; set; } = null!;
     public string PageExtension { get; set; } = null!;
-    public bool IsLoading { get; set; } = true;
 }

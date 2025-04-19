@@ -1,4 +1,5 @@
-﻿using MediaVisualizer.Web.Api;
+﻿using MediaVisualizer.Shared.ExtensionMethods;
+using MediaVisualizer.Web.Api;
 using MediaVisualizer.Web.Constants;
 using MediaVisualizer.Web.Services;
 using Microsoft.AspNetCore.Components;
@@ -52,7 +53,7 @@ public partial class Index
 
         _animeImageUrl = FileStreamApi.GetStreamImagePath(anime.Logo);
         _mangaImageUrl = FileStreamApi.GetStreamImagePath(manga.Logo, 560);
-        _manwhaImageUrl = FileStreamApi.GetStreamImagePath(manwha.Logo);
+        _manwhaImageUrl = FileStreamApi.GetStreamImagePath(manwha.Logos.GetRandomItem());
         _isLoading = false;
 
         StateHasChanged();
