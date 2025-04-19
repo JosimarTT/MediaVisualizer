@@ -83,38 +83,32 @@ public partial class ManwhaDetail
         }
     }
 
-    private void ShowPreviousChapter()
+    private void ShowChapter(int chapterNumber)
     {
-        if (currentChapter <= 1) return;
-        currentChapter--;
         modalImageUrl.Clear();
-        var chapter = _manwha.Chapters.ToList()[currentChapter - 1];
+        var chapter = _manwha.Chapters.ToList()[chapterNumber - 1];
         for (var i = 1; i <= chapter.PagesCount; i++)
         {
             var path = Path.Combine(_manwha.BasePath, $"{chapter.ChapterNumber}-{i}{chapter.PageExtension}");
             modalImageUrl.Add(FileStreamApi.GetStreamImagePath(path));
         }
+
+        currentChapter = chapterNumber;
+    }
+
+    private void ShowPreviousChapter()
+    {
+        if (currentChapter > 1) ShowChapter(--currentChapter);
     }
 
     private void ShowNextChapter()
     {
-        if (currentChapter >= _manwha.Chapters.Count) return;
-        currentChapter++;
-        modalImageUrl.Clear();
-        var chapter = _manwha.Chapters.ToList()[currentChapter - 1];
-        for (var i = 1; i <= chapter.PagesCount; i++)
-        {
-            var path = Path.Combine(_manwha.BasePath, $"{chapter.ChapterNumber}-{i}{chapter.PageExtension}");
-            modalImageUrl.Add(FileStreamApi.GetStreamImagePath(path));
-        }
+        if (currentChapter < _manwha.Chapters.Count) ShowChapter(++currentChapter);
     }
 
     private class PageIsLoading
     {
         public string logo { get; set; }
         public int pageNumber { get; set; }
-        public string pagePath { get; set; }
-        public string pageFullPath { get; set; }
-        public bool IsLoading { get; set; } = true;
     }
 }
